@@ -1,6 +1,6 @@
+import ThemeProvider from "@/context/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
-// eslint-disable-next-line camelcase
 import { Inter, Space_Grotesk } from "next/font/google";
 import React from "react";
 import "./globals.css";
@@ -41,8 +41,7 @@ export default function RootLayout({
             },
           }}
         >
-          {children}
-          <h1 className="h1-bold">This is</h1>
+          <ThemeProvider>{children}</ThemeProvider>
         </ClerkProvider>
       </body>
     </html>
