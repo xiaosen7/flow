@@ -9,14 +9,6 @@ export default {
   },
 } as Meta<typeof Button>;
 
-export const Secondary: StoryObj<typeof Button> = {
-  args: {
-    className: "btn-secondary",
-  },
-};
-
-export const Tertiary: StoryObj<typeof Button> = {
-  args: {
-    className: "btn-tertiary",
-  },
+export const Base: StoryObj<typeof Button> = {
+  args: {},
 };
