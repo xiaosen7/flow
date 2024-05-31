@@ -1,4 +1,5 @@
 import { BADGE_CRITERIA } from "@/constants";
+export * from "./component";
 
 export interface Job {
   id?: string;

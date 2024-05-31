@@ -1,4 +1,4 @@
-import { Theme } from "@/modules/theme";
+import { ThemeSwitcher } from "@/modules/theme";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,10 +24,11 @@ export const Navbar: React.FC<INavbarProps> = () => {
         </p>
       </Link>
 
-      <GlobalSearch />
+      <GlobalSearch className="max-lg:hidden" />
 
       <div className="flex-between gap-5">
-        <Theme />
+        <ThemeSwitcher />
+
         <SignedIn>
           <UserButton
             appearance={{
@@ -41,7 +42,7 @@ export const Navbar: React.FC<INavbarProps> = () => {
           />
         </SignedIn>
 
-        <MobileNav />
+        <MobileNav className="sm:hidden" />
       </div>
     </nav>
   );

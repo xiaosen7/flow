@@ -34,7 +34,7 @@ const reloadUserThemeMode = (): EUserThemeMode => {
   return localStorage.userThemeMode ?? EUserThemeMode.System;
 };
 
-const Theme: React.FC<IThemeProps> = () => {
+const ThemeSwitcher: React.FC<IThemeProps> = () => {
   const { mode, setMode } = useTheme();
   const [userThemeMode, setUserThemeMode] = useState<EUserThemeMode>(
     reloadUserThemeMode()
@@ -108,4 +108,4 @@ const Theme: React.FC<IThemeProps> = () => {
   );
 };
 
-export { Theme };
+export { ThemeSwitcher };
