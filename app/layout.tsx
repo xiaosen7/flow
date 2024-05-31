@@ -1,4 +1,4 @@
-import ThemeProvider from "@/context/theme-provider";
+import ThemeProvider from "@/modules/theme/context";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";

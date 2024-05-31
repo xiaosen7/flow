@@ -1,11 +1,7 @@
 "use client";
 
+import { EThemeMode } from "@/modules/theme";
 import React, { createContext, useContext, useEffect, useState } from "react";
-
-export enum EThemeMode {
-  LIGHT = "light",
-  DARK = "dark",
-}
 
 interface IThemeContextValue {
   mode: EThemeMode;
@@ -19,10 +15,13 @@ export interface IThemeProviderProps {
 }
 
 const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
-  const [mode, setMode] = useState<EThemeMode>(EThemeMode.LIGHT);
+  const [mode, setMode] = useState<EThemeMode>(EThemeMode.Light);
 
   useEffect(() => {
     if (mode) {
+      document.documentElement.classList.remove(
+        mode === EThemeMode.Light ? EThemeMode.Dark : EThemeMode.Light
+      );
       document.documentElement.classList.add(mode);
     }
   }, [mode]);
