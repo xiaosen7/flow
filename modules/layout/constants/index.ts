@@ -1,6 +1,6 @@
 import { ISidebarLink } from "@/modules/layout";
 
-export const SIDEBAR_LINKS: ISidebarLink[] = [
+export const NAV_LINKS: ISidebarLink[] = [
   {
     imgURL: "/assets/icons/home.svg",
     route: "/",

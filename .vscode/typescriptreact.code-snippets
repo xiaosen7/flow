@@ -1,0 +1,17 @@
+{
+  "export arrow function component": {
+    "prefix": "reafc",
+    "body": [
+      "import { mergeClassAndStyleProps } from \"@/lib/utils\";",
+      "import { IComponentBaseProps } from \"@/types\";",
+      "import React from \"react\";",
+      "",
+      "export interface I$1Props extends IComponentBaseProps {}",
+      "",
+      "export const $1: React.FC<I$1Props> = (props) => {",
+      "  return mergeClassAndStyleProps(props, <div>$1</div>);",
+      "};",
+    ],
+    "description": "export arrow function component",
+  },
+}

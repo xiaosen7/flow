@@ -22,7 +22,7 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
         <Input
           type="text"
           placeholder="Search globally"
-          className="paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none"
+          className="paragraph-regular no-focus bg-inherit placeholder border-none shadow-none outline-none"
         />
       </div>
     </div>

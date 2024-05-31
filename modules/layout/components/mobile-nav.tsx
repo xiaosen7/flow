@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetClose,
@@ -9,48 +8,11 @@ import {
 import { mergeClassAndStyleProps } from "@/lib/utils";
 import { IComponentBaseProps } from "@/types/component";
 import { SignedOut } from "@clerk/nextjs";
-import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
-import { SIDEBAR_LINKS } from "../constants";
-
-interface INavContentProps {}
-const NavContent: React.FC<INavContentProps> = () => {
-  const pathname = usePathname();
-  return (
-    <section className="flex flex-col gap-6 overflow-auto">
-      {SIDEBAR_LINKS.map(({ imgURL, label, route }) => {
-        const isActive = pathname?.includes(route);
-        return (
-          <SheetClose asChild key={route}>
-            <Link
-              href={route}
-              className={clsx(
-                isActive
-                  ? "primary-gradient rounded-lg text-light-900"
-                  : "text-dark300_light900",
-                "flex items-center justify-start gap-4 bg-transparent p-4"
-              )}
-            >
-              <Image
-                src={imgURL}
-                width={20}
-                height={20}
-                alt={label}
-                className={clsx(!isActive && "invert-colors")}
-              />
-              <p className={clsx(isActive ? "base-bold" : "base-medium")}>
-                {label}
-              </p>
-            </Link>
-          </SheetClose>
-        );
-      })}
-    </section>
-  );
-};
+import { NavButtons } from "./nav-buttons";
+import { NavLinks } from "./nav-links";
 
 export interface IMobileNavProps extends IComponentBaseProps {}
 
@@ -65,7 +27,7 @@ export const MobileNav: React.FC<IMobileNavProps> = (props) => {
             width={36}
             height={36}
             alt="Menu"
-            className="invert-colors"
+            className="invert-colors cursor-pointer"
           />
         </SheetTrigger>
 
@@ -86,27 +48,14 @@ export const MobileNav: React.FC<IMobileNavProps> = (props) => {
             </p>
           </Link>
 
-          <NavContent />
+          <NavLinks
+            renderItem={(node) => <SheetClose asChild>{node}</SheetClose>}
+          />
 
           <SignedOut>
-            {/* only rendered when signed out */}
-            <div className="flex flex-col gap-3">
-              <SheetClose asChild>
-                <Link href={"/sign-in"}>
-                  <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3">
-                    <span className="primary-text-gradient">Log In</span>
-                  </Button>
-                </Link>
-              </SheetClose>
-
-              <SheetClose asChild>
-                <Link href={"/sign-up"}>
-                  <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                    Sign Up
-                  </Button>
-                </Link>
-              </SheetClose>
-            </div>
+            <NavButtons
+              renderItem={(node) => <SheetClose asChild>{node}</SheetClose>}
+            />
           </SignedOut>
         </SheetContent>
       </Sheet>

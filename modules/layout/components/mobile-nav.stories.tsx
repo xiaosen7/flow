@@ -8,5 +8,5 @@ export default {
 } as Meta<typeof MobileNav>;
 
 export const Base: StoryFn<typeof MobileNav> = (args) => (
-  <MobileNav {...args} />
+  <MobileNav className="m-6" {...args} />
 );
