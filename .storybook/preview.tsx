@@ -41,6 +41,7 @@ const preview: Preview = {
               footerActionLink: "primary-text-gradient hover:text-primary-500",
             },
           }}
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         >
           <ThemeProvider>
             <Story />
