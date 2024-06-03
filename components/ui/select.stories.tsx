@@ -13,7 +13,7 @@ export default {
   args: {},
 } as Meta<typeof Select>;
 
-export const Base: StoryFn<typeof Select> = (args) => (
+export const Base: StoryFn<typeof Select> = () => (
   <Select>
     <SelectTrigger className="w-[180px]">
       <SelectValue placeholder="Theme" />

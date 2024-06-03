@@ -1,6 +1,8 @@
 import { BADGE_CRITERIA } from "@constants";
 export * from "./component";
 
+export type ISafeAny = any;
+
 export interface Job {
   id?: string;
   employer_name?: string;

@@ -25,7 +25,7 @@ export const SearchInput: React.FC<ISearchInputProps> = (props) => {
         <Input
           type="text"
           placeholder={placeholder}
-          className="paragraph-regular no-focus bg-inherit placeholder border-none shadow-none outline-none"
+          className="paragraph-regular no-focus placeholder border-none bg-inherit shadow-none outline-none"
         />
       </div>
     </div>

@@ -29,7 +29,7 @@ export const Filter: React.FC<IFilterProps> = (props) => {
       <Select>
         <SelectTrigger
           className={
-            "no-focus body-regular light-border background-light800_dark300 text-dark500_light700 px-5 py-2.5 min-h-[56px] rounded-md border-0"
+            "no-focus body-regular light-border background-light800_dark300 text-dark500_light700 min-h-[56px] rounded-md border-0 px-5 py-2.5"
           }
         >
           <SelectValue placeholder={props.placeholder ?? "Select a filter"} />
