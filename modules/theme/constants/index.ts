@@ -1,4 +1,4 @@
-import { EUserThemeMode } from "@/modules/theme/types";
+import { EUserThemeMode } from "@modules/theme/types";
 import { keyBy } from "lodash-es";
 
 export const USER_THEMES = [

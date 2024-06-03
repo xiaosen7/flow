@@ -1,9 +1,9 @@
-import "@/app/globals.css";
-import { EThemeMode, useTheme } from "@/modules/theme";
-import ThemeProvider from "@/modules/theme/context";
+import "@app/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { EThemeMode, ThemeProvider, useTheme } from "@modules/theme";
 import type { Preview } from "@storybook/react";
 import { useEffect } from "react";
+import "./preview.css";
 
 const preview: Preview = {
   parameters: {
@@ -21,7 +21,7 @@ const preview: Preview = {
         globals: { backgrounds },
       } = context;
       const backgroundMode =
-        backgrounds.value === "#333333" ? EThemeMode.Dark : EThemeMode.Light;
+        backgrounds?.value === "#333333" ? EThemeMode.Dark : EThemeMode.Light;
 
       const { setMode } = useTheme();
 

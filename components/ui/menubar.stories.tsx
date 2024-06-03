@@ -14,7 +14,7 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "@/components/ui/menubar";
+} from "@components/ui/menubar";
 import { Input } from "./input";
 
 export default {
@@ -22,7 +22,7 @@ export default {
   args: {},
 } as Meta<typeof Input>;
 
-export function MenubarDemo() {
+export function Base() {
   return (
     <Menubar>
       <MenubarMenu>

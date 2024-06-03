@@ -7,4 +7,9 @@ export default {
   args: {},
 } as Meta<typeof Navbar>;
 
-export const Base: StoryFn<typeof Navbar> = (args) => <Navbar {...args} />;
+export const Base: StoryFn<typeof Navbar> = (args) => (
+  <div>
+    <p>Resize to see it's responsiveness</p>
+    <Navbar {...args} />
+  </div>
+);

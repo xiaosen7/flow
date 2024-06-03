@@ -1,7 +1,7 @@
 "use client";
-import { IDENTITY_FN } from "@/constants";
-import { cn, mergeClassAndStyleProps } from "@/lib/utils";
-import { IComponentBaseProps } from "@/types";
+import { IDENTITY_FN } from "@constants";
+import { cn, mergeClassAndStyleProps } from "@lib/utils";
+import { IComponentBaseProps } from "@types";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

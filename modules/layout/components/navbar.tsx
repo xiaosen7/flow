@@ -1,16 +1,19 @@
-import { ThemeSwitcher } from "@/modules/theme";
 import { SignedIn, UserButton } from "@clerk/nextjs";
+import { mergeClassAndStyleProps } from "@lib/utils";
+import { ThemeSwitcher } from "@modules/theme";
+import { IComponentBaseProps } from "@types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { GlobalSearch } from "./global-search";
 import { MobileNav } from "./mobile-nav";
 
-export interface INavbarProps {}
+export interface INavbarProps extends IComponentBaseProps {}
 
-export const Navbar: React.FC<INavbarProps> = () => {
-  return (
-    <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
+export const Navbar: React.FC<INavbarProps> = (props) => {
+  return mergeClassAndStyleProps(
+    props,
+    <nav className="flex-between background-light900_dark200 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
       <Link href="/" className="flex items-center gap-1">
         <Image
           src={"/assets/images/site-logo.svg"}
@@ -24,7 +27,7 @@ export const Navbar: React.FC<INavbarProps> = () => {
         </p>
       </Link>
 
-      <GlobalSearch className="max-lg:hidden" />
+      <GlobalSearch className="max-lg:hidden max-w-[600px] flex-1" />
 
       <div className="flex-between gap-5">
         <ThemeSwitcher />

@@ -1,13 +1,8 @@
 "use client";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { mergeClassAndStyleProps } from "@/lib/utils";
-import { IComponentBaseProps } from "@/types/component";
 import { SignedOut } from "@clerk/nextjs";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@components/ui";
+import { mergeClassAndStyleProps } from "@lib/utils";
+import { IComponentBaseProps } from "@types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

@@ -1,9 +1,9 @@
 import type { StorybookConfig } from "@storybook/nextjs";
 
+console.log("storybook", process.env.NODE_ENV);
+
 const config: StorybookConfig = {
   stories: [
-    "../stories/**/*.mdx",
-    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../modules/*/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
@@ -18,6 +18,6 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
-  staticDirs: ["../public"],
+  staticDirs: process.env.NODE_ENV === "development" ? ["../public"] : [], // in build mode, it is built into public folder, so we didn't need to specify it.
 };
 export default config;

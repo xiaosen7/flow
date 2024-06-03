@@ -1,6 +1,6 @@
 "use client";
 
-import { EThemeMode } from "@/modules/theme";
+import { EThemeMode } from "@modules/theme";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface IThemeContextValue {
@@ -44,3 +44,4 @@ export function useTheme() {
 }
 
 export default ThemeProvider;
+export { ThemeProvider };

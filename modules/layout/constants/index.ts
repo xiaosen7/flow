@@ -1,4 +1,4 @@
-import { ISidebarLink } from "@/modules/layout";
+import { ISidebarLink } from "@modules/layout";
 
 export const NAV_LINKS: ISidebarLink[] = [
   {

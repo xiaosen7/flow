@@ -3,7 +3,7 @@ import {
   DEVICE_WIDTH_MD,
   DEVICE_WIDTH_SM,
   IS_CLIENT_SIDE,
-} from "@/constants";
+} from "@constants";
 import { useSize } from "ahooks";
 
 export function useMediaQuery() {
