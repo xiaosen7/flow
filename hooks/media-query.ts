@@ -8,7 +8,8 @@ import { useSize } from "ahooks";
 
 export function useMediaQuery() {
   const { width = 1920 } = IS_CLIENT_SIDE
-    ? useSize(document.body) ?? {}
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      useSize(document.body) ?? {}
     : { width: 1920 };
 
   const isLessThanSM = width < DEVICE_WIDTH_SM;

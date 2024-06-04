@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { NoResults, SearchInput } from "@components/shared";
 import { Button } from "@components/ui";
-import { HomeFilter } from "@modules/flow-home";
+import { QuestionFilter } from "@modules/question";
 
 const result = {
   questions: [],
@@ -27,7 +27,7 @@ export default async function Home() {
           className="flex-1"
         />
 
-        <HomeFilter />
+        <QuestionFilter />
 
         <div className="mt-10 flex w-full flex-col gap-6">
           {result.questions.length > 0 ? (

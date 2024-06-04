@@ -1,13 +1,13 @@
 import { Filter } from "@components/shared";
 import { Button } from "@components/ui";
 import { mergeClassAndStyleProps } from "@lib/utils";
-import { HOME_PAGE_FILTERS } from "@modules/flow-home/constants";
+import { HOME_PAGE_FILTERS } from "@modules/question/constants";
 import { IComponentBaseProps } from "@types";
 import React from "react";
 
 export interface IResponsiveFilterProps extends IComponentBaseProps {}
 
-export const HomeFilter: React.FC<IResponsiveFilterProps> = (props) => {
+export const QuestionFilter: React.FC<IResponsiveFilterProps> = (props) => {
   return mergeClassAndStyleProps(
     props,
     <>
@@ -16,7 +16,7 @@ export const HomeFilter: React.FC<IResponsiveFilterProps> = (props) => {
         className="min-h-[56px] min-w-[170px] md:hidden"
       />
 
-      <div className="mt-10 flex-wrap gap-3 hidden md:flex w-full">
+      <div className="mt-10 hidden w-full flex-wrap gap-3 md:flex">
         {HOME_PAGE_FILTERS.map(({ label, value }) => (
           <Button
             key={value}
