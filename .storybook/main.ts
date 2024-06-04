@@ -2,11 +2,6 @@ import type { StorybookConfig } from "@storybook/nextjs";
 import { DefinePlugin } from "webpack";
 import { merge } from "webpack-merge";
 
-console.log(
-  "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
-  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-);
-
 const config: StorybookConfig = {
   stories: [
     "../modules/*/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
@@ -18,6 +13,7 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
+    "@storybook/addon-storysource",
   ],
   framework: {
     name: "@storybook/nextjs",
