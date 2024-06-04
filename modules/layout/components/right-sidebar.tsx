@@ -1,7 +1,7 @@
+import { ImageChevronRight } from "@components/asset/icons/chevron-right";
 import { mergeClassAndStyleProps } from "@lib/utils";
 import { Tag } from "@modules/flow-tag";
 import { IComponentBaseProps } from "@types";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -43,8 +43,7 @@ export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
               <p className="body-medium text-dark500_light700">
                 {question.title}
               </p>
-              <Image
-                src="/assets/icons/chevron-right.svg"
+              <ImageChevronRight
                 alt="chevron right"
                 width={20}
                 height={20}

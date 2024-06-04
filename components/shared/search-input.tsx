@@ -1,7 +1,7 @@
+import { ImageSearch } from "@components/asset/icons/search";
 import { Input } from "@components/ui";
 import { mergeClassAndStyleProps } from "@lib/utils";
 import { IComponentBaseProps } from "@types";
-import Image from "next/image";
 import React from "react";
 
 export interface ISearchInputProps extends IComponentBaseProps {
@@ -14,8 +14,7 @@ export const SearchInput: React.FC<ISearchInputProps> = (props) => {
     props,
     <div className="relative">
       <div className="background-light800_darkgradient relative flex min-h-[56px] grow items-center gap-1 rounded-xl px-4">
-        <Image
-          src="/assets/icons/search.svg"
+        <ImageSearch
           alt="Search"
           width={24}
           height={24}

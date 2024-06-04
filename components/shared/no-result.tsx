@@ -1,7 +1,8 @@
 import { mergeClassAndStyleProps } from "@/lib/utils";
 import { IComponentBaseProps } from "@/types";
+import { ImageDarkIllustration } from "@components/asset/images/dark-illustration";
+import { ImageLightIllustration } from "@components/asset/images/light-illustration";
 import { Button } from "@components/ui";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -20,15 +21,13 @@ export const NoResults: React.FC<INoResultsProps> = (props) => {
   return mergeClassAndStyleProps(
     props,
     <div className="mt-10 flex w-full flex-col items-center justify-center">
-      <Image
-        src="/assets/images/light-illustration.png"
+      <ImageLightIllustration
         alt="No result illustration"
         width={270}
         height={200}
         className="block object-contain dark:hidden"
       />
-      <Image
-        src="/assets/images/dark-illustration.png"
+      <ImageDarkIllustration
         alt="No result illustration"
         width={270}
         height={200}
