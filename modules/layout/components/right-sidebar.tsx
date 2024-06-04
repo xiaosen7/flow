@@ -60,7 +60,7 @@ export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
           {popularTags.map((tag) => (
             <Tag
               key={tag._id}
-              id={tag._id}
+              id={String(tag._id)}
               name={tag.name}
               totalQuestions={tag.totalQuestions}
               showCount

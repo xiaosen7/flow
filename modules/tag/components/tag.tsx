@@ -2,11 +2,9 @@ import { Badge } from "@components/ui";
 import { mergeClassAndStyleProps } from "@lib/utils";
 import { IComponentBaseProps } from "@types";
 import Link from "next/link";
+import { ITag } from "../types";
 
-export interface ITagProps extends IComponentBaseProps {
-  id: number;
-  name: string;
-  totalQuestions?: number;
+export interface ITagProps extends IComponentBaseProps, ITag {
   showCount?: boolean;
 }
 export const Tag = (props: ITagProps) => {
@@ -14,7 +12,7 @@ export const Tag = (props: ITagProps) => {
   return mergeClassAndStyleProps(
     props,
     <Link href={`/tags/${id}`} className="flex justify-between gap-2">
-      <Badge className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase">
+      <Badge className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase shadow">
         {name}
       </Badge>
 

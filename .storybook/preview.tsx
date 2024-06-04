@@ -5,6 +5,14 @@ import type { Preview } from "@storybook/react";
 import { useEffect } from "react";
 import "./preview.css";
 
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+});
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -33,6 +41,9 @@ const preview: Preview = {
     },
     (Story) => {
       // global providers
+      useEffect(() => {
+        document.body.classList.add(inter.variable); // font
+      }, []);
       return (
         <ClerkProvider
           appearance={{
