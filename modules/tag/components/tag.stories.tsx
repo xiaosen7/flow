@@ -6,7 +6,8 @@ export default {
   component: Tag,
   args: {
     name: "tag",
-    id: 1,
+    id: String(1),
+    totalQuestions: 0,
   },
 } as Meta<typeof Tag>;
 
