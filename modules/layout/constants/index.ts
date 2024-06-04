@@ -1,38 +1,45 @@
+import { imageHomeSrc } from "@components/asset/icons/home";
+import { imageQuestionSrc } from "@components/asset/icons/question";
+import { imageStarSrc } from "@components/asset/icons/star";
+import { imageSuitcaseSrc } from "@components/asset/icons/suitcase";
+import { imageTagSrc } from "@components/asset/icons/tag";
+import { imageUserSrc } from "@components/asset/icons/user";
+import { imageUsersSrc } from "@components/asset/icons/users";
 import { ISidebarLink } from "@modules/layout";
 
 export const NAV_LINKS: ISidebarLink[] = [
   {
-    imgURL: "/assets/icons/home.svg",
+    imgURL: imageHomeSrc,
     route: "/",
     label: "Home",
   },
   {
-    imgURL: "/assets/icons/users.svg",
+    imgURL: imageUsersSrc,
     route: "/community",
     label: "Community",
   },
   {
-    imgURL: "/assets/icons/star.svg",
+    imgURL: imageStarSrc,
     route: "/collection",
     label: "Collections",
   },
   {
-    imgURL: "/assets/icons/suitcase.svg",
+    imgURL: imageSuitcaseSrc,
     route: "/jobs",
     label: "Find Jobs",
   },
   {
-    imgURL: "/assets/icons/tag.svg",
+    imgURL: imageTagSrc,
     route: "/tags",
     label: "Tags",
   },
   {
-    imgURL: "/assets/icons/user.svg",
+    imgURL: imageUserSrc,
     route: "/profile",
     label: "Profile",
   },
   {
-    imgURL: "/assets/icons/question.svg",
+    imgURL: imageQuestionSrc,
     route: "/ask-question",
     label: "Ask a question",
   },

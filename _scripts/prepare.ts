@@ -1,1 +1,1 @@
-import "./gen-assets-components";
+import "./gen-asset-components";
