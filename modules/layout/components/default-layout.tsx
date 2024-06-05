@@ -1,6 +1,7 @@
 import { mergeClassAndStyleProps } from "@lib/utils";
 import { IComponentBaseProps } from "@types";
 import React from "react";
+
 import { LeftSidebar } from "./left-sidebar";
 import { Navbar } from "./navbar";
 import { RightSidebar } from "./right-sidebar";
@@ -9,7 +10,7 @@ export interface IDefaultLayoutProps extends IComponentBaseProps {
   children?: React.ReactNode;
 }
 
-export const DefaultLayout: React.FC<IDefaultLayoutProps> = (props) => {
+export const DefaultLayout: React.FC<IDefaultLayoutProps> = async (props) => {
   return mergeClassAndStyleProps(
     props,
     <div className="background-light850_dark100 relative">
