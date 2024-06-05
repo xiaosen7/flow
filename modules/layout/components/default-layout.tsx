@@ -18,13 +18,11 @@ export const DefaultLayout: React.FC<IDefaultLayoutProps> = (props) => {
       <Navbar className="absolute left-0 top-0 z-50" />
       <div className="flex size-full">
         <LeftSidebar className="pt-36 max-sm:hidden" />
-        <div className="">
-          <section className="mx-auto flex size-full flex-1 flex-col overflow-auto break-all px-6 pb-6 pt-36 max-md:pb-14 sm:px-14">
-            {props.children}
+        <section className="mx-auto flex size-full flex-1 flex-col overflow-auto break-all px-6 pb-6 pt-36 max-md:pb-14 sm:px-14">
+          {props.children}
 
-            <GitLog className="mt-6" />
-          </section>
-        </div>
+          <GitLog className="mt-6" />
+        </section>
         <RightSidebar className="pt-36 max-xl:hidden" />
       </div>
       {/* Toaster */}

@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "dev:storybook": "storybook dev -p 6006",
-    "build:storybook": "git log -1 --pretty=format:\"%ad %h %s\" >> public/git.log && storybook build -o ./public/storybook-static",
+    "build:storybook": "git log -1 --pretty=format:\"%cd %h %s\" >> public/git.log && storybook build -o ./public/storybook-static",
     "test": "vitest",
     "prepare": "husky & tsx _scripts/prepare"
   },
