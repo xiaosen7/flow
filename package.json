@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "dev:storybook": "storybook dev -p 6006",
-    "build:storybook": "storybook build -o ./public/storybook-static",
+    "build:storybook": "git log -1 --pretty=format:\"%ad %h %s\" >> public/git.log && storybook build -o ./public/storybook-static",
     "test": "vitest",
     "prepare": "husky & tsx _scripts/prepare"
   },
@@ -40,7 +40,6 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.5",
-    "simple-git": "^3.24.0",
     "tailwind-merge": "^2.3.0",
     "ts-dedent": "^2.2.0",
     "tsx": "^4.11.2",
