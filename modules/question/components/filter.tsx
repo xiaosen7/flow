@@ -1,7 +1,7 @@
 import { Filter } from "@components/shared";
 import { Button } from "@components/ui";
 import { mergeClassAndStyleProps } from "@lib/utils";
-import { HOME_PAGE_FILTERS } from "@modules/question/constants";
+import { QUESTION_FILTER_OPTIONS } from "@modules/question/constants";
 import { IComponentBaseProps } from "@types";
 import React from "react";
 
@@ -12,12 +12,12 @@ export const QuestionFilter: React.FC<IResponsiveFilterProps> = (props) => {
     props,
     <>
       <Filter
-        options={HOME_PAGE_FILTERS}
+        options={QUESTION_FILTER_OPTIONS}
         className="min-h-[56px] min-w-[170px] md:hidden"
       />
 
       <div className="mt-10 hidden w-full flex-wrap gap-3 md:flex">
-        {HOME_PAGE_FILTERS.map(({ label, value }) => (
+        {QUESTION_FILTER_OPTIONS.map(({ label, value }) => (
           <Button
             key={value}
             className={`body-medium rounded-lg px-6 py-3 capitalize shadow-none ${

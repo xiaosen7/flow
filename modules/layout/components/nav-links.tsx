@@ -21,7 +21,8 @@ export const NavLinks: React.FC<INavLinksProps> = (props) => {
     props,
     <section className="flex flex-col gap-6 overflow-auto">
       {NAV_LINKS.map(({ imgURL, label, route }) => {
-        const isActive = pathname?.includes(route);
+        const isActive =
+          route === "/" ? pathname === "/" : pathname.includes(route);
         return (
           <React.Fragment key={route}>
             {renderItem(

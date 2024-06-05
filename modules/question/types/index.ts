@@ -1,5 +1,7 @@
 import { IAuthor } from "@modules/author";
 import { ITag } from "@modules/tag";
+import { z } from "zod";
+import { QUESTION_SCHEMA } from "../constants";
 
 export interface IQuestion {
   id: string;
@@ -15,3 +17,7 @@ export interface IQuestionMetrics {
   answers: number;
   views: number;
 }
+
+export type IQuestionSchema = typeof QUESTION_SCHEMA;
+
+export type IQuestionPostValue = z.infer<IQuestionSchema>;

@@ -29,7 +29,7 @@ export interface IRightSidebarProps extends IComponentBaseProps {}
 export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
   return mergeClassAndStyleProps(
     props,
-    <section className="background-light900_dark200 light-border custom-scrollbar sticky right-0 top-0 flex h-screen w-[350px] flex-col overflow-y-auto border-l p-6 shadow-light-300 dark:shadow-none">
+    <section className="background-light900_dark200 light-border custom-scrollbar sticky right-0 top-0 flex h-full w-[350px] flex-col overflow-y-auto border-l p-6 shadow-light-300 dark:shadow-none">
       <div>
         <h3 className="h3-bold text-dark200_light900">Top Questions</h3>
 

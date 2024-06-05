@@ -14,7 +14,7 @@ export const LeftSidebar: React.FC<ILeftSidebarProps> = (props) => {
 
   return mergeClassAndStyleProps(
     props,
-    <section className="w-fit background-light900_dark200 light-border sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 shadow-light-300 dark:shadow-none lg:w-[266px] custom-scrollbar">
+    <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex h-full w-fit flex-col justify-between overflow-y-auto border-r p-6 shadow-light-300 dark:shadow-none lg:w-[266px]">
       <NavLinks simple={mediaQuery.isLessThanLG} />
       <NavButtons simple={mediaQuery.isLessThanLG} />
     </section>

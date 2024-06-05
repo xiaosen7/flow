@@ -13,11 +13,13 @@ export const DefaultLayout: React.FC<IDefaultLayoutProps> = (props) => {
   return mergeClassAndStyleProps(
     props,
     <div className="background-light850_dark100 relative">
-      <Navbar className="fixed z-50" />
-      <div className="flex">
-        <LeftSidebar className="max-sm:hidden pt-36" />
-        <div className="flex-1 pt-36">{props.children}</div>
-        <RightSidebar className="max-xl:hidden pt-36" />
+      <Navbar className="absolute left-0 top-0 z-50" />
+      <div className="flex size-full">
+        <LeftSidebar className="pt-36 max-sm:hidden" />
+        <div className="h-full flex-1 overflow-auto break-all px-6 pb-6 pt-36">
+          {props.children}
+        </div>
+        <RightSidebar className="pt-36 max-xl:hidden" />
       </div>
       {/* Toaster */}
     </div>

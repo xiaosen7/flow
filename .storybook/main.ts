@@ -40,6 +40,9 @@ const config: StorybookConfig = {
           "process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL": JSON.stringify(
             process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL
           ),
+          "process.env.NEXT_PUBLIC_TINY_MCE_API_KEY": JSON.stringify(
+            process.env.NEXT_PUBLIC_TINY_MCE_API_KEY
+          ),
         }),
       ],
     });

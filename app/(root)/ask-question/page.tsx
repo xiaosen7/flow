@@ -1,7 +1,8 @@
+import { QuestionForm } from "@modules/question";
 import React from "react";
 
 const Page: React.FC = () => {
-  return <>ask question</>;
+  return <QuestionForm />;
 };
 
 export default Page;
