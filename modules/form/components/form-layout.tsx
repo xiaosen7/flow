@@ -1,5 +1,3 @@
-import { mergeClassAndStyleProps } from "@/lib/utils";
-import { IComponentBaseProps, ISafeAny } from "@/types";
 import {
   Button,
   Form,
@@ -9,8 +7,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  IComponentBaseProps,
+  ISafeAny,
   Input,
-} from "@components/ui";
+  mergeClassAndStyleProps,
+} from "@/shared";
 import { useRequest } from "ahooks";
 import { capitalCase } from "change-case";
 import {

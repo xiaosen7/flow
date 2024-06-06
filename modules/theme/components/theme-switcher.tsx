@@ -6,14 +6,14 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "@components/ui";
+} from "@/shared";
 import {
   EThemeMode,
   EUserThemeMode,
   USER_THEMES,
   USER_THEME_MAP,
   useTheme,
-} from "@modules/theme";
+} from "@/theme";
 import clsx from "clsx";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";

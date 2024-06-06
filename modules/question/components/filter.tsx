@@ -1,8 +1,10 @@
-import { Filter } from "@components/shared";
-import { Button } from "@components/ui";
-import { mergeClassAndStyleProps } from "@lib/utils";
-import { QUESTION_FILTER_OPTIONS } from "@modules/question/constants";
-import { IComponentBaseProps } from "@types";
+import { QUESTION_FILTER_OPTIONS } from "@/question/constants";
+import {
+  Button,
+  Filter,
+  IComponentBaseProps,
+  mergeClassAndStyleProps,
+} from "@/shared";
 import React from "react";
 
 export interface IResponsiveFilterProps extends IComponentBaseProps {}

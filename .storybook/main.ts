@@ -3,10 +3,7 @@ import { DefinePlugin } from "webpack";
 import { merge } from "webpack-merge";
 
 const config: StorybookConfig = {
-  stories: [
-    "../modules/*/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-  ],
+  stories: ["../modules/*/components/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
     "@storybook/addon-onboarding",
     "@storybook/addon-links",

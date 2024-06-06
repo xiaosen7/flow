@@ -1,8 +1,10 @@
 "use client";
 
-import { useMediaQuery } from "@hooks/media-query";
-import { mergeClassAndStyleProps } from "@lib/utils";
-import { IComponentBaseProps } from "@types";
+import {
+  IComponentBaseProps,
+  mergeClassAndStyleProps,
+  useMediaQuery,
+} from "@/shared";
 import React from "react";
 import { NavButtons } from "./nav-buttons";
 import { NavLinks } from "./nav-links";

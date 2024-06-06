@@ -1,11 +1,11 @@
-import { imageHomeSrc } from "@components/asset/icons/home";
-import { imageQuestionSrc } from "@components/asset/icons/question";
-import { imageStarSrc } from "@components/asset/icons/star";
-import { imageSuitcaseSrc } from "@components/asset/icons/suitcase";
-import { imageTagSrc } from "@components/asset/icons/tag";
-import { imageUserSrc } from "@components/asset/icons/user";
-import { imageUsersSrc } from "@components/asset/icons/users";
-import { ISidebarLink } from "@modules/layout";
+import { ISidebarLink } from "@/layout";
+import { imageHomeSrc } from "@/shared/assets/icons/home";
+import { imageQuestionSrc } from "@/shared/assets/icons/question";
+import { imageStarSrc } from "@/shared/assets/icons/star";
+import { imageSuitcaseSrc } from "@/shared/assets/icons/suitcase";
+import { imageTagSrc } from "@/shared/assets/icons/tag";
+import { imageUserSrc } from "@/shared/assets/icons/user";
+import { imageUsersSrc } from "@/shared/assets/icons/users";
 
 export const NAV_LINKS: ISidebarLink[] = [
   {

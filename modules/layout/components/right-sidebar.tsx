@@ -1,7 +1,6 @@
-import { ImageChevronRight } from "@components/asset/icons/chevron-right";
-import { mergeClassAndStyleProps } from "@lib/utils";
-import { Tag } from "@modules/tag";
-import { IComponentBaseProps } from "@types";
+import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { ImageChevronRight } from "@/shared/assets/icons/chevron-right";
+import { Tag } from "@/tag";
 import Link from "next/link";
 import React from "react";
 

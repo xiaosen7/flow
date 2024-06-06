@@ -1,7 +1,10 @@
-import { Button } from "@components/ui";
-import { IDENTITY_FN } from "@constants";
-import { cn, mergeClassAndStyleProps } from "@lib/utils";
-import { IComponentBaseProps } from "@types";
+import {
+  Button,
+  IComponentBaseProps,
+  IDENTITY_FN,
+  cn,
+  mergeClassAndStyleProps,
+} from "@/shared";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

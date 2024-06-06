@@ -10,7 +10,7 @@ import { dedent } from "ts-dedent";
   const projectRoot = join(__dirname, "..");
   const publicDir = join(projectRoot, "public");
   const publicAssetsDir = join(publicDir, "assets");
-  const outDir = join(projectRoot, "components", "asset");
+  const outDir = join(projectRoot, "modules", "shared", "asset");
 
   const assetPaths = await fg([join("**/*.{svg,png,jpg}")], {
     cwd: publicAssetsDir,
@@ -54,7 +54,7 @@ import { dedent } from "ts-dedent";
 
       /* eslint-disable jsx-a11y/alt-text */
 
-      import { mergeClassAndStyleProps } from "@lib/utils";
+      import { mergeClassAndStyleProps } from "@/shared";
       import Image, { ImageProps } from "next/image";
       import React from "react";
       

@@ -1,7 +1,6 @@
-import { mergeClassAndStyleProps } from "@/lib/utils";
-import { IComponentBaseProps } from "@/types";
-import { formatDate } from "@modules/formatter";
-import { Tag } from "@modules/tag";
+import { formatDate } from "@/formatter";
+import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { Tag } from "@/tag";
 import Link from "next/link";
 import React from "react";
 import { IQuestion } from "../types";

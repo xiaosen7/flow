@@ -1,7 +1,12 @@
-import { mergeClassAndStyleProps } from "@/lib/utils";
-import { IComponentBaseProps, IControllableComponentProps } from "@/types";
-import { ImageClose } from "@components/asset/icons/close";
-import { Badge, Input, InputProps } from "@components/ui";
+import {
+  Badge,
+  IComponentBaseProps,
+  IControllableComponentProps,
+  Input,
+  InputProps,
+  mergeClassAndStyleProps,
+} from "@/shared";
+import { ImageClose } from "@/shared/assets/icons/close";
 import { useControllableValue } from "ahooks";
 import React from "react";
 

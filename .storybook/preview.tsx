@@ -1,8 +1,8 @@
-import "@app/globals.css";
+import { EThemeMode, ThemeProvider, useTheme } from "@/theme";
 import { ClerkProvider } from "@clerk/nextjs";
-import { EThemeMode, ThemeProvider, useTheme } from "@modules/theme";
 import type { Preview } from "@storybook/react";
 import { useEffect } from "react";
+import "../app/globals.css";
 import "./preview.css";
 
 import { Inter } from "next/font/google";

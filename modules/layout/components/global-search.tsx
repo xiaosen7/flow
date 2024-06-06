@@ -1,6 +1,8 @@
-import { SearchInput } from "@components/shared";
-import { mergeClassAndStyleProps } from "@lib/utils";
-import { IComponentBaseProps } from "@types";
+import {
+  IComponentBaseProps,
+  SearchInput,
+  mergeClassAndStyleProps,
+} from "@/shared";
 import React from "react";
 
 export interface IGlobalSearchProps extends IComponentBaseProps {}

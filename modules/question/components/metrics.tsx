@@ -1,9 +1,7 @@
-import { mergeClassAndStyleProps } from "@/lib/utils";
-import { IComponentBaseProps } from "@/types";
-import { imageEyeSrc } from "@components/asset/icons/eye";
-import { imageLikeSrc } from "@components/asset/icons/like";
-import { imageMessageSrc } from "@components/asset/icons/message";
-import { Metric } from "@components/shared";
+import { IComponentBaseProps, Metric, mergeClassAndStyleProps } from "@/shared";
+import { imageEyeSrc } from "@/shared/assets/icons/eye";
+import { imageLikeSrc } from "@/shared/assets/icons/like";
+import { imageMessageSrc } from "@/shared/assets/icons/message";
 import React from "react";
 import { IQuestionMetrics } from "../types";
 

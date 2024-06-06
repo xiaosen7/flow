@@ -1,5 +1,4 @@
-import { mergeClassAndStyleProps } from "@/lib/utils";
-import { IComponentBaseProps } from "@/types";
+import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
 import Link from "next/link";
 import React from "react";
 

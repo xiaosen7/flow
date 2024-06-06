@@ -1,8 +1,11 @@
 "use client";
 
-import { mergeClassAndStyleProps } from "@/lib/utils";
-import { IComponentBaseProps, IControllableComponentProps } from "@/types";
-import { EThemeMode, useTheme } from "@modules/theme";
+import {
+  IComponentBaseProps,
+  IControllableComponentProps,
+  mergeClassAndStyleProps,
+} from "@/shared";
+import { EThemeMode, useTheme } from "@/theme";
 import { Editor } from "@tinymce/tinymce-react";
 import React, { useRef } from "react";
 

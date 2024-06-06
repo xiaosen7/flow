@@ -1,4 +1,4 @@
-import { QuestionForm } from "@modules/question";
+import { QuestionForm } from "@/question";
 import React from "react";
 
 const Page: React.FC = () => {

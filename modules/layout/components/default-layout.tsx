@@ -1,8 +1,7 @@
-import { mergeClassAndStyleProps } from "@lib/utils";
-import { IComponentBaseProps } from "@types";
+import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
 import React from "react";
 
-import { GitLog } from "@components/shared";
+import { GitLog } from "@/shared";
 import { LeftSidebar } from "./left-sidebar";
 import { Navbar } from "./navbar";
 import { RightSidebar } from "./right-sidebar";

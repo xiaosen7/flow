@@ -1,9 +1,7 @@
 "use client";
-import { mergeClassAndStyleProps } from "@/lib/utils";
-import { IComponentBaseProps } from "@/types";
-import { Input } from "@components/ui";
-import { FormLayout, IFormItems, useForm } from "@modules/form";
-import { TagsEditor } from "@modules/tag";
+import { FormLayout, IFormItems, useForm } from "@/form";
+import { IComponentBaseProps, Input, mergeClassAndStyleProps } from "@/shared";
+import { TagsEditor } from "@/tag";
 import React from "react";
 import { QUESTION_SCHEMA } from "../constants";
 import { IQuestionPostValue } from "../types";

@@ -1,4 +1,4 @@
-import { DefaultLayout } from "@modules/layout";
+import { DefaultLayout } from "@/layout";
 import React from "react";
 
 interface ILayoutProps extends React.PropsWithChildren {}

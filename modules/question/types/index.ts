@@ -1,5 +1,5 @@
-import { IAuthor } from "@modules/author";
-import { ITag } from "@modules/tag";
+import { IAuthor } from "@/author";
+import { ITag } from "@/tag";
 import { z } from "zod";
 import { QUESTION_SCHEMA } from "../constants";
 

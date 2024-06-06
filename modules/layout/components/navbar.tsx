@@ -1,8 +1,7 @@
+import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { ImageSiteLogo } from "@/shared/assets/images/site-logo";
+import { ThemeSwitcher } from "@/theme";
 import { SignedIn, UserButton } from "@clerk/nextjs";
-import { ImageSiteLogo } from "@components/asset/images/site-logo";
-import { mergeClassAndStyleProps } from "@lib/utils";
-import { ThemeSwitcher } from "@modules/theme";
-import { IComponentBaseProps } from "@types";
 import Link from "next/link";
 import React from "react";
 import { GlobalSearch } from "./global-search";

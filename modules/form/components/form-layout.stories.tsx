@@ -1,4 +1,4 @@
-import { Input } from "@components/ui";
+import { Input } from "@/shared";
 import { Meta, StoryFn } from "@storybook/react";
 import { z } from "zod";
 import { useForm } from "../hooks";

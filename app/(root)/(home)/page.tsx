@@ -1,8 +1,7 @@
 import Link from "next/link";
 
-import { NoResults, SearchInput } from "@components/shared";
-import { Button } from "@components/ui";
-import { IQuestion, QuestionCard, QuestionFilter } from "@modules/question";
+import { IQuestion, QuestionCard, QuestionFilter } from "@/question";
+import { Button, NoResults, SearchInput } from "@/shared";
 import { random, range } from "lodash-es";
 
 const result = {

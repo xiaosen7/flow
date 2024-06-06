@@ -1,6 +1,4 @@
-import { Badge } from "@components/ui";
-import { mergeClassAndStyleProps } from "@lib/utils";
-import { IComponentBaseProps } from "@types";
+import { Badge, IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
 import Link from "next/link";
 import { ITag } from "../types";
 

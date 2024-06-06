@@ -1,5 +1,5 @@
+import { ISafeAny } from "@/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ISafeAny } from "@types";
 import { omit } from "lodash-es";
 import {
   FieldValues,

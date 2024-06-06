@@ -1,4 +1,4 @@
-import { IFilterOption } from "@components/shared";
+import { IFilterOption } from "@/shared";
 import * as z from "zod";
 
 export const QUESTION_FILTER_OPTIONS: IFilterOption[] = [
