@@ -1,26 +1,20 @@
 import { formatDate } from "@/formatter";
-import { prisma } from "@/prisma";
 import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
-import { CTag } from "@/tag";
+import { CTag, ITag } from "@/tag";
+import { IUser } from "@/user";
 import Link from "next/link";
 import React from "react";
+import { IQuestion } from "../types";
 import { UIQuestionAuthor, UIQuestionMetrics } from "../ui";
 
 export interface IQuestionCardProps extends IComponentBaseProps {
-  id: string;
+  question: IQuestion;
+  tags: ITag[];
+  creator: IUser;
 }
 
 export const CQuestionCard: React.FC<IQuestionCardProps> = async (props) => {
-  const { id } = props;
-  const question = await prisma.question.findUniqueOrThrow({
-    where: {
-      id,
-    },
-    include: {
-      tags: true,
-      author: true,
-    },
-  });
+  const { question, tags, creator } = props;
 
   return mergeClassAndStyleProps(
     props,
@@ -36,14 +30,14 @@ export const CQuestionCard: React.FC<IQuestionCardProps> = async (props) => {
       </Link>
 
       <div className="mt-3.5 flex flex-wrap gap-2">
-        {question.tags?.map((tag) => <CTag key={tag.tagId} id={tag.tagId} />)}
+        {tags?.map((tag) => <CTag key={tag.id} tag={tag} />)}
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap items-center gap-3 ">
-        <Link href={`/profile/${id}`}>
+        <Link href={`/profile/${creator.id}`}>
           <UIQuestionAuthor
-            username={question.author.username}
-            imageUrl={question.author.imageUrl}
+            username={creator.username}
+            imageUrl={creator.imageUrl}
             extra={
               <span className="small-regular line-clamp-1 max-sm:hidden">
                 • asked {formatDate(question.createdAt)}

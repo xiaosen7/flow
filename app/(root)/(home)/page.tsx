@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { UIQuestionFilter } from "@/question";
-import { Button, NoResults, SearchInput } from "@/shared";
+import { CQuestionCards, UIQuestionFilter } from "@/question";
+import { Button, SearchInput } from "@/shared";
 
 export default async function Home() {
   return (
@@ -24,16 +24,7 @@ export default async function Home() {
 
         <UIQuestionFilter />
 
-        <div className="mt-10 flex w-full flex-col gap-6">
-          <NoResults
-            titleName="questions"
-            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
-          discussion. our query could be the next big thing others learn from. Get
-          involved! 💡"
-            link="/ask-question"
-            linkTitle="Ask a Question"
-          />
-        </div>
+        <CQuestionCards />
       </div>
     </>
   );
