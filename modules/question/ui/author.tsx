@@ -1,19 +1,17 @@
 import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
-import Link from "next/link";
 import React from "react";
 
-export interface IQuestionAuthorProps extends IComponentBaseProps {
-  name: string;
-  avatarUrl: string;
-  id: string;
+export interface IUIQuestionAuthorProps extends IComponentBaseProps {
+  username: string;
+  imageUrl: string;
   extra?: React.ReactNode;
 }
 
-export const QuestionAuthor: React.FC<IQuestionAuthorProps> = (props) => {
-  const { name, avatarUrl, id, extra } = props;
+export const UIQuestionAuthor: React.FC<IUIQuestionAuthorProps> = (props) => {
+  const { username: name, imageUrl: avatarUrl, extra } = props;
   return mergeClassAndStyleProps(
     props,
-    <Link href={`/profile/${id}`} className="flex items-center gap-1">
+    <div className="flex items-center gap-1">
       <img
         className="invert-colors rounded-full object-contain"
         src={avatarUrl}
@@ -23,6 +21,6 @@ export const QuestionAuthor: React.FC<IQuestionAuthorProps> = (props) => {
       />
       <span className="body-medium text-dark400_light700">{name}</span>
       {extra}
-    </Link>
+    </div>
   );
 };

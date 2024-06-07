@@ -21,7 +21,7 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 
-type _IFormItem<
+type _IUIFormItem<
   TValues extends FieldValues,
   TName extends Path<TValues> = Path<TValues>,
 > =
@@ -37,20 +37,24 @@ type _IFormItem<
       }
     : never;
 
-export type IFormItem<TValues extends FieldValues> = _IFormItem<TValues>;
+export type IUIFormItem<TValues extends FieldValues> = _IUIFormItem<TValues>;
 
-export type IFormItems<TValues extends FieldValues> = IFormItem<TValues>[];
+export type IUIFormItems<TValues extends FieldValues> = IUIFormItem<TValues>[];
 
-export interface IFormLayoutProps<TValues extends FieldValues>
+export type IUIFormLayoutPropsOnSubmit<TValues extends FieldValues> = (
+  values: TValues
+) => void | Promise<void>;
+
+export interface IUIFormLayoutProps<TValues extends FieldValues>
   extends IComponentBaseProps {
-  items: IFormItem<TValues>[];
+  items: IUIFormItem<TValues>[];
   form: UseFormReturn<TValues, ISafeAny, ISafeAny>;
-  onSubmit: (values: TValues) => void | Promise<void>;
+  onSubmit: IUIFormLayoutPropsOnSubmit<TValues>;
   getSubmitText?: (loading: boolean) => React.ReactNode;
 }
 
-export const FormLayout = <TValues extends FieldValues>(
-  props: IFormLayoutProps<TValues>
+export const UIFormLayout = <TValues extends FieldValues>(
+  props: IUIFormLayoutProps<TValues>
 ) => {
   const { items, form, onSubmit, getSubmitText = getDefaultSubmitText } = props;
   const { run, loading } = useRequest(

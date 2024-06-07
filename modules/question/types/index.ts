@@ -1,22 +1,8 @@
-import { IAuthor } from "@/author";
-import { ITag } from "@/tag";
+import { Question } from "@prisma/client";
 import { z } from "zod";
 import { QUESTION_SCHEMA } from "../constants";
 
-export interface IQuestion {
-  id: string;
-  title: string;
-  metrics: IQuestionMetrics;
-  author: IAuthor;
-  createAt: Date;
-  tags: ITag[];
-}
-
-export interface IQuestionMetrics {
-  votes: number;
-  answers: number;
-  views: number;
-}
+export interface IQuestion extends Question {}
 
 export type IQuestionSchema = typeof QUESTION_SCHEMA;
 

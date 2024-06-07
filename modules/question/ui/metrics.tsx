@@ -3,13 +3,14 @@ import { imageEyeSrc } from "@/shared/assets/icons/eye";
 import { imageLikeSrc } from "@/shared/assets/icons/like";
 import { imageMessageSrc } from "@/shared/assets/icons/message";
 import React from "react";
-import { IQuestionMetrics } from "../types";
 
-export interface IQuestionMetricsProps
-  extends IComponentBaseProps,
-    IQuestionMetrics {}
+export interface IUIQuestionMetricsProps extends IComponentBaseProps {
+  answers: number;
+  views: number;
+  votes: number;
+}
 
-export const QuestionMetrics: React.FC<IQuestionMetricsProps> = (props) => {
+export const UIQuestionMetrics: React.FC<IUIQuestionMetricsProps> = (props) => {
   const { answers, views, votes } = props;
   return mergeClassAndStyleProps(
     props,

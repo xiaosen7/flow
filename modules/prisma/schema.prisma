@@ -7,19 +7,55 @@
 generator client {
   provider = "prisma-client-js"
 }
- 
+
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
   // Uses connection pooling
-  url = env("POSTGRES_PRISMA_URL")
+  url       = env("POSTGRES_PRISMA_URL")
   // Uses direct connection, ⚠️ make sure to keep this to `POSTGRES_URL_NON_POOLING`
   // or you'll have dangling databases from migrations
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
- 
-model users {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
+
+model User {
+  id        String     @id @default(cuid())
+  clerkId   String     @unique
+  fullName  String
+  username  String     @unique
+  email     String     @unique
+  imageUrl  String
+  joinedAt  DateTime   @default(now())
+  questions Question[]
+}
+
+model Tag {
+  id          String            @id @default(cuid()) // Primary key
+  name        String            @unique
+  description String
+  createdOn   DateTime          @default(now())
+  questions   TagsOnQuestions[]
+}
+
+model Question {
+  id        String            @id @default(cuid()) // Primary key
+  title     String
+  content   String
+  tags      TagsOnQuestions[]
+  views     Int
+  upvotes   Int
+  downvotes Int
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
   createdAt DateTime @default(now())
+}
+
+model TagsOnQuestions {
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
+  tag        Tag      @relation(fields: [tagId], references: [id])
+  tagId      String
+
+  @@id([questionId, tagId])
 }

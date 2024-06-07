@@ -9,13 +9,15 @@ import { EThemeMode, useTheme } from "@/theme";
 import { Editor } from "@tinymce/tinymce-react";
 import React, { useRef } from "react";
 
-export interface IExplanationEditorProps
+export interface IUIExplanationEditorProps
   extends IComponentBaseProps,
     IControllableComponentProps<string> {
   onBlur: () => void;
 }
 
-export const ExplanationEditor: React.FC<IExplanationEditorProps> = (props) => {
+export const UIExplanationEditor: React.FC<IUIExplanationEditorProps> = (
+  props
+) => {
   const ref = useRef<Editor>(null);
   const {
     defaultValue: initialValue,

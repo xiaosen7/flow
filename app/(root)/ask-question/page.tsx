@@ -1,8 +1,8 @@
-import { QuestionForm } from "@/question";
+import { CQuestionForm } from "@/question";
 import React from "react";
 
 const Page: React.FC = () => {
-  return <QuestionForm />;
+  return <CQuestionForm />;
 };
 
 export default Page;

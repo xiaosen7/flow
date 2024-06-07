@@ -7,9 +7,9 @@ import {
 } from "@/shared";
 import React from "react";
 
-export interface IResponsiveFilterProps extends IComponentBaseProps {}
+export interface IUIQuestionFilterProps extends IComponentBaseProps {}
 
-export const QuestionFilter: React.FC<IResponsiveFilterProps> = (props) => {
+export const UIQuestionFilter: React.FC<IUIQuestionFilterProps> = (props) => {
   return mergeClassAndStyleProps(
     props,
     <>

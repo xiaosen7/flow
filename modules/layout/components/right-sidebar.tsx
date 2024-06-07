@@ -1,6 +1,6 @@
 import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
 import { ImageChevronRight } from "@/shared/assets/icons/chevron-right";
-import { Tag } from "@/tag";
+import { UITag } from "@/tag";
 import Link from "next/link";
 import React from "react";
 
@@ -57,9 +57,8 @@ export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
         <div className="mt-7 flex flex-col gap-4">
           {popularTags.map((tag) => (
-            <Tag
+            <UITag
               key={tag._id}
-              id={String(tag._id)}
               name={tag.name}
               totalQuestions={tag.totalQuestions}
               showCount

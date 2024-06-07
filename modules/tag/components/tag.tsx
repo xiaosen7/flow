@@ -1,24 +1,29 @@
-import { Badge, IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { prisma } from "@/prisma";
+import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
 import Link from "next/link";
-import { ITag } from "../types";
+import { UITag } from "../ui";
 
-export interface ITagProps extends IComponentBaseProps, ITag {
+export interface ICTagProps extends IComponentBaseProps {
+  id: string;
   showCount?: boolean;
 }
-export const Tag = (props: ITagProps) => {
-  const { id, name, totalQuestions, showCount } = props;
+export const CTag = async (props: ICTagProps) => {
+  const { id, showCount } = props;
+  const tag = await prisma.tag.findUniqueOrThrow({
+    where: { id },
+    include: {
+      questions: true,
+    },
+  });
+
   return mergeClassAndStyleProps(
     props,
-    <Link href={`/tags/${id}`} className="flex justify-between gap-2">
-      <Badge className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase shadow">
-        {name}
-      </Badge>
-
-      {showCount && (
-        <p className="small-medium text-dark500_light700">{totalQuestions}</p>
-      )}
+    <Link href={`/tag/${id}`}>
+      <UITag
+        name={tag.name}
+        totalQuestions={tag.questions.length}
+        showCount={showCount}
+      />
     </Link>
   );
 };
-
-export default Tag;

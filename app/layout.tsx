@@ -1,3 +1,4 @@
+import { createUserIfNeeded } from "@/shared";
 import { ThemeProvider } from "@/theme";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
@@ -25,11 +26,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  await createUserIfNeeded();
   return (
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>

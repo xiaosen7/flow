@@ -2,7 +2,7 @@ import { Input } from "@/shared";
 import { Meta, StoryFn } from "@storybook/react";
 import { z } from "zod";
 import { useForm } from "../hooks";
-import { FormLayout, IFormItem } from "./form-layout";
+import { IUIFormItem, UIFormLayout } from "./form-layout";
 
 const schema = z.object({
   username: z.string().min(2, {
@@ -11,7 +11,7 @@ const schema = z.object({
   age: z.string().min(1).max(2),
 });
 
-const items: IFormItem<z.infer<typeof schema>>[] = [
+const items: IUIFormItem<z.infer<typeof schema>>[] = [
   {
     name: "username",
     label: "username",
@@ -28,10 +28,10 @@ const items: IFormItem<z.infer<typeof schema>>[] = [
 ];
 
 export default {
-  component: FormLayout,
-} as Meta<typeof FormLayout>;
+  component: UIFormLayout,
+} as Meta<typeof UIFormLayout>;
 
-export const Base: StoryFn<typeof FormLayout> = (args) => {
+export const Base: StoryFn<typeof UIFormLayout> = (args) => {
   const form = useForm({
     schema,
     defaultValues: {
@@ -41,7 +41,7 @@ export const Base: StoryFn<typeof FormLayout> = (args) => {
   });
 
   return (
-    <FormLayout<z.infer<typeof schema>>
+    <UIFormLayout<z.infer<typeof schema>>
       {...args}
       onSubmit={console.log}
       form={form}
@@ -50,7 +50,7 @@ export const Base: StoryFn<typeof FormLayout> = (args) => {
   );
 };
 
-export const Submitting: StoryFn<typeof FormLayout> = (args) => {
+export const Submitting: StoryFn<typeof UIFormLayout> = (args) => {
   const form = useForm({
     schema,
     defaultValues: {
@@ -64,7 +64,7 @@ export const Submitting: StoryFn<typeof FormLayout> = (args) => {
   };
 
   return (
-    <FormLayout<z.infer<typeof schema>>
+    <UIFormLayout<z.infer<typeof schema>>
       {...args}
       onSubmit={onSubmit}
       form={form}

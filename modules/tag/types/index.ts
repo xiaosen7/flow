@@ -1,5 +1,5 @@
-export interface ITag {
-  id: string;
-  name: string;
-  totalQuestions: number;
+import { Tag } from "@prisma/client";
+
+export interface ITag extends Tag {
 }
+
