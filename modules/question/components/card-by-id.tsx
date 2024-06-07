@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma";
-import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, mp } from "@/shared";
 import React from "react";
 import { CQuestionCard } from "./card";
 
@@ -21,7 +21,7 @@ export const CQuestionCardById: React.FC<ICQuestionCardByIdProps> = async (
     },
   });
 
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <CQuestionCard
       question={question}

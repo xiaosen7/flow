@@ -1,4 +1,4 @@
-import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, mp } from "@/shared";
 import React from "react";
 
 import { GitLog } from "@/shared";
@@ -11,7 +11,7 @@ export interface IDefaultLayoutProps extends IComponentBaseProps {
 }
 
 export const DefaultLayout: React.FC<IDefaultLayoutProps> = (props) => {
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="background-light850_dark100 relative">
       <Navbar className="absolute left-0 top-0 z-50" />

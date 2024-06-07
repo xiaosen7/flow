@@ -1,9 +1,5 @@
 import { prisma } from "@/prisma";
-import {
-  IComponentBaseProps,
-  NoResults,
-  mergeClassAndStyleProps,
-} from "@/shared";
+import { IComponentBaseProps, NoResults, mp } from "@/shared";
 import React from "react";
 import { CQuestionCard } from "./card";
 
@@ -22,7 +18,7 @@ export const CQuestionCards: React.FC<ICQuestionCardsProps> = async (props) => {
     },
   });
 
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="mt-10 flex w-full flex-col gap-6">
       {questions.length > 0 ? (

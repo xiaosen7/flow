@@ -1,10 +1,4 @@
-import {
-  Button,
-  IComponentBaseProps,
-  IDENTITY_FN,
-  cn,
-  mergeClassAndStyleProps,
-} from "@/shared";
+import { Button, IComponentBaseProps, IDENTITY_FN, cn, mp } from "@/shared";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,7 +10,7 @@ export interface INavButtonsProps extends IComponentBaseProps {
 
 export const NavButtons: React.FC<INavButtonsProps> = (props) => {
   const { renderItem = IDENTITY_FN, simple } = props;
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="flex flex-col gap-3">
       {renderItem(

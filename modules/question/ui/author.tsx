@@ -1,4 +1,4 @@
-import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, mp } from "@/shared";
 import React from "react";
 
 export interface IUIQuestionAuthorProps extends IComponentBaseProps {
@@ -9,7 +9,7 @@ export interface IUIQuestionAuthorProps extends IComponentBaseProps {
 
 export const UIQuestionAuthor: React.FC<IUIQuestionAuthorProps> = (props) => {
   const { username: name, imageUrl: avatarUrl, extra } = props;
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="flex items-center gap-1">
       <img

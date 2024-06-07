@@ -2,7 +2,7 @@ import { ISafeAny } from "@/shared";
 import React from "react";
 import { cn } from "./clsx";
 
-export function mergeClassAndStyleProps(
+export function mp(
   props: ISafeAny,
   jsx: React.ReactElement
 ) {

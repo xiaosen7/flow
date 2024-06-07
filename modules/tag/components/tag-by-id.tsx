@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma";
-import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, mp } from "@/shared";
 import { CTag } from "./tag";
 
 export interface ICTagByIdProps extends IComponentBaseProps {
@@ -14,5 +14,5 @@ export const CTagById = async (props: ICTagByIdProps) => {
     },
   });
 
-  return mergeClassAndStyleProps(props, <CTag tag={tag} />);
+  return mp(props, <CTag tag={tag} />);
 };

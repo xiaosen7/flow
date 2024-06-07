@@ -1,4 +1,4 @@
-import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, mp } from "@/shared";
 import React from "react";
 import { createQuestion } from "../server-actions";
 import { UIQuestionForm } from "../ui";
@@ -6,8 +6,5 @@ import { UIQuestionForm } from "../ui";
 export interface ICQuestionFormProps extends IComponentBaseProps {}
 
 export const CQuestionForm: React.FC<ICQuestionFormProps> = (props) => {
-  return mergeClassAndStyleProps(
-    props,
-    <UIQuestionForm onSubmit={createQuestion} />
-  );
+  return mp(props, <UIQuestionForm onSubmit={createQuestion} />);
 };

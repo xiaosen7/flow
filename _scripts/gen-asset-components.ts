@@ -54,12 +54,12 @@ import { dedent } from "ts-dedent";
 
       /* eslint-disable jsx-a11y/alt-text */
 
-      import { mergeClassAndStyleProps } from "@/shared";
+      import { mp } from "@/shared";
       import Image, { ImageProps } from "next/image";
       import React from "react";
       
       export const ${componentName}: React.FC<Omit<ImageProps, "src">> = (props) => {
-        return mergeClassAndStyleProps(
+        return mp(
           props, 
           <Image src={"/${url}"} {...props}/>
         );

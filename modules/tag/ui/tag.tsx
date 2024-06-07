@@ -1,4 +1,4 @@
-import { Badge, IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { Badge, IComponentBaseProps, mp } from "@/shared";
 
 export interface IUITagProps extends IComponentBaseProps {
   showCount?: boolean;
@@ -7,7 +7,7 @@ export interface IUITagProps extends IComponentBaseProps {
 }
 export const UITag = (props: IUITagProps) => {
   const { name, showCount, totalQuestions } = props;
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="flex justify-between gap-2">
       <Badge className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase shadow">

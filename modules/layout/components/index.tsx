@@ -1,6 +1,7 @@
 export * from "./default-layout";
 export * from "./global-search";
 export * from "./left-sidebar";
+export * from "./list-page-layout";
 export * from "./mobile-nav";
 export * from "./nav-buttons";
 export * from "./nav-links";

@@ -4,7 +4,7 @@ import {
   IControllableComponentProps,
   Input,
   InputProps,
-  mergeClassAndStyleProps,
+  mp,
 } from "@/shared";
 import { ImageClose } from "@/shared/assets/icons/close";
 import { useControllableValue } from "ahooks";
@@ -47,7 +47,7 @@ export const UITagsEditor: React.FC<IUITagsEditorProps> = (props) => {
     onChange(newValue);
   };
 
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div>
       <Input

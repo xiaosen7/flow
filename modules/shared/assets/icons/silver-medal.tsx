@@ -2,15 +2,12 @@
 
 /* eslint-disable jsx-a11y/alt-text */
 
-import { mergeClassAndStyleProps } from "@/shared";
+import { mp } from "@/shared";
 import Image, { ImageProps } from "next/image";
 import React from "react";
 
 export const ImageSilverMedal: React.FC<Omit<ImageProps, "src">> = (props) => {
-  return mergeClassAndStyleProps(
-    props,
-    <Image src={"/assets/icons/silver-medal.svg"} {...props} />
-  );
+  return mp(props, <Image src={"/assets/icons/silver-medal.svg"} {...props} />);
 };
 
 export const imageSilverMedalSrc = "/assets/icons/silver-medal.svg";

@@ -1,4 +1,4 @@
-import { Button, IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { Button, IComponentBaseProps, mp } from "@/shared";
 import { ImageDarkIllustration } from "@/shared/assets/images/dark-illustration";
 import { ImageLightIllustration } from "@/shared/assets/images/light-illustration";
 import Link from "next/link";
@@ -16,7 +16,7 @@ export interface INoResultsProps extends IComponentBaseProps {
 
 export const NoResults: React.FC<INoResultsProps> = (props) => {
   const { titleName = "Results", description, link, linkTitle } = props;
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="mt-10 flex w-full flex-col items-center justify-center">
       <ImageLightIllustration

@@ -2,15 +2,12 @@
 
 /* eslint-disable jsx-a11y/alt-text */
 
-import { mergeClassAndStyleProps } from "@/shared";
+import { mp } from "@/shared";
 import Image, { ImageProps } from "next/image";
 import React from "react";
 
 export const ImageEye: React.FC<Omit<ImageProps, "src">> = (props) => {
-  return mergeClassAndStyleProps(
-    props,
-    <Image src={"/assets/icons/eye.svg"} {...props} />
-  );
+  return mp(props, <Image src={"/assets/icons/eye.svg"} {...props} />);
 };
 
 export const imageEyeSrc = "/assets/icons/eye.svg";

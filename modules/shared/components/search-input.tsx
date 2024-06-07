@@ -1,4 +1,4 @@
-import { IComponentBaseProps, Input, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, Input, mp } from "@/shared";
 import { ImageSearch } from "@/shared/assets/icons/search";
 import React from "react";
 
@@ -8,7 +8,7 @@ export interface ISearchInputProps extends IComponentBaseProps {
 
 export const SearchInput: React.FC<ISearchInputProps> = (props) => {
   const { placeholder } = props;
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="relative">
       <div className="background-light800_darkgradient relative flex min-h-[56px] grow items-center gap-1 rounded-xl px-4">

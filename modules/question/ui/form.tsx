@@ -5,7 +5,7 @@ import {
   UIFormLayout,
   useForm,
 } from "@/form";
-import { IComponentBaseProps, Input, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, Input, mp } from "@/shared";
 import { UITagsEditor } from "@/tag";
 import React from "react";
 import { QUESTION_SCHEMA } from "../constants";
@@ -53,7 +53,7 @@ export const UIQuestionForm: React.FC<IUIQuestionFormProps> = (props) => {
     },
   });
 
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <UIFormLayout<IQuestionPostValue>
       items={items}

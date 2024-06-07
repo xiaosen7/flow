@@ -1,6 +1,6 @@
 "use client";
 
-import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, mp } from "@/shared";
 import { useRequest } from "ahooks";
 import React from "react";
 
@@ -11,7 +11,7 @@ export const GitLog: React.FC<IGitLogProps> = (props) => {
     fetch("/git.log").then((r) => r.text() as Promise<string>)
   );
 
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="text-light400_light500 text-sm">
       {loading ? "loading..." : data}

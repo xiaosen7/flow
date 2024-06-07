@@ -2,15 +2,18 @@
 
 /* eslint-disable jsx-a11y/alt-text */
 
-import { mergeClassAndStyleProps } from "@/shared";
+import { mp } from "@/shared";
 import Image, { ImageProps } from "next/image";
 import React from "react";
 
-export const ImageCurrencyDollarCircle: React.FC<Omit<ImageProps, "src">> = (props) => {
-  return mergeClassAndStyleProps(
-    props, 
-    <Image src={"/assets/icons/currency-dollar-circle.svg"} {...props}/>
+export const ImageCurrencyDollarCircle: React.FC<Omit<ImageProps, "src">> = (
+  props
+) => {
+  return mp(
+    props,
+    <Image src={"/assets/icons/currency-dollar-circle.svg"} {...props} />
   );
 };
 
-export const imageCurrencyDollarCircleSrc = "/assets/icons/currency-dollar-circle.svg";
+export const imageCurrencyDollarCircleSrc =
+  "/assets/icons/currency-dollar-circle.svg";

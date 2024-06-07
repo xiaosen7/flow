@@ -1,4 +1,4 @@
-import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, mp } from "@/shared";
 import { ImageChevronRight } from "@/shared/assets/icons/chevron-right";
 import { UITag } from "@/tag";
 import Link from "next/link";
@@ -26,7 +26,7 @@ const popularTags = [
 export interface IRightSidebarProps extends IComponentBaseProps {}
 
 export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <section className="background-light900_dark200 light-border custom-scrollbar sticky right-0 top-0 flex h-full w-[350px] flex-col overflow-y-auto border-l p-6 shadow-light-300 dark:shadow-none">
       <div>

@@ -1,4 +1,4 @@
-import { IComponentBaseProps, Metric, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, Metric, mp } from "@/shared";
 import { imageEyeSrc } from "@/shared/assets/icons/eye";
 import { imageLikeSrc } from "@/shared/assets/icons/like";
 import { imageMessageSrc } from "@/shared/assets/icons/message";
@@ -12,7 +12,7 @@ export interface IUIQuestionMetricsProps extends IComponentBaseProps {
 
 export const UIQuestionMetrics: React.FC<IUIQuestionMetricsProps> = (props) => {
   const { answers, views, votes } = props;
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
       <Metric

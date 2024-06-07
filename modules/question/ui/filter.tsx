@@ -1,16 +1,11 @@
 import { QUESTION_FILTER_OPTIONS } from "@/question/constants";
-import {
-  Button,
-  Filter,
-  IComponentBaseProps,
-  mergeClassAndStyleProps,
-} from "@/shared";
+import { Button, Filter, IComponentBaseProps, mp } from "@/shared";
 import React from "react";
 
 export interface IUIQuestionFilterProps extends IComponentBaseProps {}
 
 export const UIQuestionFilter: React.FC<IUIQuestionFilterProps> = (props) => {
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <>
       <Filter

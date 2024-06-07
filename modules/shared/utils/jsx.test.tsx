@@ -1,9 +1,9 @@
-import { mergeClassAndStyleProps } from "./jsx";
+import { mp } from "./jsx";
 
 describe("jsx", () => {
-  test("mergeClassAndStyleProps", () => {
+  test("mp", () => {
     expect(
-      mergeClassAndStyleProps(
+      mp(
         {
           className: "p-4",
           style: {

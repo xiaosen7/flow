@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  mergeClassAndStyleProps,
+  mp,
 } from "@/shared";
 import React from "react";
 
@@ -23,7 +23,7 @@ export interface IFilterOption {
 }
 
 export const Filter: React.FC<IFilterProps> = (props) => {
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div>
       <Select>

@@ -1,5 +1,5 @@
 import { formatDate } from "@/formatter";
-import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, mp } from "@/shared";
 import { CTag, ITag } from "@/tag";
 import { IUser } from "@/user";
 import Link from "next/link";
@@ -16,7 +16,7 @@ export interface IQuestionCardProps extends IComponentBaseProps {
 export const CQuestionCard: React.FC<IQuestionCardProps> = async (props) => {
   const { question, tags, creator } = props;
 
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <span className="small-regular line-clamp-1 sm:hidden">

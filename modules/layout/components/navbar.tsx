@@ -1,4 +1,4 @@
-import { IComponentBaseProps, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, mp } from "@/shared";
 import { ImageSiteLogo } from "@/shared/assets/images/site-logo";
 import { ThemeSwitcher } from "@/theme";
 import { SignedIn, UserButton } from "@clerk/nextjs";
@@ -10,7 +10,7 @@ import { MobileNav } from "./mobile-nav";
 export interface INavbarProps extends IComponentBaseProps {}
 
 export const Navbar: React.FC<INavbarProps> = (props) => {
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <nav className="flex-between background-light900_dark200 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
       <Link href="/" className="flex items-center gap-1">

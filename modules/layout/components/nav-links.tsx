@@ -1,10 +1,5 @@
 "use client";
-import {
-  IComponentBaseProps,
-  IDENTITY_FN,
-  cn,
-  mergeClassAndStyleProps,
-} from "@/shared";
+import { IComponentBaseProps, IDENTITY_FN, cn, mp } from "@/shared";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,7 +15,7 @@ export const NavLinks: React.FC<INavLinksProps> = (props) => {
   const { renderItem = IDENTITY_FN, simple } = props;
 
   const pathname = usePathname() ?? "/";
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <section className="flex flex-col gap-6 overflow-auto">
       {NAV_LINKS.map(({ imgURL, label, route }) => {

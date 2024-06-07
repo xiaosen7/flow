@@ -2,15 +2,18 @@
 
 /* eslint-disable jsx-a11y/alt-text */
 
-import { mergeClassAndStyleProps } from "@/shared";
+import { mp } from "@/shared";
 import Image, { ImageProps } from "next/image";
 import React from "react";
 
-export const ImageLightIllustration: React.FC<Omit<ImageProps, "src">> = (props) => {
-  return mergeClassAndStyleProps(
-    props, 
-    <Image src={"/assets/images/light-illustration.png"} {...props}/>
+export const ImageLightIllustration: React.FC<Omit<ImageProps, "src">> = (
+  props
+) => {
+  return mp(
+    props,
+    <Image src={"/assets/images/light-illustration.png"} {...props} />
   );
 };
 
-export const imageLightIllustrationSrc = "/assets/images/light-illustration.png";
+export const imageLightIllustrationSrc =
+  "/assets/images/light-illustration.png";

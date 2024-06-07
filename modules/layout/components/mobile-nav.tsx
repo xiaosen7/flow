@@ -5,7 +5,7 @@ import {
   SheetClose,
   SheetContent,
   SheetTrigger,
-  mergeClassAndStyleProps,
+  mp,
 } from "@/shared";
 import { ImageHamburger } from "@/shared/assets/icons/hamburger";
 import { ImageSiteLogo } from "@/shared/assets/images/site-logo";
@@ -18,7 +18,7 @@ import { NavLinks } from "./nav-links";
 export interface IMobileNavProps extends IComponentBaseProps {}
 
 export const MobileNav: React.FC<IMobileNavProps> = (props) => {
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div>
       <Sheet>

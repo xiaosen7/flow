@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  IComponentBaseProps,
-  IControllableComponentProps,
-  mergeClassAndStyleProps,
-} from "@/shared";
+import { IComponentBaseProps, IControllableComponentProps, mp } from "@/shared";
 import { EThemeMode, useTheme } from "@/theme";
 import { Editor } from "@tinymce/tinymce-react";
 import React, { useRef } from "react";
@@ -26,7 +22,7 @@ export const UIExplanationEditor: React.FC<IUIExplanationEditorProps> = (
   } = props;
   const { mode } = useTheme();
 
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <Editor
       ref={ref}

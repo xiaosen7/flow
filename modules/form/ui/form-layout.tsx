@@ -10,7 +10,7 @@ import {
   IComponentBaseProps,
   ISafeAny,
   Input,
-  mergeClassAndStyleProps,
+  mp,
 } from "@/shared";
 import { useRequest } from "ahooks";
 import { capitalCase } from "change-case";
@@ -64,7 +64,7 @@ export const UIFormLayout = <TValues extends FieldValues>(
 
   return (
     <Form {...form}>
-      {mergeClassAndStyleProps(
+      {mp(
         props,
         <form
           onSubmit={form.handleSubmit(run)}

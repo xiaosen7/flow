@@ -1,5 +1,5 @@
 import { formatNumber } from "@/formatter";
-import { IComponentBaseProps, cn, mergeClassAndStyleProps } from "@/shared";
+import { IComponentBaseProps, cn, mp } from "@/shared";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -40,7 +40,7 @@ export const Metric: React.FC<IMetricProps> = (props) => {
     );
   }
 
-  return mergeClassAndStyleProps(
+  return mp(
     props,
     <div className="flex-center flex-wrap gap-1">{content}</div>
   );

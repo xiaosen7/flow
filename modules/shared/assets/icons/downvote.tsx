@@ -2,15 +2,12 @@
 
 /* eslint-disable jsx-a11y/alt-text */
 
-import { mergeClassAndStyleProps } from "@/shared";
+import { mp } from "@/shared";
 import Image, { ImageProps } from "next/image";
 import React from "react";
 
 export const ImageDownvote: React.FC<Omit<ImageProps, "src">> = (props) => {
-  return mergeClassAndStyleProps(
-    props,
-    <Image src={"/assets/icons/downvote.svg"} {...props} />
-  );
+  return mp(props, <Image src={"/assets/icons/downvote.svg"} {...props} />);
 };
 
 export const imageDownvoteSrc = "/assets/icons/downvote.svg";
