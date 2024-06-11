@@ -1,12 +1,11 @@
-import { Badge, IComponentBaseProps, mp } from "@/shared";
+import { Badge, IComponentBaseProps, ITag, mp } from "@/shared";
 import Link from "next/link";
-import { ITag } from "../types";
 
-export interface IUITagProps extends IComponentBaseProps {
+export interface ITagProps extends IComponentBaseProps {
   totalQuestions?: number;
   tag: ITag;
 }
-export const CTag = (props: IUITagProps) => {
+export const Tag = (props: ITagProps) => {
   const { tag, totalQuestions } = props;
   return mp(
     props,

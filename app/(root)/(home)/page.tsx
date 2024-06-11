@@ -1,10 +1,17 @@
 import Link from "next/link";
 
 import { ListPageLayout } from "@/layout";
-import { CQuestionCards, QUESTION_FILTER_OPTIONS } from "@/question";
-import { Button } from "@/shared";
+import { prisma } from "@/prisma";
+import { QUESTION_FILTER_OPTIONS, QuestionCard } from "@/question";
+import { Button, List, NoResults } from "@/shared";
 
 export default async function Home() {
+  const questions = await prisma.question.findMany({
+    include: {
+      author: true,
+      tags: true,
+    },
+  });
   return (
     <ListPageLayout
       search={{
@@ -22,7 +29,26 @@ export default async function Home() {
         </Link>
       }
     >
-      <CQuestionCards />
+      <List
+        items={questions}
+        renderItem={(question) => (
+          <QuestionCard
+            question={question}
+            creator={question.author}
+            tags={question.tags}
+          />
+        )}
+        empty={
+          <NoResults
+            titleSubject="questions"
+            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
+        discussion. our query could be the next big thing others learn from. Get
+        involved! 💡"
+            link="/ask-question"
+            linkTitle="Ask a Question"
+          />
+        }
+      />
     </ListPageLayout>
   );
 }

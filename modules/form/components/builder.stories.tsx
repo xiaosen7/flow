@@ -2,16 +2,18 @@ import { Input } from "@/shared";
 import { Meta, StoryFn } from "@storybook/react";
 import { z } from "zod";
 import { useForm } from "../hooks";
-import { FormLayout, IFormItem } from "./form-layout";
+import { FormBuilder, IFormBuilderItem } from "./builder";
 
 const schema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  age: z.string().min(1).max(2),
+  age: z.string().min(2),
 });
 
-const items: IFormItem<z.infer<typeof schema>>[] = [
+type IValues = z.infer<typeof schema>;
+
+const items: IFormBuilderItem<IValues>[] = [
   {
     name: "username",
     label: "username",
@@ -28,10 +30,10 @@ const items: IFormItem<z.infer<typeof schema>>[] = [
 ];
 
 export default {
-  component: FormLayout,
-} as Meta<typeof FormLayout>;
+  component: FormBuilder,
+} as Meta<typeof FormBuilder>;
 
-export const Base: StoryFn<typeof FormLayout> = (args) => {
+export const Base: StoryFn<typeof FormBuilder> = (args) => {
   const form = useForm({
     schema,
     defaultValues: {
@@ -40,35 +42,12 @@ export const Base: StoryFn<typeof FormLayout> = (args) => {
     },
   });
 
-  return (
-    <FormLayout<z.infer<typeof schema>>
-      {...args}
-      onSubmit={console.log}
-      form={form}
-      items={items}
-    />
-  );
-};
-
-export const Submitting: StoryFn<typeof FormLayout> = (args) => {
-  const form = useForm({
-    schema,
-    defaultValues: {
-      username: "",
-      age: "",
-    },
-  });
-
-  const onSubmit = async () => {
+  const onSubmit = async (values: IValues) => {
+    alert(JSON.stringify(values));
     await new Promise((resolve) => setTimeout(resolve, 1000));
   };
 
   return (
-    <FormLayout<z.infer<typeof schema>>
-      {...args}
-      onSubmit={onSubmit}
-      form={form}
-      items={items}
-    />
+    <FormBuilder {...args} form={form} items={items} onSubmit={onSubmit} />
   );
 };

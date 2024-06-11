@@ -10,13 +10,13 @@ import { ImageClose } from "@/shared/assets/icons/close";
 import { useControllableValue } from "ahooks";
 import React from "react";
 
-export interface IUITagsEditorProps
+export interface ITagsEditorProps
   extends IComponentBaseProps,
     IControllableComponentProps<string[]> {
   disabled?: boolean;
 }
 
-export const UITagsEditor: React.FC<IUITagsEditorProps> = (props) => {
+export const TagsEditor: React.FC<ITagsEditorProps> = (props) => {
   const { disabled } = props;
   const [value = [], onChange] = useControllableValue<string[]>(props);
 

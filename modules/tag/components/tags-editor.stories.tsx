@@ -1,15 +1,15 @@
 import { Meta, StoryFn } from "@storybook/react";
 
 import { range } from "lodash-es";
-import { UITagsEditor } from "./tags-editor";
+import { TagsEditor } from "./tags-editor";
 
 export default {
-  component: UITagsEditor,
+  component: TagsEditor,
   args: {},
-} as Meta<typeof UITagsEditor>;
+} as Meta<typeof TagsEditor>;
 
-export const Base: StoryFn<typeof UITagsEditor> = () => (
-  <UITagsEditor
+export const Base: StoryFn<typeof TagsEditor> = () => (
+  <TagsEditor
     defaultValue={range(20).map((x) => `tag${x}`)}
     onChange={console.log}
   />

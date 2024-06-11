@@ -10,7 +10,7 @@ export interface IUIQuestionMetricsProps extends IComponentBaseProps {
   votes: number;
 }
 
-export const UIQuestionMetrics: React.FC<IUIQuestionMetricsProps> = (props) => {
+export const QuestionMetrics: React.FC<IUIQuestionMetricsProps> = (props) => {
   const { answers, views, votes } = props;
   return mp(
     props,

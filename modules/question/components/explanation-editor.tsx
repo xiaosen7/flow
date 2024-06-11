@@ -11,7 +11,7 @@ export interface IUIExplanationEditorProps
   onBlur: () => void;
 }
 
-export const UIExplanationEditor: React.FC<IUIExplanationEditorProps> = (
+export const ExplanationEditor: React.FC<IUIExplanationEditorProps> = (
   props
 ) => {
   const ref = useRef<Editor>(null);

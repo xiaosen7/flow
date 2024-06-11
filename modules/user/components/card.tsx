@@ -1,8 +1,7 @@
-import { Badge, IComponentBaseProps, mp } from "@/shared";
-import { CTag, ITag } from "@/tag";
+import { Badge, IComponentBaseProps, ITag, IUser, mp } from "@/shared";
+import { Tag } from "@/tag";
 import Image from "next/image";
 import Link from "next/link";
-import { IUser } from "../types";
 
 export interface IUserCardProps extends IComponentBaseProps {
   user: IUser;
@@ -38,7 +37,7 @@ export const UserCard = (props: IUserCardProps) => {
           {tags.length > 0 ? (
             <div className="flex items-center gap-2">
               {tags.map((tag) => (
-                <CTag key={tag.id} tag={tag} />
+                <Tag key={tag.id} tag={tag} />
               ))}
             </div>
           ) : (

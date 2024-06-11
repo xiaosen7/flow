@@ -4,7 +4,7 @@ import React from "react";
 
 export interface IUIQuestionFilterProps extends IComponentBaseProps {}
 
-export const UIQuestionFilter: React.FC<IUIQuestionFilterProps> = (props) => {
+export const QuestionFilter: React.FC<IUIQuestionFilterProps> = (props) => {
   return mp(
     props,
     <>

@@ -9,12 +9,13 @@
     "start": "next start",
     "lint": "next lint",
     "dev:storybook": "storybook dev -p 6006",
-    "build:storybook": "git log -1 --pretty=format:\"%cd %h %s\" >> public/git.log && storybook build -o ./public/storybook-static",
+    "build:storybook": "storybook build -o ./public/storybook-static",
     "test": "vitest",
     "prisma:studio": "dotenv -e .env.local -- pnpm prisma studio",
     "prisma:generate": "pnpm prisma generate",
     "prisma:push": "dotenv -e .env.local -- pnpm prisma db push",
-    "prepare": "husky & tsx _scripts/prepare"
+    "gen:git-log-file": "git log -1 --pretty=format:\"%cd %h %s\" >> public/git.log ",
+    "prepare": "husky & tsx _scripts/prepare & pnpm gen:git-log-file"
   },
   "prisma": {
     "schema": "modules/prisma/schema.prisma"

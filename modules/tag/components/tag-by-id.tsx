@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma";
 import { IComponentBaseProps, mp } from "@/shared";
-import { CTag } from "./tag";
+import { Tag } from "./tag";
 
 export interface ICTagByIdProps extends IComponentBaseProps {
   id: string;
@@ -14,5 +14,5 @@ export const CTagById = async (props: ICTagByIdProps) => {
     },
   });
 
-  return mp(props, <CTag tag={tag} />);
+  return mp(props, <Tag tag={tag} />);
 };

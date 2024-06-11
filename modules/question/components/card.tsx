@@ -1,11 +1,10 @@
 import { formatDate } from "@/formatter";
-import { IComponentBaseProps, mp } from "@/shared";
-import { CTag, ITag } from "@/tag";
-import { IUser } from "@/user";
+import { IComponentBaseProps, IQuestion, ITag, IUser, mp } from "@/shared";
+import { Tag } from "@/tag";
 import Link from "next/link";
 import React from "react";
-import { IQuestion } from "../types";
-import { UIQuestionAuthor, UIQuestionMetrics } from "../ui";
+import { QuestionAuthor } from "./author";
+import { QuestionMetrics } from "./metrics";
 
 export interface IQuestionCardProps extends IComponentBaseProps {
   question: IQuestion;
@@ -13,7 +12,7 @@ export interface IQuestionCardProps extends IComponentBaseProps {
   creator: IUser;
 }
 
-export const CQuestionCard: React.FC<IQuestionCardProps> = async (props) => {
+export const QuestionCard: React.FC<IQuestionCardProps> = (props) => {
   const { question, tags, creator } = props;
 
   return mp(
@@ -30,12 +29,12 @@ export const CQuestionCard: React.FC<IQuestionCardProps> = async (props) => {
       </Link>
 
       <div className="mt-3.5 flex flex-wrap gap-2">
-        {tags?.map((tag) => <CTag key={tag.id} tag={tag} />)}
+        {tags?.map((tag) => <Tag key={tag.id} tag={tag} />)}
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap items-center gap-3 ">
         <Link href={`/profile/${creator.id}`}>
-          <UIQuestionAuthor
+          <QuestionAuthor
             username={creator.username}
             imageUrl={creator.imageUrl}
             extra={
@@ -46,7 +45,7 @@ export const CQuestionCard: React.FC<IQuestionCardProps> = async (props) => {
           />
         </Link>
 
-        <UIQuestionMetrics
+        <QuestionMetrics
           answers={0}
           views={question.views}
           votes={question.upvotes}

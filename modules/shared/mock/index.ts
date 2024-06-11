@@ -1,6 +1,6 @@
-import { ITag } from "@/tag";
-import { IUser } from "@/user";
+import { IQuestion } from "@/shared";
 import { isArray, random, range, uniqueId } from "lodash-es";
+import { ITag, IUser } from "../types";
 
 export namespace mock {
   export function tag(): ITag {
@@ -23,6 +23,21 @@ export namespace mock {
       fullName: `fullName of ${id}`,
       joinedAt: date(),
       username: `username of ${id}`,
+    };
+  }
+
+  export function question(): IQuestion {
+    const id = uniqueId("mocked-question");
+
+    return {
+      id,
+      title: `question${id}`,
+      content: `question${id} content`,
+      createdAt: date(),
+      authorId: uniqueId("mocked-user"),
+      downvotes: random(0, 9999999),
+      upvotes: random(0, 9999999),
+      views: random(0, 99999999),
     };
   }
 

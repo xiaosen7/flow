@@ -1,6 +1,6 @@
-import { IComponentBaseProps, mp } from "@/shared";
+import { IComponentBaseProps, ITag, mp } from "@/shared";
 import { ImageChevronRight } from "@/shared/assets/icons/chevron-right";
-import { CTag, ITag } from "@/tag";
+import { Tag } from "@/tag";
 import Link from "next/link";
 import React from "react";
 
@@ -57,7 +57,7 @@ export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
         <div className="mt-7 flex flex-col gap-4">
           {popularTags.map((tag) => (
-            <CTag key={tag.id} totalQuestions={10} tag={tag} />
+            <Tag key={tag.id} totalQuestions={10} tag={tag} />
           ))}
         </div>
       </div>

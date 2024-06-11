@@ -1,9 +1,8 @@
 import { Meta, StoryFn } from "@storybook/react";
-import React from "react";
-import { CTag } from "./tag";
+import { Tag } from "./tag";
 
 export default {
-  component: CTag,
+  component: Tag,
   args: {
     tag: {
       name: "tag",
@@ -11,6 +10,6 @@ export default {
     },
     totalQuestions: 5,
   },
-} as Meta<typeof CTag>;
+} as Meta<typeof Tag>;
 
-export const Base: StoryFn<typeof CTag> = (args) => <CTag {...args} />;
+export const Base: StoryFn<typeof Tag> = (args) => <Tag {...args} />;

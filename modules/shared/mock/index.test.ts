@@ -24,6 +24,20 @@ describe("mock", () => {
     });
   });
 
+  test("question", () => {
+    const question = mock.question();
+    expect(question).toEqual({
+      id: expect.any(String),
+      title: expect.any(String),
+      content: expect.any(String),
+      createdAt: expect.any(Date),
+      authorId: expect.any(String),
+      downvotes: expect.any(Number),
+      upvotes: expect.any(Number),
+      views: expect.any(Number),
+    });
+  });
+
   test("create", () => {
     const tags = mock.create(mock.tag, 3);
     expect(tags).toHaveLength(3);

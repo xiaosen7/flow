@@ -8,7 +8,7 @@ export interface IUIQuestionAuthorProps extends IComponentBaseProps {
   extra?: React.ReactNode;
 }
 
-export const UIQuestionAuthor: React.FC<IUIQuestionAuthorProps> = (props) => {
+export const QuestionAuthor: React.FC<IUIQuestionAuthorProps> = (props) => {
   const { username: name, imageUrl: avatarUrl, extra } = props;
   return mp(
     props,

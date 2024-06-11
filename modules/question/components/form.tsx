@@ -1,10 +1,59 @@
-import { IComponentBaseProps, mp } from "@/shared";
+"use client";
+import { FormBuilder, IFormBuilderItems, useForm } from "@/form";
+import { IComponentBaseProps, Input, mp } from "@/shared";
+import { TagsEditor } from "@/tag";
 import React from "react";
+import { QUESTION_SCHEMA } from "../constants";
 import { createQuestion } from "../server-actions";
-import { UIQuestionForm } from "../ui";
+import { IQuestionPostValue } from "../types";
+import { ExplanationEditor } from "./explanation-editor";
 
 export interface ICQuestionFormProps extends IComponentBaseProps {}
 
-export const CQuestionForm: React.FC<ICQuestionFormProps> = (props) => {
-  return mp(props, <UIQuestionForm onSubmit={createQuestion} />);
+const items: IFormBuilderItems<IQuestionPostValue> = [
+  {
+    label: "Title",
+    name: "title",
+    description:
+      "Be specific and imagine you're asking a question to another person.",
+    renderControl: (field) => <Input {...field} />,
+    required: true,
+  },
+  {
+    label: "Explanation",
+    name: "explanation",
+    description:
+      " Introduces the problem and expand on what you put in the title. Minimum 20 characters.",
+    renderControl: (field) => <ExplanationEditor {...field} />,
+    required: true,
+  },
+  {
+    label: "Tags",
+    name: "tags",
+    description:
+      "Add up to 3 tags to describe what your question is about. You need to press enter to add a tag.",
+    renderControl: (field) => <TagsEditor {...field} />,
+    required: true,
+  },
+];
+
+export const QuestionForm: React.FC<ICQuestionFormProps> = (props) => {
+  const form = useForm({
+    schema: QUESTION_SCHEMA,
+    defaultValues: {
+      explanation: "",
+      tags: [] as string[],
+      title: "",
+    },
+  });
+
+  return mp(
+    props,
+    <FormBuilder<IQuestionPostValue>
+      items={items}
+      form={form}
+      onSubmit={createQuestion}
+      getSubmitText={(loading) => (loading ? "Posting..." : "Ask a Question")}
+    />
+  );
 };

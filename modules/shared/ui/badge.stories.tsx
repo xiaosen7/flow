@@ -10,6 +10,3 @@ export default {
 } as Meta<typeof Badge>;
 
 export const Base: StoryFn<typeof Badge> = (args) => <Badge {...args} />;
-export const Outline: StoryFn<typeof Badge> = (args) => <Badge {...args} />;
-export const Destructive: StoryFn<typeof Badge> = (args) => <Badge {...args} />;
-export const Secondary: StoryFn<typeof Badge> = (args) => <Badge {...args} />;
