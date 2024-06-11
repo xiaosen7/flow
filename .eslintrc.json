@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:tailwindcss/recommended",
+    "plugin:storybook/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "import/no-cycle": "error"
+  },
+  "overrides": [
+    {
+      "files": ["modules/shared/**"],
+      "rules": {
+        "import/no-cycle": "off"
+      }
+    }
+  ]
+}

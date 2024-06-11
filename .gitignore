@@ -45,4 +45,4 @@ storybook-static
 public/git.log
 
 # scripts
-/components/asset
+/modules/shared/assets/
