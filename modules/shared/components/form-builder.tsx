@@ -1,25 +1,24 @@
+import { useRequest } from "ahooks";
+import { capitalCase } from "change-case";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  Form,
+  Path,
+  UseFormReturn,
+} from "react-hook-form";
+import { IComponentBaseProps, ISafeAny } from "../types";
 import {
   Button,
-  Form,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  IComponentBaseProps,
-  ISafeAny,
   Input,
-  mp,
-} from "@/shared";
-import { useRequest } from "ahooks";
-import { capitalCase } from "change-case";
-import {
-  ControllerRenderProps,
-  FieldValues,
-  Path,
-  UseFormReturn,
-} from "react-hook-form";
+} from "../ui";
+import { mp } from "../utils";
 
 type _IFormBuilderItem<
   TValues extends FieldValues,

@@ -1,9 +1,8 @@
-import { formatNumber } from "@/formatter";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { IComponentBaseProps } from "../types";
-import { cn, mp } from "../utils";
+import { cn, formatNumber, mp } from "../utils";
 
 export interface IMetricProps extends IComponentBaseProps {
   imgUrl: string;

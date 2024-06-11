@@ -1,4 +1,3 @@
-import { ISafeAny } from "@/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { omit } from "lodash-es";
 import {
@@ -8,6 +7,7 @@ import {
   useForm as rcUseForm,
 } from "react-hook-form";
 import { z } from "zod";
+import { ISafeAny } from "../types";
 
 export const useForm = <
   TFieldValues extends FieldValues = FieldValues,

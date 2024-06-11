@@ -1,5 +1,11 @@
-import { formatDate } from "@/formatter";
-import { IComponentBaseProps, IQuestion, ITag, IUser, mp } from "@/shared";
+import {
+  IComponentBaseProps,
+  IQuestion,
+  ITag,
+  IUser,
+  formatDate,
+  mp,
+} from "@/shared";
 import { Tag } from "@/tag";
 import Link from "next/link";
 import React from "react";

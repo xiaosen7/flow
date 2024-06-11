@@ -14,7 +14,7 @@
     "prisma:studio": "dotenv -e .env.local -- pnpm prisma studio",
     "prisma:generate": "pnpm prisma generate",
     "prisma:push": "dotenv -e .env.local -- pnpm prisma db push",
-    "gen:git-log-file": "git log -1 --pretty=format:\"%cd %h %s\" >> public/git.log ",
+    "gen:git-log-file": "git log -1 --pretty=format:\"%cd %h %s\" > public/git.log ",
     "prepare": "husky & tsx _scripts/prepare & pnpm gen:git-log-file"
   },
   "prisma": {

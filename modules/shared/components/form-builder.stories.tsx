@@ -2,7 +2,7 @@ import { Input } from "@/shared";
 import { Meta, StoryFn } from "@storybook/react";
 import { z } from "zod";
 import { useForm } from "../hooks";
-import { FormBuilder, IFormBuilderItem } from "./builder";
+import { FormBuilder, IFormBuilderItem } from "./form-builder";
 
 const schema = z.object({
   username: z.string().min(2, {

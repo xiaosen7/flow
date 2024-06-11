@@ -1,4 +1,4 @@
-import { formatDate, formatNumber } from ".";
+import { formatDate, formatNumber } from "./formatter";
 
 describe("formatter", () => {
   test("formattedDate", () => {

@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { ListPageLayout } from "@/layout";
 import { prisma } from "@/prisma";
 import { QUESTION_FILTER_OPTIONS, QuestionCard } from "@/question";
 import { Button, List, NoResults } from "@/shared";
@@ -13,7 +12,7 @@ export default async function Home() {
     },
   });
   return (
-    <ListPageLayout
+    <List
       search={{
         placeholder: "Search for amazing minds",
       }}
@@ -28,27 +27,25 @@ export default async function Home() {
           </Button>
         </Link>
       }
-    >
-      <List
-        items={questions}
-        renderItem={(question) => (
-          <QuestionCard
-            question={question}
-            creator={question.author}
-            tags={question.tags}
-          />
-        )}
-        empty={
-          <NoResults
-            titleSubject="questions"
-            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
+      direction="column"
+      items={questions}
+      renderItem={(question) => (
+        <QuestionCard
+          question={question}
+          creator={question.author}
+          tags={question.tags}
+        />
+      )}
+      empty={
+        <NoResults
+          titleSubject="questions"
+          description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
         discussion. our query could be the next big thing others learn from. Get
         involved! 💡"
-            link="/ask-question"
-            linkTitle="Ask a Question"
-          />
-        }
-      />
-    </ListPageLayout>
+          link="/ask-question"
+          linkTitle="Ask a Question"
+        />
+      }
+    ></List>
   );
 }
