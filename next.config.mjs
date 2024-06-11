@@ -13,6 +13,9 @@ const nextConfig = {
       },
     ],
   },
+  eslint: {
+    dirs: ["app", "modules"],
+  },
 };
 
 export default nextConfig;

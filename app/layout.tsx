@@ -1,5 +1,5 @@
-import { createUserIfNeeded } from "@/shared";
 import { ThemeProvider } from "@/theme";
+import { createUserIfNeeded } from "@/user";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";

@@ -9,7 +9,7 @@ export default {
 
 export const Base: StoryFn<typeof Navbar> = (args) => (
   <div>
-    <p>Resize to see it's responsiveness</p>
+    <p>Resize to see its responsiveness</p>
     <Navbar {...args} />
   </div>
 );

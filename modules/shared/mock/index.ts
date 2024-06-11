@@ -1,6 +1,6 @@
-import { IQuestion } from "@/shared";
 import { isArray, random, range, uniqueId } from "lodash-es";
-import { ITag, IUser } from "../types";
+import { IFilterOption } from "../components";
+import { IQuestion, ITag, IUser } from "../types";
 
 export namespace mock {
   export function tag(): ITag {
@@ -45,6 +45,21 @@ export namespace mock {
     return new Date(random(2000, 2020), 1, 1);
   }
 
+  export function imageUrl(
+    width: number = 100,
+    height: number = 100,
+    seed: number = random(0, 10000)
+  ) {
+    return `https://picsum.photos/${width}/${height}?random=${seed}`;
+  }
+
+  export function filterOption(): IFilterOption {
+    const value = uniqueId("mocked-filter-option-value");
+    const label = uniqueId("mocked-filter-option-label");
+
+    return { value, label };
+  }
+
   export function create<T>(
     creator: () => T,
     count: number | [number, number]
@@ -54,13 +69,5 @@ export namespace mock {
     }
 
     return range(count).map(() => creator());
-  }
-
-  export function imageUrl(
-    width: number = 100,
-    height: number = 100,
-    seed: number = random(0, 10000)
-  ) {
-    return `https://picsum.photos/${width}/${height}?random=${seed}`;
   }
 }

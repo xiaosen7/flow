@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 
+import { mock } from "@/shared";
 import { ListPageLayout } from "./list-page-layout";
 
 export default {
@@ -11,12 +12,7 @@ export const Base: StoryFn<typeof ListPageLayout> = () => (
   <ListPageLayout
     className="w-full"
     filter={{
-      options: [
-        {
-          label: "option",
-          value: "option",
-        },
-      ],
+      options: mock.create(mock.filterOption, 10),
     }}
     search={{
       placeholder: "Search something...",

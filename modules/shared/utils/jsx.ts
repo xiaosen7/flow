@@ -1,5 +1,5 @@
-import { ISafeAny } from "@/shared";
 import React from "react";
+import { ISafeAny } from "../types";
 import { cn } from "./clsx";
 
 /**

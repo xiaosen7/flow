@@ -7,16 +7,13 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/shared";
-import {
-  EThemeMode,
-  EUserThemeMode,
-  USER_THEMES,
-  USER_THEME_MAP,
-  useTheme,
-} from "@/theme";
+
 import clsx from "clsx";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { USER_THEMES, USER_THEME_MAP } from "../constants";
+import { useTheme } from "../context";
+import { EThemeMode, EUserThemeMode } from "../types";
 
 export interface IThemeProps {}
 

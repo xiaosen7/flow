@@ -1,8 +1,9 @@
 "use client";
 
-import { IComponentBaseProps, mp } from "@/shared";
 import { useRequest } from "ahooks";
 import React from "react";
+import { IComponentBaseProps } from "../types";
+import { mp } from "../utils";
 
 export interface IGitLogProps extends IComponentBaseProps {}
 

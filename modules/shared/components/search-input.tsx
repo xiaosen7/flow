@@ -1,6 +1,6 @@
-import { IComponentBaseProps, Input, mp } from "@/shared";
 import { ImageSearch } from "@/shared/assets/icons/search";
 import React from "react";
+import { IComponentBaseProps, Input, mp } from "..";
 
 export interface ISearchInputProps extends IComponentBaseProps {
   placeholder?: string;

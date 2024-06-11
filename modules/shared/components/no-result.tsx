@@ -1,8 +1,10 @@
-import { Button, IComponentBaseProps, mp } from "@/shared";
 import { ImageDarkIllustration } from "@/shared/assets/images/dark-illustration";
 import { ImageLightIllustration } from "@/shared/assets/images/light-illustration";
 import Link from "next/link";
 import React from "react";
+import { IComponentBaseProps } from "../types";
+import { Button } from "../ui";
+import { mp } from "../utils";
 
 export interface INoResultsProps extends IComponentBaseProps {
   /**

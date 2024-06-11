@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/prisma";
-import { getCurrentUserOrThrow } from "@/shared";
+import { getCurrentUserOrThrow } from "@/user";
 import { RedirectType, redirect } from "next/navigation";
 import { IQuestionPostValue } from "../types";
 

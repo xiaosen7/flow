@@ -1,10 +1,10 @@
+import { useSize } from "ahooks";
 import {
   DEVICE_WIDTH_LG,
   DEVICE_WIDTH_MD,
   DEVICE_WIDTH_SM,
   IS_CLIENT_SIDE,
-} from "@/shared";
-import { useSize } from "ahooks";
+} from "../constants";
 
 export function useMediaQuery() {
   const { width = 1920 } = IS_CLIENT_SIDE

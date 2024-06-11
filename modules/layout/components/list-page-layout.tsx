@@ -27,10 +27,11 @@ export const ListPageLayout: React.FC<IListPageLayoutProps> = (props) => {
         {titleExtra}
       </div>
 
-      <div className="mt-11 flex flex-wrap justify-between gap-5 max-sm:flex-col sm:items-center">
-        {search && mp(search, <SearchInput {...search} className="flex-1" />)}
+      <div className="mt-11 flex flex-wrap justify-between gap-5 max-sm:flex-col sm:items-center md:flex-col">
+        {search &&
+          mp(search, <SearchInput {...search} className="flex-1 md:w-full" />)}
 
-        {filter && <Filter {...filter} />}
+        {filter && mp(filter, <Filter {...filter} className="md:w-full" />)}
 
         <div className="w-full">{children}</div>
       </div>

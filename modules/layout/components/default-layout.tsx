@@ -1,7 +1,6 @@
-import { IComponentBaseProps, mp } from "@/shared";
+import { GitLog, IComponentBaseProps, mp } from "@/shared";
 import React from "react";
 
-import { GitLog } from "@/shared";
 import { LeftSidebar } from "./left-sidebar";
 import { Navbar } from "./navbar";
 import { RightSidebar } from "./right-sidebar";

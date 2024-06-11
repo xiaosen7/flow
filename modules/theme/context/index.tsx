@@ -1,6 +1,6 @@
 "use client";
 
-import { EThemeMode } from "@/theme";
+import { EThemeMode } from "@/theme/types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface IThemeContextValue {
