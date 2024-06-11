@@ -10,7 +10,7 @@ export default {
     involved! 💡`,
     link: "/ask-question",
     linkTitle: "Ask a Question",
-    titleName: "questions",
+    titleSubject: "questions",
   },
 } as Meta<typeof NoResults>;
 

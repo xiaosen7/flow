@@ -32,7 +32,7 @@ export const CQuestionCards: React.FC<ICQuestionCardsProps> = async (props) => {
         ))
       ) : (
         <NoResults
-          titleName="questions"
+          titleSubject="questions"
           description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
           discussion. our query could be the next big thing others learn from. Get
           involved! 💡"

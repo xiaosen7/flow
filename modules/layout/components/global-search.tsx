@@ -1,8 +1,8 @@
 import { IComponentBaseProps, SearchInput, mp } from "@/shared";
 import React from "react";
 
-export interface IGlobalSearchProps extends IComponentBaseProps {}
+export interface IUIGlobalSearchProps extends IComponentBaseProps {}
 
-export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
+export const GlobalSearch: React.FC<IUIGlobalSearchProps> = (props) => {
   return mp(props, <SearchInput placeholder="Search globally" />);
 };

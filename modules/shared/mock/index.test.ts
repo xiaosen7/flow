@@ -1,0 +1,43 @@
+import { mock } from ".";
+
+describe("mock", () => {
+  test("user", () => {
+    const user = mock.user();
+    expect(user).toEqual({
+      id: expect.any(String),
+      email: expect.any(String),
+      clerkId: expect.any(String),
+      imageUrl: expect.any(String),
+      fullName: expect.any(String),
+      joinedAt: expect.any(Date),
+      username: expect.any(String),
+    });
+  });
+
+  test("tag", () => {
+    const tag = mock.tag();
+    expect(tag).toEqual({
+      id: expect.any(String),
+      createdOn: expect.any(Date),
+      name: expect.any(String),
+      description: expect.any(String),
+    });
+  });
+
+  test("create", () => {
+    const tags = mock.create(mock.tag, 3);
+    expect(tags).toHaveLength(3);
+    tags.forEach((tag) => {
+      expect(tag).toEqual({
+        id: expect.any(String),
+        createdOn: expect.any(Date),
+        name: expect.any(String),
+        description: expect.any(String),
+      });
+    });
+  });
+
+  test("imageUrl", () => {
+    expect(mock.imageUrl(100, 100)).toMatch(/^http/);
+  });
+});

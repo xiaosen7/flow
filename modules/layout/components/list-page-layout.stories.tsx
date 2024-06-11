@@ -1,14 +1,14 @@
 import { Meta, StoryFn } from "@storybook/react";
 
-import { CListPageLayout } from "./list-page-layout";
+import { ListPageLayout } from "./list-page-layout";
 
 export default {
-  component: CListPageLayout,
+  component: ListPageLayout,
   args: { children: "content" },
-} as Meta<typeof CListPageLayout>;
+} as Meta<typeof ListPageLayout>;
 
-export const Base: StoryFn<typeof CListPageLayout> = () => (
-  <CListPageLayout
+export const Base: StoryFn<typeof ListPageLayout> = () => (
+  <ListPageLayout
     className="w-full"
     filter={{
       options: [
@@ -25,5 +25,5 @@ export const Base: StoryFn<typeof CListPageLayout> = () => (
     titleExtra={"Title Extra"}
   >
     <div>content</div>
-  </CListPageLayout>
+  </ListPageLayout>
 );

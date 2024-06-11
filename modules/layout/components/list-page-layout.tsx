@@ -8,7 +8,7 @@ import {
 } from "@/shared";
 import React from "react";
 
-export interface ICListPageLayoutProps extends IComponentBaseProps {
+export interface IListPageLayoutProps extends IComponentBaseProps {
   title: React.ReactNode;
   titleExtra?: React.ReactNode;
   search?: ISearchInputProps;
@@ -16,7 +16,7 @@ export interface ICListPageLayoutProps extends IComponentBaseProps {
   children?: React.ReactNode;
 }
 
-export const CListPageLayout: React.FC<ICListPageLayoutProps> = (props) => {
+export const ListPageLayout: React.FC<IListPageLayoutProps> = (props) => {
   const { titleExtra, search, filter, children, title } = props;
   return mp(
     props,

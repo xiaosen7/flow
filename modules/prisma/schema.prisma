@@ -26,6 +26,7 @@ model User {
   imageUrl  String
   joinedAt  DateTime   @default(now())
   questions Question[]
+  tags      Tag[]
 }
 
 model Tag {
@@ -34,6 +35,7 @@ model Tag {
   description String
   createdOn   DateTime   @default(now())
   questions   Question[]
+  users       User[]
 }
 
 model Question {

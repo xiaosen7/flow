@@ -8,6 +8,9 @@ const nextConfig = {
         port: "",
         pathname: "/**/*",
       },
+      {
+        hostname: "img.clerk.com",
+      },
     ],
   },
 };

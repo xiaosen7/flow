@@ -8,14 +8,14 @@ export interface INoResultsProps extends IComponentBaseProps {
   /**
    * @default 'Results'
    */
-  titleName?: React.ReactNode;
+  titleSubject?: React.ReactNode;
   description: React.ReactNode;
   link: string;
   linkTitle: string;
 }
 
 export const NoResults: React.FC<INoResultsProps> = (props) => {
-  const { titleName = "Results", description, link, linkTitle } = props;
+  const { titleSubject = "Results", description, link, linkTitle } = props;
   return mp(
     props,
     <div className="mt-10 flex w-full flex-col items-center justify-center">
@@ -33,7 +33,7 @@ export const NoResults: React.FC<INoResultsProps> = (props) => {
       />
 
       <h2 className="h2-bold text-dark200_light900 mt-8 capitalize">
-        No {titleName} Found
+        No {titleSubject} Found
       </h2>
       <p className="body-regular text-dark500_light700 my-3.5 max-w-md text-center">
         {description}

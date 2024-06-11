@@ -2,13 +2,21 @@ import { ISafeAny } from "@/shared";
 import React from "react";
 import { cn } from "./clsx";
 
-export function mp(
-  props: ISafeAny,
-  jsx: React.ReactElement
-) {
+/**
+ * merge props with jsx
+ * @param props
+ * @param jsx
+ * @returns
+ */
+export function mp(props: ISafeAny, jsx: React.ReactElement) {
+  if (!React.isValidElement(jsx)) {
+    return jsx;
+  }
+
+  const originalProps = jsx.props as ISafeAny;
   return React.cloneElement(jsx, {
-    ...jsx.props,
-    className: cn(jsx.props.className, props.className),
-    style: { ...jsx.props.style, ...props.style },
+    ...originalProps,
+    className: cn(originalProps.className, props.className),
+    style: { ...originalProps.style, ...props.style },
   });
 }

@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-import { CListPageLayout } from "@/layout";
+import { ListPageLayout } from "@/layout";
 import { CQuestionCards, QUESTION_FILTER_OPTIONS } from "@/question";
 import { Button } from "@/shared";
 
 export default async function Home() {
   return (
-    <CListPageLayout
+    <ListPageLayout
       search={{
         placeholder: "Search for amazing minds",
       }}
@@ -23,6 +23,6 @@ export default async function Home() {
       }
     >
       <CQuestionCards />
-    </CListPageLayout>
+    </ListPageLayout>
   );
 }

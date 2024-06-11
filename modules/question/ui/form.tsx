@@ -1,8 +1,8 @@
 "use client";
 import {
-  IUIFormItems,
-  IUIFormLayoutPropsOnSubmit,
-  UIFormLayout,
+  FormLayout,
+  IFormItems,
+  IFormLayoutPropsOnSubmit,
   useForm,
 } from "@/form";
 import { IComponentBaseProps, Input, mp } from "@/shared";
@@ -13,10 +13,10 @@ import { IQuestionPostValue } from "../types";
 import { UIExplanationEditor } from "./explanation-editor";
 
 export interface IUIQuestionFormProps extends IComponentBaseProps {
-  onSubmit: IUIFormLayoutPropsOnSubmit<IQuestionPostValue>;
+  onSubmit: IFormLayoutPropsOnSubmit<IQuestionPostValue>;
 }
 
-const items: IUIFormItems<IQuestionPostValue> = [
+const items: IFormItems<IQuestionPostValue> = [
   {
     label: "Title",
     name: "title",
@@ -55,7 +55,7 @@ export const UIQuestionForm: React.FC<IUIQuestionFormProps> = (props) => {
 
   return mp(
     props,
-    <UIFormLayout<IQuestionPostValue>
+    <FormLayout<IQuestionPostValue>
       items={items}
       form={form}
       onSubmit={props.onSubmit}

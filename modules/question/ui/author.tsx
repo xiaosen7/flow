@@ -1,4 +1,5 @@
 import { IComponentBaseProps, mp } from "@/shared";
+import Image from "next/image";
 import React from "react";
 
 export interface IUIQuestionAuthorProps extends IComponentBaseProps {
@@ -12,7 +13,7 @@ export const UIQuestionAuthor: React.FC<IUIQuestionAuthorProps> = (props) => {
   return mp(
     props,
     <div className="flex items-center gap-1">
-      <img
+      <Image
         className="invert-colors rounded-full object-contain"
         src={avatarUrl}
         alt="Author avatar"

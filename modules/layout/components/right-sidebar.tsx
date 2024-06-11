@@ -1,26 +1,26 @@
 import { IComponentBaseProps, mp } from "@/shared";
 import { ImageChevronRight } from "@/shared/assets/icons/chevron-right";
-import { UITag } from "@/tag";
+import { CTag, ITag } from "@/tag";
 import Link from "next/link";
 import React from "react";
 
 const hotQuestions = [
   {
-    _id: 1,
+    id: 1,
     title:
       "Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?",
   },
-  { _id: 2, title: "Is it only me or the font is bolder than necessary?" },
-  { _id: 3, title: "Can I get the course for free?" },
-  { _id: 4, title: "Redux Toolkit Not Updating State as Expected" },
-  { _id: 5, title: "Async/Await Function Not Handling Errors Properly" },
+  { id: 2, title: "Is it only me or the font is bolder than necessary?" },
+  { id: 3, title: "Can I get the course for free?" },
+  { id: 4, title: "Redux Toolkit Not Updating State as Expected" },
+  { id: 5, title: "Async/Await Function Not Handling Errors Properly" },
 ];
-const popularTags = [
-  { _id: 1, name: "javascript", totalQuestions: 5 },
-  { _id: 2, name: "react", totalQuestions: 5 },
-  { _id: 3, name: "vuejs", totalQuestions: 15 },
-  { _id: 4, name: "redux", totalQuestions: 2 },
-  { _id: 5, name: "next", totalQuestions: 10 },
+const popularTags: ITag[] = [
+  { id: "1", name: "javascript", createdOn: new Date(), description: "" },
+  { id: "2", name: "react", createdOn: new Date(), description: "" },
+  { id: "3", name: "vuejs", createdOn: new Date(), description: "" },
+  { id: "4", name: "redux", createdOn: new Date(), description: "" },
+  { id: "5", name: "next", createdOn: new Date(), description: "" },
 ];
 
 export interface IRightSidebarProps extends IComponentBaseProps {}
@@ -35,8 +35,8 @@ export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
         <div className="mt-7 flex w-full flex-col gap-[30px]">
           {hotQuestions.map((question) => (
             <Link
-              href={`/question/${question._id}`}
-              key={question._id}
+              href={`/question/${question.id}`}
+              key={question.id}
               className="flex cursor-pointer items-center justify-between gap-7"
             >
               <p className="body-medium text-dark500_light700">
@@ -57,12 +57,7 @@ export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
         <div className="mt-7 flex flex-col gap-4">
           {popularTags.map((tag) => (
-            <UITag
-              key={tag._id}
-              name={tag.name}
-              totalQuestions={tag.totalQuestions}
-              showCount
-            />
+            <CTag key={tag.id} totalQuestions={10} tag={tag} />
           ))}
         </div>
       </div>

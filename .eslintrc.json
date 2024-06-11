@@ -1,7 +1,5 @@
 {
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
@@ -10,5 +8,8 @@
     "plugin:tailwindcss/recommended",
     "prettier",
     "plugin:storybook/recommended"
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/no-namespace": "off"
+  }
 }
