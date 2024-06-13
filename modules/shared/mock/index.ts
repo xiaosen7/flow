@@ -1,6 +1,7 @@
+import questionContent from "@/markdown/assets/example-value.md?raw";
 import { isArray, random, range, uniqueId } from "lodash-es";
 import { IFilterOption } from "../components";
-import { IQuestion, ITag, IUser } from "../types";
+import { IAnswer, IQuestion, ITag, IUser } from "../types";
 
 export namespace mock {
   export function tag(): ITag {
@@ -32,12 +33,21 @@ export namespace mock {
     return {
       id,
       title: `question${id}`,
-      content: `question${id} content`,
+      content: questionContent,
       createdAt: date(),
       authorId: uniqueId("mocked-user"),
-      downvotes: random(0, 9999999),
-      upvotes: random(0, 9999999),
       views: random(0, 99999999),
+    };
+  }
+
+  export function answer(): IAnswer {
+    const id = uniqueId("mocked-answer");
+    return {
+      id,
+      content: `answer${id}`,
+      createdAt: date(),
+      authorId: uniqueId("mocked-user"),
+      questionId: uniqueId("mocked-question"),
     };
   }
 

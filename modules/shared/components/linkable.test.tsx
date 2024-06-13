@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import { CLinkable } from "./linkable";
+import { Linkable } from "./linkable";
 
 describe("CLinkable", () => {
   describe("with href", () => {
     test("base", () => {
-      render(<CLinkable href="/home">Home</CLinkable>);
+      render(<Linkable href="/home">Home</Linkable>);
       expect(screen.getByText("Home").tagName).toBe("A");
     });
 
@@ -12,9 +12,9 @@ describe("CLinkable", () => {
       const className = "text-red-500";
       const style = { color: "red" };
       render(
-        <CLinkable href="/" className={className} style={style}>
+        <Linkable href="/" className={className} style={style}>
           Home
-        </CLinkable>
+        </Linkable>
       );
 
       const el = screen.getByText("Home");
@@ -25,7 +25,7 @@ describe("CLinkable", () => {
 
   describe("without href", () => {
     test("base", async () => {
-      render(<CLinkable>Home</CLinkable>);
+      render(<Linkable>Home</Linkable>);
       expect(screen.getByText("Home").tagName).not.toBe("A");
     });
 
@@ -33,9 +33,9 @@ describe("CLinkable", () => {
       const className = "text-red-500";
       const style = { color: "red" };
       render(
-        <CLinkable className={className} style={style}>
+        <Linkable className={className} style={style}>
           <div>Home</div>
-        </CLinkable>
+        </Linkable>
       );
 
       const el = screen.getByText("Home");

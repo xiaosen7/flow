@@ -25,7 +25,7 @@ const CommunityPage: React.FC = async () => {
       )}
       empty={
         <NoResults
-          titleSubject="Users"
+          topic="Users"
           description="Be the first to break the silence! 🚀 Sign up to be the first and kickstart the community. Get involved! 💡"
           link="/sign-up"
           linkTitle="Sign Up"

@@ -12,10 +12,14 @@ const ThemeContext = createContext<IThemeContextValue | null>(null);
 
 export interface IThemeProviderProps {
   children?: React.ReactNode;
+  defaultMode?: EThemeMode;
 }
 
-const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
-  const [mode, setMode] = useState<EThemeMode>(EThemeMode.Light);
+const ThemeProvider: React.FC<IThemeProviderProps> = ({
+  children,
+  defaultMode,
+}) => {
+  const [mode, setMode] = useState<EThemeMode>(defaultMode ?? EThemeMode.Light);
 
   useEffect(() => {
     if (mode) {
@@ -43,5 +47,4 @@ export function useTheme() {
   return context;
 }
 
-export default ThemeProvider;
 export { ThemeProvider };

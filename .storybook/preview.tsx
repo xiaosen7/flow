@@ -39,7 +39,14 @@ const preview: Preview = {
 
       return <Story />;
     },
-    (Story) => {
+
+    (Story, context) => {
+      const {
+        globals: { backgrounds },
+      } = context;
+      const backgroundMode =
+        backgrounds?.value === "#333333" ? EThemeMode.Dark : EThemeMode.Light;
+
       // global providers
       useEffect(() => {
         document.body.classList.add(inter.variable); // font
@@ -54,7 +61,7 @@ const preview: Preview = {
           }}
           publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
         >
-          <ThemeProvider>
+          <ThemeProvider defaultMode={backgroundMode}>
             <Story />
           </ThemeProvider>
         </ClerkProvider>

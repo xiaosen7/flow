@@ -13,23 +13,14 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { USER_THEMES, USER_THEME_MAP } from "../constants";
 import { useTheme } from "../context";
-import { EThemeMode, EUserThemeMode } from "../types";
+import { EUserThemeMode } from "../types";
+import {
+  getThemeModeFromUserThemeMode,
+  reloadUserThemeMode,
+  saveUserThemeMode,
+} from "../utils";
 
 export interface IThemeProps {}
-
-const saveUserThemeMode = (userThemeMode: EUserThemeMode) => {
-  if (typeof localStorage === "undefined") {
-    return;
-  }
-  localStorage.userThemeMode = userThemeMode;
-};
-
-const reloadUserThemeMode = (): EUserThemeMode => {
-  if (typeof localStorage === "undefined") {
-    return EUserThemeMode.System;
-  }
-  return localStorage.userThemeMode ?? EUserThemeMode.System;
-};
 
 const ThemeSwitcher: React.FC<IThemeProps> = () => {
   const { mode, setMode } = useTheme();
@@ -39,22 +30,7 @@ const ThemeSwitcher: React.FC<IThemeProps> = () => {
 
   useEffect(() => {
     saveUserThemeMode(userThemeMode);
-
-    switch (userThemeMode) {
-      case EUserThemeMode.System:
-        {
-          const preferDark = !!window.matchMedia("(prefers-color-scheme:dark)")
-            .matches;
-          setMode(preferDark ? EThemeMode.Dark : EThemeMode.Light);
-        }
-        break;
-
-      default:
-        {
-          setMode(userThemeMode as unknown as EThemeMode);
-        }
-        break;
-    }
+    setMode(getThemeModeFromUserThemeMode(userThemeMode));
   }, [userThemeMode, setMode]);
 
   return (

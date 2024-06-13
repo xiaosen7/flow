@@ -9,6 +9,7 @@ export default {
     question: mock.question(),
     tags: mock.create(mock.tag, [0, 10]),
     creator: mock.user(),
+    votes: 10,
   },
 } as Meta<typeof QuestionCard>;
 

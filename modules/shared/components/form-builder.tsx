@@ -1,3 +1,5 @@
+"use client";
+
 import { useRequest } from "ahooks";
 import { capitalCase } from "change-case";
 import {
@@ -103,7 +105,7 @@ export const FormBuilder = <TValues extends FieldValues>(
             )
           )}
 
-          <div>
+          <div className="flex flex-wrap">
             <Button disabled={loading} variant="primary-gradient">
               {getSubmitText(loading)}
             </Button>

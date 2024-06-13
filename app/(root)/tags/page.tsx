@@ -17,7 +17,7 @@ const TagsPage: React.FC = async () => {
       title={"Tags"}
       empty={
         <NoResults
-          titleSubject="Tags"
+          topic="Tags"
           description="It appears that there are not tags found at the moment 😔. Ask a Question and kickstart the
           discussion with tags. our query could be the next big thing others learn from. Get
           involved! 💡"

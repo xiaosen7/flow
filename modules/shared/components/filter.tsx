@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui";
-import { mp } from "../utils";
+import { cn, mp } from "../utils";
 
 export interface IFilterProps extends IComponentBaseProps {
   options: IFilterOption[];
@@ -16,6 +16,7 @@ export interface IFilterProps extends IComponentBaseProps {
    * @default "Select a filter"
    */
   placeholder?: React.ReactNode;
+  variation?: "tags" | "default";
 }
 
 export interface IFilterOption {
@@ -24,10 +25,16 @@ export interface IFilterOption {
 }
 
 export const Filter: React.FC<IFilterProps> = (props) => {
+  const { variation = "default" } = props;
   return mp(
     props,
     <div>
-      <div className="min-h-[56px] min-w-[170px] md:hidden">
+      <div
+        className={cn(
+          "min-h-[56px] min-w-[170px]",
+          variation === "tags" && "hidden"
+        )}
+      >
         <Select>
           <SelectTrigger
             className={
@@ -50,7 +57,12 @@ export const Filter: React.FC<IFilterProps> = (props) => {
         </Select>
       </div>
 
-      <div className="hidden w-full flex-wrap gap-3 md:flex">
+      <div
+        className={cn(
+          "w-full flex-wrap gap-3 flex",
+          variation === "default" && "hidden"
+        )}
+      >
         {props.options.map(({ label, value }) => (
           <Button
             key={value}

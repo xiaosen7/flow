@@ -3,7 +3,7 @@
 import { prisma } from "@/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 
-export async function getCurrentUser() {
+export async function getCurrent() {
   const clerkUser = await currentUser();
   if (!clerkUser) {
     return null;
@@ -17,8 +17,8 @@ export async function getCurrentUser() {
   return user;
 }
 
-export const getCurrentUserOrThrow = async () => {
-  const user = await getCurrentUser();
+export const getCurrentOrThrow = async () => {
+  const user = await getCurrent();
 
   if (!user) {
     throw new Error("User not found");
@@ -27,7 +27,7 @@ export const getCurrentUserOrThrow = async () => {
   return user;
 };
 
-export async function createUserIfNeeded() {
+export async function createIfNeeded() {
   const clerkUser = await currentUser();
 
   if (!clerkUser) {

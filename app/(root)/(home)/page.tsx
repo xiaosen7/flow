@@ -9,6 +9,7 @@ export default async function Home() {
     include: {
       author: true,
       tags: true,
+      upvotes: true,
     },
   });
   return (
@@ -34,11 +35,12 @@ export default async function Home() {
           question={question}
           creator={question.author}
           tags={question.tags}
+          votes={question.upvotes.length}
         />
       )}
       empty={
         <NoResults
-          titleSubject="questions"
+          topic="questions"
           description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
         discussion. our query could be the next big thing others learn from. Get
         involved! 💡"

@@ -12,3 +12,8 @@ export default {
 } as Meta<typeof Filter>;
 
 export const Base: StoryFn<typeof Filter> = (args) => <Filter {...args} />;
+export const VariationTags = {
+  args: {
+    variation: "tags",
+  },
+};

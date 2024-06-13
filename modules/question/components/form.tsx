@@ -1,18 +1,19 @@
 "use client";
+import { MarkdownEditor } from "@/markdown";
 import {
   FormBuilder,
   IComponentBaseProps,
   IFormBuilderItems,
   Input,
+  cn,
   mp,
   useForm,
 } from "@/shared";
 import { TagsEditor } from "@/tag";
 import React from "react";
+import { questionActions } from "../actions";
 import { QUESTION_SCHEMA } from "../constants";
-import { createQuestion } from "../server-actions";
 import { IQuestionPostValue } from "../types";
-import { ExplanationEditor } from "./explanation-editor";
 
 export interface ICQuestionFormProps extends IComponentBaseProps {}
 
@@ -30,7 +31,9 @@ const items: IFormBuilderItems<IQuestionPostValue> = [
     name: "explanation",
     description:
       " Introduces the problem and expand on what you put in the title. Minimum 20 characters.",
-    renderControl: (field) => <ExplanationEditor {...field} />,
+    renderControl: (field) => (
+      <MarkdownEditor {...field} className={cn("h-[300px]")} />
+    ),
     required: true,
   },
   {
@@ -58,7 +61,7 @@ export const QuestionForm: React.FC<ICQuestionFormProps> = (props) => {
     <FormBuilder<IQuestionPostValue>
       items={items}
       form={form}
-      onSubmit={createQuestion}
+      onSubmit={questionActions.create}
       getSubmitText={(loading) => (loading ? "Posting..." : "Ask a Question")}
     />
   );

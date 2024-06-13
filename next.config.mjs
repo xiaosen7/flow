@@ -1,3 +1,5 @@
+import { merge } from "webpack-merge";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -15,6 +17,18 @@ const nextConfig = {
   },
   eslint: {
     dirs: ["app", "modules"],
+  },
+  webpack(config) {
+    return merge(config, {
+      module: {
+        rules: [
+          {
+            resourceQuery: /raw/,
+            type: "asset/source",
+          },
+        ],
+      },
+    });
   },
 };
 

@@ -3,12 +3,12 @@ import React from "react";
 import { IComponentBaseProps } from "../types";
 import { mp } from "../utils";
 
-export interface ICLinkableProps extends IComponentBaseProps {
+export interface ILinkableProps extends IComponentBaseProps {
   href?: string;
   children?: React.ReactNode;
 }
 
-export const CLinkable: React.FC<ICLinkableProps> = (props) => {
+export const Linkable: React.FC<ILinkableProps> = (props) => {
   const { href, children } = props;
 
   if (href) {

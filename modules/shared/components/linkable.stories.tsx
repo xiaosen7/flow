@@ -1,16 +1,16 @@
 import { Meta, StoryFn } from "@storybook/react";
 
-import { CLinkable } from "./linkable";
+import { Linkable } from "./linkable";
 
 export default {
-  component: CLinkable,
+  component: Linkable,
   args: {},
-} as Meta<typeof CLinkable>;
+} as Meta<typeof Linkable>;
 
-export const WithHref: StoryFn<typeof CLinkable> = () => (
-  <CLinkable href="/home">home</CLinkable>
+export const WithHref: StoryFn<typeof Linkable> = () => (
+  <Linkable href="/home">home</Linkable>
 );
 
-export const WithoutHref: StoryFn<typeof CLinkable> = () => (
-  <CLinkable>no href</CLinkable>
+export const WithoutHref: StoryFn<typeof Linkable> = () => (
+  <Linkable>no href</Linkable>
 );

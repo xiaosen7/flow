@@ -18,15 +18,23 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(cuid())
-  clerkId   String     @unique
-  fullName  String
-  username  String     @unique
-  email     String     @unique
-  imageUrl  String
-  joinedAt  DateTime   @default(now())
-  questions Question[]
-  tags      Tag[]
+  id       String   @id @default(cuid())
+  clerkId  String   @unique
+  fullName String
+  username String   @unique
+  email    String   @unique
+  imageUrl String
+  joinedAt DateTime @default(now())
+
+  tags Tag[]
+
+  questions         Question[] @relation("UserQuestions")
+  upvoteQuestions   Question[] @relation("UserUpvoteQuestions")
+  downvoteQuestions Question[] @relation("UserDownvoteQuestions")
+
+  answers         Answer[] @relation("UserAnswers")
+  upvoteAnswers   Answer[] @relation("UserUpvoteAnswers")
+  downVoteAnswers Answer[] @relation("UserDownvoteAnswers")
 }
 
 model Tag {
@@ -39,18 +47,33 @@ model Tag {
 }
 
 model Question {
-  id        String @id @default(cuid()) // Primary key
+  id        String   @id @default(cuid()) // Primary key
   title     String
   content   String
   tags      Tag[]
+  answers   Answer[]
   views     Int
-  upvotes   Int
-  downvotes Int
+  upvotes   User[]   @relation("UserUpvoteQuestions")
+  downvotes User[]   @relation("UserDownvoteQuestions")
 
-  author   User   @relation(fields: [authorId], references: [id])
+  author   User   @relation("UserQuestions", fields: [authorId], references: [id])
   authorId String
 
   createdAt DateTime @default(now())
+}
+
+model Answer {
+  id        String   @id @default(cuid()) // Primary key
+  content   String
+  createdAt DateTime @default(now())
+
+  author    User   @relation("UserAnswers", fields: [authorId], references: [id])
+  authorId  String
+  upvotes   User[] @relation("UserUpvoteAnswers")
+  downvotes User[] @relation("UserDownvoteAnswers")
+
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
 }
 
 // model TagsOnQuestions {

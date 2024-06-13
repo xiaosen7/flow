@@ -6,6 +6,7 @@ import {
   SearchInput,
   cn,
   mp,
+  useMediaQuery,
 } from "@/shared";
 import React from "react";
 
@@ -36,6 +37,8 @@ export const List = <TItem extends { id: React.Key }>(
     empty,
     direction = "row",
   } = props;
+
+  const media = useMediaQuery();
   return mp(
     props,
     <div>
@@ -49,7 +52,15 @@ export const List = <TItem extends { id: React.Key }>(
         {search &&
           mp(search, <SearchInput {...search} className="flex-1 md:w-full" />)}
 
-        {filter && mp(filter, <Filter {...filter} className="md:w-full" />)}
+        {filter &&
+          mp(
+            filter,
+            <Filter
+              {...filter}
+              className="md:w-full"
+              variation={media.isGreaterThanMD ? "tags" : "default"}
+            />
+          )}
 
         <div className="w-full">
           <div
