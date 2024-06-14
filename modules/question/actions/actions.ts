@@ -108,3 +108,57 @@ export async function cancelDownVote(question: IQuestion) {
     },
   });
 }
+
+export async function collect(question: IQuestion) {
+  const user = await userActions.getCurrentOrThrow();
+
+  await prisma.question.update({
+    where: {
+      id: question.id,
+    },
+    data: {
+      collectors: {
+        connect: {
+          id: user.id,
+        },
+      },
+    },
+  });
+}
+
+export async function cancelCollect(question: IQuestion) {
+  const user = await userActions.getCurrentOrThrow();
+
+  await prisma.question.update({
+    where: {
+      id: question.id,
+    },
+    data: {
+      collectors: {
+        disconnect: {
+          id: user.id,
+        },
+      },
+    },
+  });
+}
+
+export async function getCollected() {
+  const user = await userActions.getCurrentOrThrow();
+  return (
+    await prisma.user.findUniqueOrThrow({
+      where: {
+        id: user.id,
+      },
+      include: {
+        collections: {
+          include: {
+            author: true,
+            tags: true,
+            upvotes: true,
+          },
+        },
+      },
+    })
+  ).collections;
+}

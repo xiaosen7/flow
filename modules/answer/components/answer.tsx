@@ -3,6 +3,8 @@ import {
   DownVote,
   IAnswer,
   IComponentBaseProps,
+  IDownVoteProps,
+  IUpVoteProps,
   IUser,
   UpVote,
   formatDate,
@@ -14,12 +16,12 @@ import React from "react";
 export interface IAnswerProps extends IComponentBaseProps {
   answer: IAnswer;
   author: IUser;
-  upvotes: IUser[];
-  downvotes: IUser[];
+  upVote: IUpVoteProps;
+  downVote: IDownVoteProps;
 }
 
 export const Answer: React.FC<IAnswerProps> = (props) => {
-  const { answer, author, upvotes, downvotes } = props;
+  const { answer, author, upVote, downVote } = props;
   return mp(
     props,
     <article key={answer.id} className="light-border border-b py-10">
@@ -34,8 +36,10 @@ export const Answer: React.FC<IAnswerProps> = (props) => {
           }
         />
 
-        <UpVote count={upvotes.length} />
-        <DownVote count={downvotes.length} />
+        <div className="flex gap-5">
+          <UpVote {...upVote} />
+          <DownVote {...downVote} />
+        </div>
       </div>
 
       <MarkdownViewer value={answer.content} />

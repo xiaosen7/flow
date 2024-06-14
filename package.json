@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm prisma:generate --watch & next dev",
+    "dev": "next dev",
     "build": "pnpm build:storybook && next build",
     "vercel-build": "pnpm prisma:generate && prisma db push && pnpm build",
     "start": "next start",

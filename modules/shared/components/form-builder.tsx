@@ -20,7 +20,7 @@ import {
   FormMessage,
   Input,
 } from "../ui";
-import { mp } from "../utils";
+import { cn, mp } from "../utils";
 
 type _IFormBuilderItem<
   TValues extends FieldValues,
@@ -54,12 +54,22 @@ export interface IFormBuilderProps<TValues extends FieldValues>
   form: UseFormReturn<TValues, ISafeAny, ISafeAny>;
   onSubmit: IFormBuilderPropsOnSubmit<TValues>;
   getSubmitText?: (loading: boolean) => React.ReactNode;
+  /**
+   * @default 'left'
+   */
+  submitAlign?: "left" | "right";
 }
 
 export const FormBuilder = <TValues extends FieldValues>(
   props: IFormBuilderProps<TValues>
 ) => {
-  const { items, form, onSubmit, getSubmitText = getDefaultSubmitText } = props;
+  const {
+    items,
+    form,
+    onSubmit,
+    getSubmitText = getDefaultSubmitText,
+    submitAlign = "left",
+  } = props;
   const { run, loading } = useRequest(
     async (values: TValues) => onSubmit(values),
     { manual: true }
@@ -106,7 +116,11 @@ export const FormBuilder = <TValues extends FieldValues>(
           )}
 
           <div className="flex flex-wrap">
-            <Button disabled={loading} variant="primary-gradient">
+            <Button
+              disabled={loading}
+              variant="primary-gradient"
+              className={cn(submitAlign === "right" && "ml-auto")}
+            >
               {getSubmitText(loading)}
             </Button>
           </div>

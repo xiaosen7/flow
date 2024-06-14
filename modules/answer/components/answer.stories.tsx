@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react";
 
 import { mock } from "@/shared";
+import { random } from "lodash-es";
 import { Answer } from "./answer";
 
 export default {
@@ -8,8 +9,14 @@ export default {
   args: {
     answer: mock.answer(),
     author: mock.user(),
-    upvotes: mock.create(mock.user, [0, 999]),
-    downvotes: mock.create(mock.user, [0, 999]),
+    upVote: {
+      count: random(0, 100),
+      voted: false,
+    },
+    downVote: {
+      count: random(0, 100),
+      voted: false,
+    },
   },
 } as Meta<typeof Answer>;
 

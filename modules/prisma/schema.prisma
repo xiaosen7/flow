@@ -31,6 +31,7 @@ model User {
   questions         Question[] @relation("UserQuestions")
   upvoteQuestions   Question[] @relation("UserUpvoteQuestions")
   downvoteQuestions Question[] @relation("UserDownvoteQuestions")
+  collections       Question[] @relation("collections")
 
   answers         Answer[] @relation("UserAnswers")
   upvoteAnswers   Answer[] @relation("UserUpvoteAnswers")
@@ -47,14 +48,15 @@ model Tag {
 }
 
 model Question {
-  id        String   @id @default(cuid()) // Primary key
-  title     String
-  content   String
-  tags      Tag[]
-  answers   Answer[]
-  views     Int
-  upvotes   User[]   @relation("UserUpvoteQuestions")
-  downvotes User[]   @relation("UserDownvoteQuestions")
+  id         String   @id @default(cuid()) // Primary key
+  title      String
+  content    String
+  tags       Tag[]
+  answers    Answer[]
+  views      Int
+  upvotes    User[]   @relation("UserUpvoteQuestions")
+  downvotes  User[]   @relation("UserDownvoteQuestions")
+  collectors User[]   @relation("collections")
 
   author   User   @relation("UserQuestions", fields: [authorId], references: [id])
   authorId String

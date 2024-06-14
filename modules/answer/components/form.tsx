@@ -39,6 +39,7 @@ export const AnswerForm: React.FC<IAnswerFormProps> = (props) => {
       form={form}
       items={items}
       onSubmit={props.onSubmit}
+      submitAlign="right"
       getSubmitText={(loading) => (loading ? "Posting..." : "Post Answer")}
     />
   );

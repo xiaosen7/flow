@@ -3,24 +3,22 @@ import {
   ANSWER_SCHEMA,
   Answer,
   AnswerForm,
+  answerActions,
 } from "@/answer";
 import { MarkdownViewer } from "@/markdown";
 import { prisma } from "@/prisma";
 import {
+  Collect,
   QuestionDate,
   QuestionMetrics,
   QuestionTitle,
   questionActions,
 } from "@/question";
-import { DownVote, Filter, UpVote } from "@/shared";
-import { ImageClock } from "@/shared/assets/icons/clock";
-import { imageStarFilledSrc } from "@/shared/assets/icons/star-filled";
-import { imageStarRedSrc } from "@/shared/assets/icons/star-red";
+import { DownVote, Filter, IAnswer, UpVote } from "@/shared";
 import { Tags } from "@/tag";
 import { UserAvatar } from "@/user";
 import { userActions } from "@/user/actions";
 import { NextPage } from "next";
-import Image from "next/image";
 import { z } from "zod";
 
 export interface IQuestionDetailPageProps {
@@ -43,6 +41,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
       tags: true,
       upvotes: true,
       downvotes: true,
+      collectors: true,
       answers: {
         include: {
           author: true,
@@ -52,37 +51,52 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
       },
     },
   });
-  const { author, tags, answers, upvotes, downvotes } = question;
-  const hasSaved = false;
+  const { author, tags, answers, upvotes, downvotes, collectors } = question;
 
   const onCreateAnswer = async ({ content }: z.infer<typeof ANSWER_SCHEMA>) => {
     "use server";
 
-    await prisma.answer.create({
-      data: {
-        content: content,
-        authorId: author.id,
-        questionId: question.id,
-      },
-    });
+    await answerActions.create(question.id, { content });
   };
 
   const onUpVote = async (vote: boolean) => {
     "use server";
-    vote
+    return vote
       ? questionActions.upVote(question)
       : questionActions.cancelUpVote(question);
   };
 
   const onDownVote = async (vote: boolean) => {
     "use server";
-    vote
+    return vote
       ? questionActions.downVote(question)
       : questionActions.cancelDownVote(question);
   };
 
+  const onUpVoteAnswer = async (vote: boolean, answer: IAnswer) => {
+    "use server";
+    return vote
+      ? answerActions.upVote(answer)
+      : answerActions.cancelUpVote(answer);
+  };
+
+  const onDownVoteAnswer = async (vote: boolean, answer: IAnswer) => {
+    "use server";
+    return vote
+      ? answerActions.downVote(answer)
+      : answerActions.cancelDownVote(answer);
+  };
+
+  const onCollectChange = async (collect: boolean) => {
+    "use server";
+    return collect
+      ? questionActions.collect(question)
+      : questionActions.cancelCollect(question);
+  };
+
   const upVoted = !!(user && upvotes.find((x) => x.id === user.id));
   const downVoted = !!(user && downvotes.find((x) => x.id === user.id));
+  const collected = !!(user && collectors.find((x) => x.id === user.id));
 
   return (
     <div>
@@ -102,31 +116,15 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
             onChange={onDownVote}
           />
 
-          <Image
-            src={hasSaved ? imageStarFilledSrc : imageStarRedSrc}
-            width={18}
-            height={18}
-            alt="star"
-            className="cursor-pointer"
-          />
+          <Collect collected={collected} onChange={onCollectChange} />
         </div>
       </div>
 
       <QuestionTitle className="mt-3.5" level={2} question={question} />
 
       <div className="mb-8 mt-5 flex flex-wrap gap-4">
-        <span className="small-regular line-clamp-1 flex gap-1 max-sm:hidden">
-          <ImageClock
-            className="invert-colors object-contain"
-            width={16}
-            height={16}
-            alt="clock"
-          />
-
-          <QuestionDate question={question} />
-        </span>
-
-        <QuestionMetrics answers={0} views={question.views} />
+        <QuestionDate variation="with-icon" question={question} />
+        <QuestionMetrics answers={answers.length} views={question.views} />
       </div>
 
       <MarkdownViewer value={question.content} />
@@ -143,8 +141,26 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
           key={answer.id}
           answer={answer}
           author={answer.author}
-          downvotes={answer.downvotes}
-          upvotes={answer.upvotes}
+          upVote={{
+            count: answer.upvotes.length,
+            voted: user
+              ? !!answer.upvotes.find((x) => x.id === user.id)
+              : false,
+            onChange: async (vote) => {
+              "use server";
+              await onUpVoteAnswer(vote, answer);
+            },
+          }}
+          downVote={{
+            count: answer.downvotes.length,
+            voted: user
+              ? !!answer.downvotes.find((x) => x.id === user.id)
+              : false,
+            onChange: async (vote) => {
+              "use server";
+              await onDownVoteAnswer(vote, answer);
+            },
+          }}
         />
       ))}
 

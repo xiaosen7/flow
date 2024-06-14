@@ -1,3 +1,5 @@
+"use client";
+
 import { mp } from "@/shared";
 import { useTheme } from "@/theme";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
