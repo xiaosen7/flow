@@ -32,9 +32,14 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   const { id } = params;
 
   const user = await userActions.getCurrent();
-  const question = await prisma.question.findUniqueOrThrow({
+  const question = await prisma.question.update({
     where: {
       id,
+    },
+    data: {
+      views: {
+        increment: 1,
+      },
     },
     include: {
       author: true,
@@ -51,7 +56,9 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
       },
     },
   });
-  const { author, tags, answers, upvotes, downvotes, collectors } = question;
+
+  const { author, tags, answers, upvotes, downvotes, collectors, views } =
+    question;
 
   const onCreateAnswer = async ({ content }: z.infer<typeof ANSWER_SCHEMA>) => {
     "use server";
@@ -124,7 +131,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
 
       <div className="mb-8 mt-5 flex flex-wrap gap-4">
         <QuestionDate variation="with-icon" question={question} />
-        <QuestionMetrics answers={answers.length} views={question.views} />
+        <QuestionMetrics answers={answers.length} views={views} />
       </div>
 
       <MarkdownViewer value={question.content} />
