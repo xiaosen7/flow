@@ -1,6 +1,5 @@
 import {
   ANSWER_FILTER_OPTIONS,
-  ANSWER_SCHEMA,
   Answer,
   AnswerForm,
   answerActions,
@@ -14,12 +13,12 @@ import {
   QuestionTitle,
   questionActions,
 } from "@/question";
-import { DownVote, Filter, IAnswer, UpVote } from "@/shared";
+import { DownVote, Filter, UpVote } from "@/shared";
+import { bindAction } from "@/shared/utils/action";
 import { Tags } from "@/tag";
 import { UserAvatar } from "@/user";
 import { userActions } from "@/user/actions";
 import { NextPage } from "next";
-import { z } from "zod";
 
 export interface IQuestionDetailPageProps {
   params: { id: string };
@@ -60,47 +59,6 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   const { author, tags, answers, upvotes, downvotes, collectors, views } =
     question;
 
-  const onCreateAnswer = async ({ content }: z.infer<typeof ANSWER_SCHEMA>) => {
-    "use server";
-
-    await answerActions.create(question.id, { content });
-  };
-
-  const onUpVote = async (vote: boolean) => {
-    "use server";
-    return vote
-      ? questionActions.upVote(question)
-      : questionActions.cancelUpVote(question);
-  };
-
-  const onDownVote = async (vote: boolean) => {
-    "use server";
-    return vote
-      ? questionActions.downVote(question)
-      : questionActions.cancelDownVote(question);
-  };
-
-  const onUpVoteAnswer = async (vote: boolean, answer: IAnswer) => {
-    "use server";
-    return vote
-      ? answerActions.upVote(answer)
-      : answerActions.cancelUpVote(answer);
-  };
-
-  const onDownVoteAnswer = async (vote: boolean, answer: IAnswer) => {
-    "use server";
-    return vote
-      ? answerActions.downVote(answer)
-      : answerActions.cancelDownVote(answer);
-  };
-
-  const onCollectChange = async (collect: boolean) => {
-    "use server";
-    return collect
-      ? questionActions.collect(question)
-      : questionActions.cancelCollect(question);
-  };
-
   const upVoted = !!(user && upvotes.find((x) => x.id === user.id));
   const downVoted = !!(user && downvotes.find((x) => x.id === user.id));
   const collected = !!(user && collectors.find((x) => x.id === user.id));
@@ -114,16 +72,19 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
           <UpVote
             count={question.upvotes.length}
             voted={upVoted}
-            onChange={onUpVote}
+            onChange={bindAction(questionActions.upVote, question)}
           />
 
           <DownVote
             count={question.downvotes.length}
             voted={downVoted}
-            onChange={onDownVote}
+            onChange={bindAction(questionActions.downVote, question)}
           />
 
-          <Collect collected={collected} onChange={onCollectChange} />
+          <Collect
+            collected={collected}
+            onChange={bindAction(questionActions.collect, question)}
+          />
         </div>
       </div>
 
@@ -153,25 +114,19 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
             voted: user
               ? !!answer.upvotes.find((x) => x.id === user.id)
               : false,
-            onChange: async (vote) => {
-              "use server";
-              await onUpVoteAnswer(vote, answer);
-            },
+            onChange: bindAction(answerActions.upVote, answer),
           }}
           downVote={{
             count: answer.downvotes.length,
             voted: user
               ? !!answer.downvotes.find((x) => x.id === user.id)
               : false,
-            onChange: async (vote) => {
-              "use server";
-              await onDownVoteAnswer(vote, answer);
-            },
+            onChange: bindAction(answerActions.downVote, answer),
           }}
         />
       ))}
 
-      <AnswerForm onSubmit={onCreateAnswer} />
+      <AnswerForm onSubmit={bindAction(answerActions.create, question.id)} />
     </div>
   );
 };

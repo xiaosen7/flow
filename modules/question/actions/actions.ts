@@ -37,10 +37,10 @@ export async function create(values: z.infer<typeof QUESTION_SCHEMA>) {
   redirect("/", RedirectType.push);
 }
 
-export async function upVote(question: IQuestion) {
+export async function upVote(question: IQuestion, vote: boolean) {
   const user = await userActions.getCurrentOrThrow();
 
-  await cancelDownVote(question);
+  vote && (await downVote(question, false));
 
   await prisma.question.update({
     where: {
@@ -48,7 +48,7 @@ export async function upVote(question: IQuestion) {
     },
     data: {
       upvotes: {
-        connect: {
+        [vote ? "connect" : "disconnect"]: {
           id: user.id,
         },
       },
@@ -56,27 +56,10 @@ export async function upVote(question: IQuestion) {
   });
 }
 
-export async function cancelUpVote(question: IQuestion) {
+export async function downVote(question: IQuestion, vote: boolean) {
   const user = await userActions.getCurrentOrThrow();
 
-  await prisma.question.update({
-    where: {
-      id: question.id,
-    },
-    data: {
-      upvotes: {
-        disconnect: {
-          id: user.id,
-        },
-      },
-    },
-  });
-}
-
-export async function downVote(question: IQuestion) {
-  const user = await userActions.getCurrentOrThrow();
-
-  await cancelUpVote(question);
+  vote && (await upVote(question, false));
 
   await prisma.question.update({
     where: {
@@ -84,7 +67,7 @@ export async function downVote(question: IQuestion) {
     },
     data: {
       downvotes: {
-        connect: {
+        [vote ? "connect" : "disconnect"]: {
           id: user.id,
         },
       },
@@ -92,24 +75,7 @@ export async function downVote(question: IQuestion) {
   });
 }
 
-export async function cancelDownVote(question: IQuestion) {
-  const user = await userActions.getCurrentOrThrow();
-
-  await prisma.question.update({
-    where: {
-      id: question.id,
-    },
-    data: {
-      downvotes: {
-        disconnect: {
-          id: user.id,
-        },
-      },
-    },
-  });
-}
-
-export async function collect(question: IQuestion) {
+export async function collect(question: IQuestion, collect: boolean) {
   const user = await userActions.getCurrentOrThrow();
 
   await prisma.question.update({
@@ -118,24 +84,7 @@ export async function collect(question: IQuestion) {
     },
     data: {
       collectors: {
-        connect: {
-          id: user.id,
-        },
-      },
-    },
-  });
-}
-
-export async function cancelCollect(question: IQuestion) {
-  const user = await userActions.getCurrentOrThrow();
-
-  await prisma.question.update({
-    where: {
-      id: question.id,
-    },
-    data: {
-      collectors: {
-        disconnect: {
+        [collect ? "connect" : "disconnect"]: {
           id: user.id,
         },
       },

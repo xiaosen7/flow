@@ -52,7 +52,7 @@ export interface IFormBuilderProps<TValues extends FieldValues>
   extends IComponentBaseProps {
   items: IFormBuilderItem<TValues>[];
   form: UseFormReturn<TValues, ISafeAny, ISafeAny>;
-  onSubmit: IFormBuilderPropsOnSubmit<TValues>;
+  onSubmit?: IFormBuilderPropsOnSubmit<TValues>;
   getSubmitText?: (loading: boolean) => React.ReactNode;
   /**
    * @default 'left'
@@ -71,7 +71,7 @@ export const FormBuilder = <TValues extends FieldValues>(
     submitAlign = "left",
   } = props;
   const { run, loading } = useRequest(
-    async (values: TValues) => onSubmit(values),
+    async (values: TValues) => onSubmit?.(values),
     { manual: true }
   );
 

@@ -4,6 +4,7 @@ import {
   FormBuilder,
   IComponentBaseProps,
   IFormBuilderItems,
+  IFormBuilderPropsOnSubmit,
   Input,
   cn,
   mp,
@@ -11,11 +12,12 @@ import {
 } from "@/shared";
 import { TagsEditor } from "@/tag";
 import React from "react";
-import { questionActions } from "../actions";
 import { QUESTION_SCHEMA } from "../constants";
 import { IQuestionPostValue } from "../types";
 
-export interface ICQuestionFormProps extends IComponentBaseProps {}
+export interface ICQuestionFormProps extends IComponentBaseProps {
+  onSubmit: IFormBuilderPropsOnSubmit<IQuestionPostValue>;
+}
 
 const items: IFormBuilderItems<IQuestionPostValue> = [
   {
@@ -61,7 +63,7 @@ export const QuestionForm: React.FC<ICQuestionFormProps> = (props) => {
     <FormBuilder<IQuestionPostValue>
       items={items}
       form={form}
-      onSubmit={questionActions.create}
+      onSubmit={props.onSubmit}
       getSubmitText={(loading) => (loading ? "Posting..." : "Ask a Question")}
     />
   );

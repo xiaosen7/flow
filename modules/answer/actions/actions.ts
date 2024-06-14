@@ -21,18 +21,17 @@ export async function create(
   });
 }
 
-export async function upVote(answer: IAnswer) {
+export async function upVote(answer: IAnswer, vote: boolean) {
   const user = await userActions.getCurrentOrThrow();
 
-  await cancelDownVote(answer);
-
+  vote && (await downVote(answer, false));
   await prisma.answer.update({
     where: {
       id: answer.id,
     },
     data: {
       upvotes: {
-        connect: {
+        [vote ? "connect" : "disconnect"]: {
           id: user.id,
         },
       },
@@ -40,52 +39,17 @@ export async function upVote(answer: IAnswer) {
   });
 }
 
-export async function cancelUpVote(answer: IAnswer) {
+export async function downVote(answer: IAnswer, vote: boolean) {
   const user = await userActions.getCurrentOrThrow();
 
-  await prisma.answer.update({
-    where: {
-      id: answer.id,
-    },
-    data: {
-      upvotes: {
-        disconnect: {
-          id: user.id,
-        },
-      },
-    },
-  });
-}
-
-export async function downVote(answer: IAnswer) {
-  const user = await userActions.getCurrentOrThrow();
-
-  await cancelUpVote(answer);
-
+  vote && (await upVote(answer, false));
   await prisma.answer.update({
     where: {
       id: answer.id,
     },
     data: {
       downvotes: {
-        connect: {
-          id: user.id,
-        },
-      },
-    },
-  });
-}
-
-export async function cancelDownVote(answer: IAnswer) {
-  const user = await userActions.getCurrentOrThrow();
-
-  await prisma.answer.update({
-    where: {
-      id: answer.id,
-    },
-    data: {
-      downvotes: {
-        disconnect: {
+        [vote ? "connect" : "disconnect"]: {
           id: user.id,
         },
       },
