@@ -24,6 +24,9 @@ export namespace mock {
       fullName: `fullName of ${id}`,
       joinedAt: date(),
       username: `username of ${id}`,
+      bio: `bio of ${id}`,
+      location: `location of ${id}`,
+      portfolioWebsite: `http://www.${id}.com`,
     };
   }
 

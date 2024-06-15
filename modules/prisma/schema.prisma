@@ -18,12 +18,16 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(cuid())
-  clerkId  String   @unique
-  fullName String
-  username String   @unique
-  email    String   @unique
-  imageUrl String
+  id               String  @id @default(cuid())
+  clerkId          String  @unique
+  fullName         String
+  username         String  @unique
+  email            String  @unique
+  imageUrl         String
+  portfolioWebsite String?
+  location         String?
+  bio              String?
+
   joinedAt DateTime @default(now())
 
   tags Tag[]
