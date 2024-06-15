@@ -10,3 +10,7 @@ export interface IControllableComponentProps<TValue> {
   defaultValue?: TValue;
   onChange?: (value: TValue) => void;
 }
+
+export interface IPageProps<TParams = {}> {
+  params: TParams;
+}

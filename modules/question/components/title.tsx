@@ -1,17 +1,16 @@
-import { IComponentBaseProps, IQuestion, Linkable, mp } from "@/shared";
+import { IComponentBaseProps, IQuestion, mp } from "@/shared";
+import Link from "next/link";
 import React from "react";
 
 export interface IQuestionTitleProps extends IComponentBaseProps {
   level: 2 | 3;
   question: IQuestion;
-  linkable?: boolean;
 }
 
 export const QuestionTitle: React.FC<IQuestionTitleProps> = (props) => {
   const {
     level,
     question: { title, id },
-    linkable,
   } = props;
 
   let node: React.ReactElement = <></>;
@@ -29,8 +28,5 @@ export const QuestionTitle: React.FC<IQuestionTitleProps> = (props) => {
     );
   }
 
-  return mp(
-    props,
-    <Linkable href={linkable ? `/question/${id}` : undefined}>{node}</Linkable>
-  );
+  return mp(props, <Link href={`/question/${id}`}>{node}</Link>);
 };

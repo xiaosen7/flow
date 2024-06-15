@@ -1,14 +1,9 @@
-import {
-  Filter,
-  IComponentBaseProps,
-  IFilterProps,
-  ISearchInputProps,
-  SearchInput,
-  cn,
-  mp,
-  useMediaQuery,
-} from "@/shared";
 import React from "react";
+import { useMediaQuery } from "../hooks";
+import { IComponentBaseProps } from "../types";
+import { cn, mp } from "../utils";
+import { Filter, IFilterProps } from "./filter";
+import { ISearchInputProps, SearchInput } from "./search-input";
 
 export interface IListProps<TItem> extends IComponentBaseProps {
   title: React.ReactNode;
@@ -16,7 +11,7 @@ export interface IListProps<TItem> extends IComponentBaseProps {
   search?: ISearchInputProps;
   filter?: IFilterProps;
   items: TItem[];
-  renderItem: (item: TItem) => React.ReactNode;
+  renderItem: (item: TItem, index: number) => React.ReactNode;
   empty: React.ReactNode;
   /**
    * @default "row"
@@ -24,9 +19,9 @@ export interface IListProps<TItem> extends IComponentBaseProps {
   direction?: "row" | "column";
 }
 
-export const List = <TItem extends { id: React.Key }>(
+export const List = function List<TItem extends { id: React.Key }>(
   props: IListProps<TItem>
-) => {
+) {
   const {
     titleExtra,
     search,
@@ -70,9 +65,9 @@ export const List = <TItem extends { id: React.Key }>(
             )}
           >
             {items.length > 0
-              ? items.map((item) => (
+              ? items.map((item, index) => (
                   <React.Fragment key={item.id}>
-                    {renderItem(item)}
+                    {renderItem(item, index)}
                   </React.Fragment>
                 ))
               : empty}

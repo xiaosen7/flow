@@ -1,15 +1,15 @@
 import {
   QUESTION_FILTER_OPTIONS,
-  QuestionCard,
+  QuestionList,
   questionActions,
 } from "@/question";
-import { List, NoResults } from "@/shared";
+import { NoResults } from "@/shared";
 
 export default async function Home() {
   const questions = await questionActions.getCollected();
 
   return (
-    <List
+    <QuestionList
       search={{
         placeholder: "Search for amazing minds",
       }}
@@ -17,16 +17,10 @@ export default async function Home() {
         options: QUESTION_FILTER_OPTIONS,
       }}
       title={"Saved Questions"}
-      direction="column"
-      items={questions}
-      renderItem={(question) => (
-        <QuestionCard
-          question={question}
-          creator={question.author}
-          tags={question.tags}
-          votes={question.upvotes.length}
-        />
-      )}
+      questions={questions}
+      getAuthor={(question) => question.author}
+      getTags={(question) => question.tags}
+      getVotes={(question) => question.upvotes}
       empty={
         <NoResults
           topic="questions"
@@ -37,6 +31,6 @@ export default async function Home() {
           linkTitle="Ask a Question"
         />
       }
-    ></List>
+    />
   );
 }

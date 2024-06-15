@@ -8,6 +8,7 @@ export interface ITagsProps extends IComponentBaseProps {
 
 export const Tags: React.FC<ITagsProps> = (props) => {
   const { tags } = props;
+
   return mp(
     props,
     <div className="mt-3.5 flex flex-wrap gap-2">

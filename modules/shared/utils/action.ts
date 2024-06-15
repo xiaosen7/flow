@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { ISafeAny } from "../types";
 
 export function bindAction<
@@ -10,3 +11,23 @@ export function bindAction<
     return actionFn(arg1, arg2);
   };
 }
+
+export const ac = (actionFn: (...args: ISafeAny[]) => Promise<void>) => {
+  const fn = Object.assign(actionFn, {
+    bindArgs(...boundArgs: ISafeAny[]) {
+      return ac(async (...args: ISafeAny[]) => {
+        "use server";
+        return actionFn(...boundArgs, ...args);
+      });
+    },
+    revalidatePath(path: string) {
+      return ac(async (...args) => {
+        "use server";
+        await actionFn(...args);
+        revalidatePath(path);
+      });
+    },
+  });
+
+  return fn;
+};

@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import { prisma } from "@/prisma";
-import { QUESTION_FILTER_OPTIONS, QuestionCard } from "@/question";
-import { Button, List, NoResults } from "@/shared";
+import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
+import { Button, NoResults } from "@/shared";
 
 export default async function Home() {
   const questions = await prisma.question.findMany({
@@ -13,7 +13,7 @@ export default async function Home() {
     },
   });
   return (
-    <List
+    <QuestionList
       search={{
         placeholder: "Search for amazing minds",
       }}
@@ -28,16 +28,10 @@ export default async function Home() {
           </Button>
         </Link>
       }
-      direction="column"
-      items={questions}
-      renderItem={(question) => (
-        <QuestionCard
-          question={question}
-          creator={question.author}
-          tags={question.tags}
-          votes={question.upvotes.length}
-        />
-      )}
+      questions={questions}
+      getAuthor={(question) => question.author}
+      getTags={(question) => question.tags}
+      getVotes={(question) => question.upvotes}
       empty={
         <NoResults
           topic="questions"
@@ -48,6 +42,6 @@ export default async function Home() {
           linkTitle="Ask a Question"
         />
       }
-    ></List>
+    />
   );
 }

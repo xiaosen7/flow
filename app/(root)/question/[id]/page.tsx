@@ -13,16 +13,16 @@ import {
   QuestionTitle,
   questionActions,
 } from "@/question";
-import { DownVote, Filter, UpVote } from "@/shared";
-import { bindAction } from "@/shared/utils/action";
+import { DownVote, Filter, IPageProps, UpVote } from "@/shared";
+import { ac } from "@/shared/utils/action";
 import { Tags } from "@/tag";
 import { UserAvatar } from "@/user";
 import { userActions } from "@/user/actions";
 import { NextPage } from "next";
+import { headers } from "next/headers";
+headers;
 
-export interface IQuestionDetailPageProps {
-  params: { id: string };
-}
+export interface IQuestionDetailPageProps extends IPageProps<{ id: string }> {}
 
 const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   props
@@ -62,7 +62,6 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   const upVoted = !!(user && upvotes.find((x) => x.id === user.id));
   const downVoted = !!(user && downvotes.find((x) => x.id === user.id));
   const collected = !!(user && collectors.find((x) => x.id === user.id));
-
   return (
     <div>
       <div className="flex flex-wrap justify-between gap-4">
@@ -72,18 +71,24 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
           <UpVote
             count={question.upvotes.length}
             voted={upVoted}
-            onChange={bindAction(questionActions.upVote, question)}
+            onChange={ac(questionActions.upVote)
+              .bindArgs(question)
+              .revalidatePath(`/question/${id}`)}
           />
 
           <DownVote
             count={question.downvotes.length}
             voted={downVoted}
-            onChange={bindAction(questionActions.downVote, question)}
+            onChange={ac(questionActions.downVote)
+              .bindArgs(question)
+              .revalidatePath(`/question/${id}`)}
           />
 
           <Collect
             collected={collected}
-            onChange={bindAction(questionActions.collect, question)}
+            onChange={ac(questionActions.collect)
+              .bindArgs(question)
+              .revalidatePath(`/question/${id}`)}
           />
         </div>
       </div>
@@ -114,19 +119,27 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
             voted: user
               ? !!answer.upvotes.find((x) => x.id === user.id)
               : false,
-            onChange: bindAction(answerActions.upVote, answer),
+            onChange: ac(answerActions.upVote)
+              .bindArgs(answer)
+              .revalidatePath(`/question/${id}`),
           }}
           downVote={{
             count: answer.downvotes.length,
             voted: user
               ? !!answer.downvotes.find((x) => x.id === user.id)
               : false,
-            onChange: bindAction(answerActions.downVote, answer),
+            onChange: ac(answerActions.downVote)
+              .bindArgs(answer)
+              .revalidatePath(`/question/${id}`),
           }}
         />
       ))}
 
-      <AnswerForm onSubmit={bindAction(answerActions.create, question.id)} />
+      <AnswerForm
+        onSubmit={ac(answerActions.create)
+          .bindArgs(question.id)
+          .revalidatePath(`/question/${id}`)}
+      />
     </div>
   );
 };

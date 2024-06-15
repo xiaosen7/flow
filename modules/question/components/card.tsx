@@ -34,12 +34,7 @@ export const QuestionCard: React.FC<IQuestionCardProps> = (props) => {
         question={question}
       />
 
-      <QuestionTitle
-        className="line-clamp-1"
-        linkable
-        question={question}
-        level={3}
-      />
+      <QuestionTitle className="line-clamp-1" question={question} level={3} />
 
       <Tags tags={tags} />
 
