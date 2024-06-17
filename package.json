@@ -18,7 +18,8 @@
     "prepare": "husky & tsx _scripts/prepare & pnpm gen:git-log-file"
   },
   "prisma": {
-    "schema": "modules/prisma/schema.prisma"
+    "schema": "modules/prisma/schema.prisma",
+    "seed": "dotenv -e .env.local -- tsx _scripts/seed.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.1.3",
@@ -90,6 +91,7 @@
     "eslint-plugin-storybook": "^0.8.0",
     "eslint-plugin-tailwindcss": "^3.17.0",
     "jsdom": "^24.1.0",
+    "log-update": "^6.0.0",
     "postcss": "^8.4.38",
     "prettier": "^3.3.0",
     "storybook": "8.1.5",

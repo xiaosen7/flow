@@ -4,9 +4,9 @@ import "@toast-ui/editor/dist/toastui-editor-only.css";
 import { Editor } from "@toast-ui/react-editor";
 import { useControllableValue } from "ahooks";
 import React, { useEffect } from "react";
-import { MARKDOWN_EDITOR_PLUGINS } from "../../constants";
 import "../../styles/index.css";
 import { IMarkdownEditorProps } from "../types";
+import { MARKDOWN_EDITOR_PLUGINS } from "./constants";
 
 export const MarkdownEditor: React.FC<IMarkdownEditorProps> = (props) => {
   const [value, onChange] = useControllableValue(props);

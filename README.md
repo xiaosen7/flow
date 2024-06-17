@@ -19,3 +19,9 @@ Second, run the development server:
 ```bash
 pnpm dev
 ```
+
+## Insert db seed
+
+```bash
+pnpm prisma db seed
+```

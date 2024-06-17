@@ -6,8 +6,8 @@ import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import { Viewer } from "@toast-ui/react-editor";
 import React, { useEffect } from "react";
-import { MARKDOWN_VIEWER_PLUGINS } from "../../constants";
 import { IMarkdownViewerProps } from "../types";
+import { MARKDOWN_VIEWER_PLUGINS } from "./constants";
 
 export const MarkdownViewer: React.FC<IMarkdownViewerProps> = (props) => {
   const { value } = props;
