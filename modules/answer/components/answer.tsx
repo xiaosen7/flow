@@ -16,8 +16,8 @@ import React from "react";
 export interface IAnswerProps extends IComponentBaseProps {
   answer: IAnswer;
   author: IUser;
-  upVote: IUpVoteProps;
-  downVote: IDownVoteProps;
+  upVote?: IUpVoteProps;
+  downVote?: IDownVoteProps;
 }
 
 export const Answer: React.FC<IAnswerProps> = (props) => {
@@ -37,8 +37,8 @@ export const Answer: React.FC<IAnswerProps> = (props) => {
         />
 
         <div className="flex gap-5">
-          <UpVote {...upVote} />
-          <DownVote {...downVote} />
+          {upVote && <UpVote {...upVote} />}
+          {downVote && <DownVote {...downVote} />}
         </div>
       </div>
 

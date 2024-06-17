@@ -1,3 +1,4 @@
+import { isNumber } from "lodash-es";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -7,7 +8,7 @@ import { cn, formatNumber, mp } from "../utils";
 export interface IMetricProps extends IComponentBaseProps {
   imgUrl: string;
   label: string;
-  value: number;
+  value: React.ReactNode;
   href?: string;
   classNames?: {
     text?: string;
@@ -26,7 +27,7 @@ export const Metric: React.FC<IMetricProps> = (props) => {
         className={cn(`object-contain invert-colors`, href && "rounded-full")}
       />
       <p className={cn("flex items-center gap-1", classNames?.text)}>
-        {formatNumber(value)}
+        {isNumber(value) ? formatNumber(value) : value}
         <span className={"small-regular line-clamp-1 capitalize"}>{label}</span>
       </p>
     </>

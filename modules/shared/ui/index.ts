@@ -6,3 +6,4 @@ export * from "./label";
 export * from "./menubar";
 export * from "./select";
 export * from "./sheet";
+export * from "./tabs";
