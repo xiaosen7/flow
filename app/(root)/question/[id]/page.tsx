@@ -15,6 +15,7 @@ import {
 } from "@/question";
 import {
   DownVote,
+  EditAndDelete,
   Filter,
   IActionFn,
   IAnswer,
@@ -26,8 +27,7 @@ import { Tags } from "@/tag";
 import { UserAvatar } from "@/user";
 import { userActions } from "@/user/actions";
 import { NextPage } from "next";
-import { headers } from "next/headers";
-headers;
+import { redirect } from "next/navigation";
 
 export interface IQuestionDetailPageProps extends IPageProps<{ id: string }> {}
 
@@ -76,9 +76,27 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
       .bindRevalidatePath(`/question/${id}`);
   };
 
+  const onDelete = async () => {
+    "use server";
+    await prisma.question.delete({
+      where: {
+        id: question.id,
+      },
+    });
+
+    redirect("/");
+  };
+
+  const onEdit = async () => {
+    "use server";
+    redirect(`/question/edit/${question.id}`);
+  };
+
   const bindAnswerAction = (actionFn: IActionFn, answer: IAnswer) => {
     return ac(actionFn).bindArgs(answer).bindRevalidatePath(`/question/${id}`);
   };
+
+  const editable = user?.id === author.id;
 
   return (
     <div>
@@ -114,7 +132,16 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
 
       <MarkdownViewer value={question.content} />
 
-      <Tags tags={tags} />
+      <div className="mt-3.5 flex justify-between gap-6 max-sm:flex-col">
+        <Tags tags={tags} />
+        {editable && (
+          <EditAndDelete
+            className="h-[30px]"
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
+        )}
+      </div>
 
       <div className="mt-8 flex flex-wrap items-center justify-between">
         <h3 className="primary-text-gradient">{answers.length} Answers</h3>

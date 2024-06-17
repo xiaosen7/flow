@@ -4,6 +4,7 @@ import {
   IControllableComponentProps,
   Input,
   InputProps,
+  cn,
   mp,
 } from "@/shared";
 import { ImageClose } from "@/shared/assets/icons/close";
@@ -67,10 +68,13 @@ export const TagsEditor: React.FC<ITagsEditorProps> = (props) => {
               {text}
               <ImageClose
                 alt="Close icon"
-                className="cursor-pointer object-contain invert-0 dark:invert"
+                className={cn(
+                  "cursor-pointer object-contain invert-0 dark:invert",
+                  disabled && "cursor-not-allowed"
+                )}
                 height={12}
                 width={12}
-                onClick={() => onRemove(text)}
+                onClick={disabled ? undefined : () => onRemove(text)}
               />
             </Badge>
           ))}

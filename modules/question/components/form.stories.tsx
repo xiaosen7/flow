@@ -1,5 +1,4 @@
 import { Meta, StoryFn } from "@storybook/react";
-import React from "react";
 
 import { QuestionForm } from "./form";
 
@@ -8,6 +7,18 @@ export default {
   args: {},
 } as Meta<typeof QuestionForm>;
 
-export const Base: StoryFn<typeof QuestionForm> = (args) => (
+export const Post: StoryFn<typeof QuestionForm> = (args) => (
   <QuestionForm {...args} />
+);
+
+export const Edit: StoryFn<typeof QuestionForm> = (args) => (
+  <QuestionForm
+    {...args}
+    isEdit
+    defaultValues={{
+      tags: ["react"],
+      explanation: "",
+      title: "",
+    }}
+  />
 );

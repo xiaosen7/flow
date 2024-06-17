@@ -1,31 +1,17 @@
-import { IComponentBaseProps, ITag, mp } from "@/shared";
+import { IComponentBaseProps, IQuestion, ITag, mp } from "@/shared";
 import { ImageChevronRight } from "@/shared/assets/icons/chevron-right";
 import { Tag } from "@/tag";
 import Link from "next/link";
 import React from "react";
 
-const hotQuestions = [
-  {
-    id: 1,
-    title:
-      "Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?",
-  },
-  { id: 2, title: "Is it only me or the font is bolder than necessary?" },
-  { id: 3, title: "Can I get the course for free?" },
-  { id: 4, title: "Redux Toolkit Not Updating State as Expected" },
-  { id: 5, title: "Async/Await Function Not Handling Errors Properly" },
-];
-const popularTags: ITag[] = [
-  { id: "1", name: "javascript", createdOn: new Date(), description: "" },
-  { id: "2", name: "react", createdOn: new Date(), description: "" },
-  { id: "3", name: "vuejs", createdOn: new Date(), description: "" },
-  { id: "4", name: "redux", createdOn: new Date(), description: "" },
-  { id: "5", name: "next", createdOn: new Date(), description: "" },
-];
-
-export interface IRightSidebarProps extends IComponentBaseProps {}
+export interface IRightSidebarProps extends IComponentBaseProps {
+  hotQuestions?: IQuestion[];
+  popularTags?: ITag[];
+  getTagQuestionCount?: (tag: ITag) => number;
+}
 
 export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
+  const { hotQuestions = [], popularTags = [], getTagQuestionCount } = props;
   return mp(
     props,
     <section className="background-light900_dark200 light-border custom-scrollbar sticky right-0 top-0 flex h-full w-[350px] flex-col overflow-y-auto border-l p-6 shadow-light-300 dark:shadow-none">
@@ -57,7 +43,11 @@ export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
         <div className="mt-7 flex flex-col gap-4">
           {popularTags.map((tag) => (
-            <Tag key={tag.id} tag={tag} totalQuestions={10} />
+            <Tag
+              key={tag.id}
+              tag={tag}
+              totalQuestions={getTagQuestionCount?.(tag)}
+            />
           ))}
         </div>
       </div>

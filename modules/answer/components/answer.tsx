@@ -3,6 +3,7 @@ import { MarkdownViewer } from "@/markdown";
 import {
   Button,
   DownVote,
+  EditAndDelete,
   IAnswer,
   IComponentBaseProps,
   IDownVoteProps,
@@ -12,8 +13,6 @@ import {
   formatDate,
   mp,
 } from "@/shared";
-import { ImageEdit } from "@/shared/assets/icons/edit";
-import { ImageTrash } from "@/shared/assets/icons/trash";
 import { UserAvatar } from "@/user";
 import { useRequest } from "ahooks";
 import React, { useState } from "react";
@@ -82,23 +81,11 @@ export const Answer: React.FC<IAnswerProps> = (props) => {
       )}
 
       {editable && !isEditState && (
-        <div className="flex items-center justify-end gap-3 max-sm:w-full">
-          <ImageEdit
-            alt="Edit"
-            className="cursor-pointer"
-            height={14}
-            width={14}
-            onClick={() => setIsEditState(!isEditState)}
-          />
-
-          <ImageTrash
-            alt="Delete"
-            className="cursor-pointer"
-            height={14}
-            width={14}
-            onClick={() => props.onDelete?.()}
-          />
-        </div>
+        <EditAndDelete
+          className="justify-end"
+          onDelete={() => props.onDelete?.()}
+          onEdit={() => setIsEditState(!isEditState)}
+        />
       )}
     </article>
   );

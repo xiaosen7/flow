@@ -37,6 +37,21 @@ export async function create(values: z.infer<typeof QUESTION_SCHEMA>) {
   redirect("/", RedirectType.push);
 }
 
+export async function update(
+  question: IQuestion,
+  data: Omit<z.infer<typeof QUESTION_SCHEMA>, "tags">
+) {
+  await prisma.question.update({
+    where: {
+      id: question.id,
+    },
+    data: {
+      content: data.explanation,
+      title: data.title,
+    },
+  });
+}
+
 export async function upVote(question: IQuestion, vote: boolean) {
   const user = await userActions.getCurrentOrThrow();
 

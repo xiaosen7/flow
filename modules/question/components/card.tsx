@@ -36,7 +36,7 @@ export const QuestionCard: React.FC<IQuestionCardProps> = (props) => {
 
       <QuestionTitle className="line-clamp-1" level={3} question={question} />
 
-      <Tags tags={tags} />
+      <Tags className="mt-3.5" tags={tags} />
 
       <div className="flex-between mt-6 w-full flex-wrap items-center gap-3 ">
         <UserAvatar

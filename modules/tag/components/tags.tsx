@@ -11,7 +11,7 @@ export const Tags: React.FC<ITagsProps> = (props) => {
 
   return mp(
     props,
-    <div className="mt-3.5 flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2">
       {tags?.map((tag) => <Tag key={tag.id} tag={tag} />)}
     </div>
   );

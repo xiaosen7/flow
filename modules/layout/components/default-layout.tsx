@@ -3,13 +3,16 @@ import React from "react";
 
 import { LeftSidebar } from "./left-sidebar";
 import { Navbar } from "./navbar";
-import { RightSidebar } from "./right-sidebar";
+import { IRightSidebarProps, RightSidebar } from "./right-sidebar";
 
-export interface IDefaultLayoutProps extends IComponentBaseProps {
+export interface IDefaultLayoutProps
+  extends IComponentBaseProps,
+    IRightSidebarProps {
   children?: React.ReactNode;
 }
 
 export const DefaultLayout: React.FC<IDefaultLayoutProps> = (props) => {
+  const { getTagQuestionCount, hotQuestions, popularTags } = props;
   return mp(
     props,
     <div className="background-light850_dark100 relative">
@@ -21,7 +24,12 @@ export const DefaultLayout: React.FC<IDefaultLayoutProps> = (props) => {
 
           <GitLog className="mt-6" />
         </section>
-        <RightSidebar className="pt-36 max-xl:hidden" />
+        <RightSidebar
+          className="pt-36 max-xl:hidden"
+          getTagQuestionCount={getTagQuestionCount}
+          hotQuestions={hotQuestions}
+          popularTags={popularTags}
+        />
       </div>
       {/* Toaster */}
     </div>

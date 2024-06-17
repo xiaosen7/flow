@@ -35,6 +35,7 @@ type _IFormBuilderItem<
         ) => JSX.Element;
         description?: string;
         required?: boolean;
+        disabled?: boolean;
       }
     : never;
 
@@ -92,10 +93,12 @@ export const FormBuilder = <TValues extends FieldValues>(
               label,
               renderControl = defaultRenderControl,
               required,
+              disabled,
             }) => (
               <FormField
                 key={name}
                 control={form.control}
+                disabled={disabled === true}
                 name={name}
                 render={({ field }) => (
                   <FormItem className="flex w-full flex-col gap-3">

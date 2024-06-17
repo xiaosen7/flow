@@ -1,4 +1,5 @@
 export * from "./down-vote";
+export * from "./edit-and-delete";
 export * from "./filter";
 export * from "./form-builder";
 export * from "./git-log";
