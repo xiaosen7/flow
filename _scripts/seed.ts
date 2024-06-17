@@ -24,19 +24,19 @@ async function main() {
 
   console.log("Creating users...");
   const users = await prisma.user.createManyAndReturn({
-    data: mock.create(mock.user, USER_COUNT),
+    data: mock.user.createMany(USER_COUNT),
   });
 
   console.log("Creating tags...");
   const tags = await prisma.tag.createManyAndReturn({
     data: internalTagNames
       .map((name) => ({ name, description: `${name} tag` }))
-      .concat(mock.create(mock.tag, TAG_COUNT - internalTagNames.length)),
+      .concat(mock.tag.createMany(TAG_COUNT - internalTagNames.length)),
   });
 
   console.log("Creating questions...");
   const questions = await prisma.question.createManyAndReturn({
-    data: mock.create(mock.question, QUESTION_COUNT).map((q) => ({
+    data: mock.question.createMany(QUESTION_COUNT).map((q) => ({
       ...q,
       authorId: users[random(0, USER_COUNT - 1)].id,
     })),
@@ -44,7 +44,7 @@ async function main() {
 
   console.log("Creating answers...");
   const answers = await prisma.answer.createManyAndReturn({
-    data: mock.create(mock.answer, ANSWER_COUNT).map((a) => ({
+    data: mock.answer.createMany(ANSWER_COUNT).map((a) => ({
       ...a,
       authorId: users[random(0, USER_COUNT - 1)].id,
       questionId: questions[random(0, 99)].id,
@@ -75,12 +75,16 @@ async function main() {
       downVoteAnswerStart,
       downVoteAnswerEnd,
     ] = randomRange(ANSWER_COUNT);
+    const tagStart = random(0, 96);
 
     await prisma.user.update({
       where: {
         id: user.id,
       },
       data: {
+        tags: {
+          connect: tags.slice(tagStart, tagStart + 3).map(({ id }) => ({ id })),
+        },
         collections: {
           connect: questions
             .slice(upVoteQuestionStart, upVoteQuestionEnd)

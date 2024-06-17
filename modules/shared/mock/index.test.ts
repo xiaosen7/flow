@@ -50,7 +50,7 @@ describe("mock", () => {
   });
 
   test("create", () => {
-    const tags = mock.create(mock.tag, 3);
+    const tags = mock.createMany(mock.tag, 3);
     expect(tags).toHaveLength(3);
     tags.forEach((tag) => {
       expect(tag).toEqual({

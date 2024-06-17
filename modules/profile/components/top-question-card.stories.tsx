@@ -8,7 +8,7 @@ export default {
   component: ProfileTopQuestionCard,
   args: {
     question: mock.question(),
-    tags: mock.create(mock.tag, [0, 10]),
+    tags: mock.tag.createMany([0, 10]),
     votes: random(0, 9999),
     user: mock.user(),
   },

@@ -6,7 +6,7 @@ import { Tags } from "./tags";
 export default {
   component: Tags,
   args: {
-    tags: mock.create(mock.tag, [0, 20]),
+    tags: mock.tag.createMany([0, 20]),
   },
 } as Meta<typeof Tags>;
 

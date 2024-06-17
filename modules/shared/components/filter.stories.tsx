@@ -7,7 +7,7 @@ export default {
   component: Filter,
   args: {
     placeholder: "Placeholder",
-    options: mock.create(mock.filterOption, 10),
+    options: mock.filterOption.createMany(10),
   },
 } as Meta<typeof Filter>;
 

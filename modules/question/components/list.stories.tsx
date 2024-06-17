@@ -6,10 +6,10 @@ import { QuestionList } from "./list";
 export default {
   component: QuestionList,
   args: {
-    questions: mock.create(mock.question, 10),
+    questions: mock.question.createMany(10),
     getAuthor: () => mock.user(),
-    getTags: () => mock.create(mock.tag, [0, 10]),
-    getVotes: () => mock.create(mock.user, 10),
+    getTags: () => mock.tag.createMany([0, 10]),
+    getVotes: () => mock.user.createMany(10),
   },
 } as Meta<typeof QuestionList>;
 

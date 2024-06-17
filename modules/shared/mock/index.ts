@@ -3,6 +3,8 @@ import { isArray, random, range, uniqueId } from "lodash-es";
 import type { IFilterOption } from "../components";
 import type { IAnswer, IQuestion, ITag, IUser } from "../types";
 
+type ICreateMany<T> = (count: number | [number, number]) => T[];
+
 export namespace mock {
   export function tag(): ITag {
     const id = uniqueId("mocked-tag");
@@ -14,7 +16,7 @@ export namespace mock {
     };
   }
 
-  tag.createMany = create.bind(null, tag);
+  tag.createMany = createMany.bind(null, tag) as ICreateMany<ITag>;
 
   export function user(): IUser {
     const id = uniqueId("mocked-user");
@@ -32,7 +34,7 @@ export namespace mock {
     };
   }
 
-  user.createMany = create.bind(null, user);
+  user.createMany = createMany.bind(null, user) as ICreateMany<IUser>;
 
   export function question(): IQuestion {
     const id = uniqueId("mocked-question");
@@ -47,7 +49,10 @@ export namespace mock {
     };
   }
 
-  question.createMany = create.bind(null, question);
+  question.createMany = createMany.bind(
+    null,
+    question
+  ) as ICreateMany<IQuestion>;
 
   export function answer(): IAnswer {
     const id = uniqueId("mocked-answer");
@@ -60,7 +65,7 @@ export namespace mock {
     };
   }
 
-  answer.createMany = create.bind(null, answer);
+  answer.createMany = createMany.bind(null, answer) as ICreateMany<IAnswer>;
 
   export function date() {
     return new Date(random(2000, 2020), 1, 1);
@@ -74,7 +79,7 @@ export namespace mock {
     return `https://picsum.photos/${width}/${height}?random=${seed}`;
   }
 
-  imageUrl.createMany = create.bind(null, imageUrl);
+  imageUrl.createMany = createMany.bind(null, imageUrl) as ICreateMany<string>;
 
   export function filterOption(): IFilterOption {
     const value = uniqueId("mocked-filter-option-value");
@@ -83,9 +88,12 @@ export namespace mock {
     return { value, label };
   }
 
-  filterOption.createMany = create.bind(null, filterOption);
+  filterOption.createMany = createMany.bind(
+    null,
+    filterOption
+  ) as ICreateMany<IFilterOption>;
 
-  export function create<T>(
+  export function createMany<T>(
     creator: () => T,
     count: number | [number, number]
   ): T[] {
