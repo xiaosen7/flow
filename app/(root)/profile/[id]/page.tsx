@@ -40,6 +40,7 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
               answers: true,
             },
           },
+          upvotes: true,
         },
       },
     },
@@ -87,7 +88,7 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
                 answer={answer}
                 editable={editable}
                 question={answer.question}
-                upVotes={answer.question.upvotes.length}
+                upVotes={answer.upvotes.length}
                 user={answer.question.author}
               />
             ))}
