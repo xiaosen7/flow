@@ -14,7 +14,10 @@ import { z } from "zod";
 import { ANSWER_SCHEMA } from "../constants";
 
 export interface IAnswerFormProps extends IComponentBaseProps {
-  onSubmit: IFormBuilderPropsOnSubmit<z.infer<typeof ANSWER_SCHEMA>>;
+  onSubmit?: IFormBuilderPropsOnSubmit<z.infer<typeof ANSWER_SCHEMA>>;
+  defaultValues?: z.infer<typeof ANSWER_SCHEMA>;
+  getSubmitText?: (loading: boolean) => React.ReactNode;
+  extra?: React.ReactNode;
 }
 
 const items: IFormBuilderItem<z.infer<typeof ANSWER_SCHEMA>>[] = [
@@ -27,20 +30,25 @@ const items: IFormBuilderItem<z.infer<typeof ANSWER_SCHEMA>>[] = [
 ];
 
 export const AnswerForm: React.FC<IAnswerFormProps> = (props) => {
+  const {
+    defaultValues,
+    onSubmit,
+    getSubmitText = (loading) => (loading ? "Posting..." : "Post Answer"),
+    extra,
+  } = props;
   const form = useForm({
     schema: ANSWER_SCHEMA,
-    defaultValues: {
-      content: "",
-    },
+    defaultValues,
   });
   return mp(
     props,
     <FormBuilder
+      extra={extra}
       form={form}
-      getSubmitText={(loading) => (loading ? "Posting..." : "Post Answer")}
+      getSubmitText={getSubmitText}
       items={items}
       submitAlign="right"
-      onSubmit={props.onSubmit}
+      onSubmit={onSubmit}
     />
   );
 };

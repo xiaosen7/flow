@@ -58,6 +58,7 @@ export interface IFormBuilderProps<TValues extends FieldValues>
    * @default 'left'
    */
   submitAlign?: "left" | "right";
+  extra?: React.ReactNode;
 }
 
 export const FormBuilder = <TValues extends FieldValues>(
@@ -69,6 +70,7 @@ export const FormBuilder = <TValues extends FieldValues>(
     onSubmit,
     getSubmitText = getDefaultSubmitText,
     submitAlign = "left",
+    extra,
   } = props;
   const { run, loading } = useRequest(
     async (values: TValues) => onSubmit?.(values),
@@ -115,7 +117,7 @@ export const FormBuilder = <TValues extends FieldValues>(
             )
           )}
 
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-4">
             <Button
               className={cn(submitAlign === "right" && "ml-auto")}
               disabled={loading}
@@ -123,6 +125,7 @@ export const FormBuilder = <TValues extends FieldValues>(
             >
               {getSubmitText(loading)}
             </Button>
+            {extra}
           </div>
         </form>
       )}

@@ -62,6 +62,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   const upVoted = !!(user && upvotes.find((x) => x.id === user.id));
   const downVoted = !!(user && downvotes.find((x) => x.id === user.id));
   const collected = !!(user && collectors.find((x) => x.id === user.id));
+
   return (
     <div>
       <div className="flex flex-wrap justify-between gap-4">
@@ -109,31 +110,45 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
         <Filter options={ANSWER_FILTER_OPTIONS} />
       </div>
 
-      {answers.map((answer) => (
-        <Answer
-          key={answer.id}
-          answer={answer}
-          author={answer.author}
-          downVote={{
-            count: answer.downvotes.length,
-            voted: user
-              ? !!answer.downvotes.find((x) => x.id === user.id)
-              : false,
-            onChange: ac(answerActions.downVote)
-              .bindArgs(answer)
-              .revalidatePath(`/question/${id}`),
-          }}
-          upVote={{
-            count: answer.upvotes.length,
-            voted: user
-              ? !!answer.upvotes.find((x) => x.id === user.id)
-              : false,
-            onChange: ac(answerActions.upVote)
-              .bindArgs(answer)
-              .revalidatePath(`/question/${id}`),
-          }}
-        />
-      ))}
+      {answers.map((answer) => {
+        const editable = answer.authorId === user?.id;
+        return (
+          <Answer
+            key={answer.id}
+            answer={answer}
+            author={answer.author}
+            downVote={{
+              count: answer.downvotes.length,
+              voted: user
+                ? !!answer.downvotes.find((x) => x.id === user.id)
+                : false,
+              onChange: ac(answerActions.downVote)
+                .bindArgs(answer)
+                .revalidatePath(`/question/${id}`),
+            }}
+            editable={editable}
+            upVote={{
+              count: answer.upvotes.length,
+              voted: user
+                ? !!answer.upvotes.find((x) => x.id === user.id)
+                : false,
+              onChange: ac(answerActions.upVote)
+                .bindArgs(answer)
+                .revalidatePath(`/question/${id}`),
+            }}
+            onAnswerSave={ac(answerActions.update)
+              .bindObjectArgs({
+                id: answer.id,
+              })
+              .revalidatePath(`/question/${id}`)}
+            onDelete={ac(answerActions.remove)
+              .bindObjectArgs({
+                id: answer.id,
+              })
+              .revalidatePath(`/question/${id}`)}
+          />
+        );
+      })}
 
       <AnswerForm
         onSubmit={ac(answerActions.create)

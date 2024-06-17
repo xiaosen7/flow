@@ -20,6 +20,12 @@ export const ac = (actionFn: (...args: ISafeAny[]) => Promise<void>) => {
         return actionFn(...boundArgs, ...args);
       });
     },
+    bindObjectArgs(obj: ISafeAny) {
+      return ac(async (...args) => {
+        "use server";
+        return actionFn({ ...obj, ...args[0], ...args.slice(1) });
+      });
+    },
     revalidatePath(path: string) {
       return ac(async (...args) => {
         "use server";

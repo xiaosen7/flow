@@ -14,9 +14,29 @@ export async function create(
   const user = await userActions.getCurrentOrThrow();
   await prisma.answer.create({
     data: {
-      content: content,
+      content,
       authorId: user.id,
       questionId: questionId,
+    },
+  });
+}
+
+export async function update(data: Pick<IAnswer, "id" | "content">) {
+  await prisma.answer.update({
+    where: {
+      id: data.id,
+    },
+    data: {
+      content: data.content,
+    },
+  });
+  console.log(`updated answer ${data.id}`);
+}
+
+export async function remove(data: Pick<IAnswer, "id">) {
+  await prisma.answer.delete({
+    where: {
+      id: data.id,
     },
   });
 }

@@ -2,6 +2,7 @@ import { Meta, StoryFn } from "@storybook/react";
 
 import { mock } from "@/shared";
 import { random } from "lodash-es";
+import { useState } from "react";
 import { Answer } from "./answer";
 
 export default {
@@ -21,3 +22,20 @@ export default {
 } as Meta<typeof Answer>;
 
 export const Base: StoryFn<typeof Answer> = (args) => <Answer {...args} />;
+export const Editable: StoryFn<typeof Answer> = (props) => {
+  const [answer, setAnswer] = useState(props.answer);
+
+  return (
+    <Answer
+      {...props}
+      editable
+      answer={answer}
+      onAnswerSave={(values) =>
+        setAnswer({
+          ...answer,
+          ...values,
+        })
+      }
+    />
+  );
+};
