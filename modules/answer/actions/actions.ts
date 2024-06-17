@@ -1,13 +1,13 @@
 "use server";
 
 import { prisma } from "@/prisma";
-import { IAnswer } from "@/shared";
+import { IAnswer, IQuestion } from "@/shared";
 import { userActions } from "@/user";
 import { z } from "zod";
 import { ANSWER_SCHEMA } from "../constants";
 
 export async function create(
-  questionId: string,
+  question: IQuestion,
   values: z.infer<typeof ANSWER_SCHEMA>
 ) {
   const { content } = values;
@@ -16,27 +16,29 @@ export async function create(
     data: {
       content,
       authorId: user.id,
-      questionId: questionId,
+      questionId: question.id,
     },
   });
 }
 
-export async function update(data: Pick<IAnswer, "id" | "content">) {
+export async function update(
+  answer: IAnswer,
+  data: z.infer<typeof ANSWER_SCHEMA>
+) {
   await prisma.answer.update({
     where: {
-      id: data.id,
+      id: answer.id,
     },
     data: {
       content: data.content,
     },
   });
-  console.log(`updated answer ${data.id}`);
 }
 
-export async function remove(data: Pick<IAnswer, "id">) {
+export async function remove(answer: IAnswer) {
   await prisma.answer.delete({
     where: {
-      id: data.id,
+      id: answer.id,
     },
   });
 }

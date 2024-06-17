@@ -13,7 +13,14 @@ import {
   QuestionTitle,
   questionActions,
 } from "@/question";
-import { DownVote, Filter, IPageProps, UpVote } from "@/shared";
+import {
+  DownVote,
+  Filter,
+  IActionFn,
+  IAnswer,
+  IPageProps,
+  UpVote,
+} from "@/shared";
 import { ac } from "@/shared/utils/action";
 import { Tags } from "@/tag";
 import { UserAvatar } from "@/user";
@@ -63,6 +70,16 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   const downVoted = !!(user && downvotes.find((x) => x.id === user.id));
   const collected = !!(user && collectors.find((x) => x.id === user.id));
 
+  const bindQuestionAction = (actionFn: IActionFn) => {
+    return ac(actionFn)
+      .bindArgs(question)
+      .bindRevalidatePath(`/question/${id}`);
+  };
+
+  const bindAnswerAction = (actionFn: IActionFn, answer: IAnswer) => {
+    return ac(actionFn).bindArgs(answer).bindRevalidatePath(`/question/${id}`);
+  };
+
   return (
     <div>
       <div className="flex flex-wrap justify-between gap-4">
@@ -72,24 +89,18 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
           <UpVote
             count={question.upvotes.length}
             voted={upVoted}
-            onChange={ac(questionActions.upVote)
-              .bindArgs(question)
-              .revalidatePath(`/question/${id}`)}
+            onChange={bindQuestionAction(questionActions.upVote)}
           />
 
           <DownVote
             count={question.downvotes.length}
             voted={downVoted}
-            onChange={ac(questionActions.downVote)
-              .bindArgs(question)
-              .revalidatePath(`/question/${id}`)}
+            onChange={bindQuestionAction(questionActions.downVote)}
           />
 
           <Collect
             collected={collected}
-            onChange={ac(questionActions.collect)
-              .bindArgs(question)
-              .revalidatePath(`/question/${id}`)}
+            onChange={bindQuestionAction(questionActions.collect)}
           />
         </div>
       </div>
@@ -122,9 +133,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
               voted: user
                 ? !!answer.downvotes.find((x) => x.id === user.id)
                 : false,
-              onChange: ac(answerActions.downVote)
-                .bindArgs(answer)
-                .revalidatePath(`/question/${id}`),
+              onChange: bindAnswerAction(answerActions.downVote, answer),
             }}
             editable={editable}
             upVote={{
@@ -132,29 +141,15 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
               voted: user
                 ? !!answer.upvotes.find((x) => x.id === user.id)
                 : false,
-              onChange: ac(answerActions.upVote)
-                .bindArgs(answer)
-                .revalidatePath(`/question/${id}`),
+              onChange: bindAnswerAction(answerActions.upVote, answer),
             }}
-            onAnswerSave={ac(answerActions.update)
-              .bindObjectArgs({
-                id: answer.id,
-              })
-              .revalidatePath(`/question/${id}`)}
-            onDelete={ac(answerActions.remove)
-              .bindObjectArgs({
-                id: answer.id,
-              })
-              .revalidatePath(`/question/${id}`)}
+            onAnswerSave={bindAnswerAction(answerActions.update, answer)}
+            onDelete={bindAnswerAction(answerActions.remove, answer)}
           />
         );
       })}
 
-      <AnswerForm
-        onSubmit={ac(answerActions.create)
-          .bindArgs(question.id)
-          .revalidatePath(`/question/${id}`)}
-      />
+      <AnswerForm onSubmit={bindQuestionAction(answerActions.create)} />
     </div>
   );
 };

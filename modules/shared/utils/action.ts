@@ -1,5 +1,5 @@
 import { revalidatePath } from "next/cache";
-import { ISafeAny } from "../types";
+import { IActionFn, ISafeAny } from "../types";
 
 export function bindAction<
   TArg1,
@@ -12,7 +12,7 @@ export function bindAction<
   };
 }
 
-export const ac = (actionFn: (...args: ISafeAny[]) => Promise<void>) => {
+export const ac = (actionFn: IActionFn) => {
   const fn = Object.assign(actionFn, {
     bindArgs(...boundArgs: ISafeAny[]) {
       return ac(async (...args: ISafeAny[]) => {
@@ -26,7 +26,7 @@ export const ac = (actionFn: (...args: ISafeAny[]) => Promise<void>) => {
         return actionFn({ ...obj, ...args[0], ...args.slice(1) });
       });
     },
-    revalidatePath(path: string) {
+    bindRevalidatePath(path: string) {
       return ac(async (...args) => {
         "use server";
         await actionFn(...args);
