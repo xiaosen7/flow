@@ -18,10 +18,10 @@ export const NavButtons: React.FC<INavButtonsProps> = (props) => {
           <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3">
             <Image
               alt="Log In"
+              className={cn("invert-colors", !simple && "hidden")} // < 1024px
+              height={20}
               src="/assets/icons/account.svg"
               width={20}
-              height={20}
-              className={cn("invert-colors", !simple && "hidden")} // < 1024px
             />
             <span
               className={cn("primary-text-gradient", simple && "hidden")} // > 1024px
@@ -37,10 +37,10 @@ export const NavButtons: React.FC<INavButtonsProps> = (props) => {
           <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
             <Image
               alt="Sign Up"
+              className={cn("invert-colors", !simple && "hidden")} // < 1024
+              height={20}
               src="/assets/icons/sign-up.svg"
               width={20}
-              height={20}
-              className={cn("invert-colors", !simple && "hidden")} // < 1024
             />
             <span
               className={cn(simple && "hidden")} // > 1024

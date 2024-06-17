@@ -22,22 +22,22 @@ const TagsDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
   });
   return (
     <QuestionList
+      empty={
+        <NoResults
+          description="It appears that there are no saved questions in your collection at the moment 😔.Start exploring and saving questions that pique your interest 🌟"
+          link="/"
+          linkTitle="Explore Questions"
+          topic="Tag Questions"
+        />
+      }
+      getAuthor={(question) => question.author}
+      getTags={(question) => question.tags}
+      getVotes={(question) => question.upvotes}
+      questions={tag.questions}
       search={{
         placeholder: "Search tag questions...",
       }}
       title={tag.name}
-      questions={tag.questions}
-      getAuthor={(question) => question.author}
-      getTags={(question) => question.tags}
-      getVotes={(question) => question.upvotes}
-      empty={
-        <NoResults
-          topic="Tag Questions"
-          description="It appears that there are no saved questions in your collection at the moment 😔.Start exploring and saving questions that pique your interest 🌟"
-          link="/"
-          linkTitle="Explore Questions"
-        />
-      }
     />
   );
 };

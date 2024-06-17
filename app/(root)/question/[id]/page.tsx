@@ -96,7 +96,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
       <QuestionTitle className="mt-3.5" level={2} question={question} />
 
       <div className="mb-8 mt-5 flex flex-wrap gap-4">
-        <QuestionDate variation="with-icon" question={question} />
+        <QuestionDate question={question} variation="with-icon" />
         <QuestionMetrics answers={answers.length} views={views} />
       </div>
 
@@ -114,21 +114,21 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
           key={answer.id}
           answer={answer}
           author={answer.author}
-          upVote={{
-            count: answer.upvotes.length,
-            voted: user
-              ? !!answer.upvotes.find((x) => x.id === user.id)
-              : false,
-            onChange: ac(answerActions.upVote)
-              .bindArgs(answer)
-              .revalidatePath(`/question/${id}`),
-          }}
           downVote={{
             count: answer.downvotes.length,
             voted: user
               ? !!answer.downvotes.find((x) => x.id === user.id)
               : false,
             onChange: ac(answerActions.downVote)
+              .bindArgs(answer)
+              .revalidatePath(`/question/${id}`),
+          }}
+          upVote={{
+            count: answer.upvotes.length,
+            voted: user
+              ? !!answer.upvotes.find((x) => x.id === user.id)
+              : false,
+            onChange: ac(answerActions.upVote)
               .bindArgs(answer)
               .revalidatePath(`/question/${id}`),
           }}

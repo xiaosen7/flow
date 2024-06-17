@@ -15,11 +15,11 @@ export const Collect: React.FC<ICollectProps> = (props) => {
   return mp(
     props,
     <Image
-      src={collected ? imageStarFilledSrc : imageStarRedSrc}
-      width={18}
-      height={18}
       alt="star"
       className="cursor-pointer"
+      height={18}
+      src={collected ? imageStarFilledSrc : imageStarRedSrc}
+      width={18}
       onClick={() => onChange?.(!collected)}
     />
   );

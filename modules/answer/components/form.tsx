@@ -37,10 +37,10 @@ export const AnswerForm: React.FC<IAnswerFormProps> = (props) => {
     props,
     <FormBuilder
       form={form}
-      items={items}
-      onSubmit={props.onSubmit}
-      submitAlign="right"
       getSubmitText={(loading) => (loading ? "Posting..." : "Post Answer")}
+      items={items}
+      submitAlign="right"
+      onSubmit={props.onSubmit}
     />
   );
 };

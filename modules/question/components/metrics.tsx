@@ -18,34 +18,34 @@ export const QuestionMetrics: React.FC<IUIQuestionMetricsProps> = (props) => {
     <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
       {isNumber(votes) && (
         <Metric
-          imgUrl={imageLikeSrc}
-          value={votes}
-          label="Votes"
           classNames={{
             text: "small-medium text-dark400_light800",
           }}
+          imgUrl={imageLikeSrc}
+          label="Votes"
+          value={votes}
         />
       )}
 
       {isNumber(answers) && (
         <Metric
-          imgUrl={imageMessageSrc}
-          value={answers}
-          label="Answers"
           classNames={{
             text: "small-medium text-dark400_light800",
           }}
+          imgUrl={imageMessageSrc}
+          label="Answers"
+          value={answers}
         />
       )}
 
       {isNumber(views) && (
         <Metric
-          imgUrl={imageEyeSrc}
-          value={views}
-          label="Views"
           classNames={{
             text: "small-medium text-dark400_light800",
           }}
+          imgUrl={imageEyeSrc}
+          label="Views"
+          value={views}
         />
       )}
     </div>

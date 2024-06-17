@@ -11,13 +11,13 @@ export default {
 
 export const Base: StoryFn<typeof List> = () => (
   <List
-    items={mock.create(mock.tag, 10)}
-    renderItem={(item) => <TagCard tag={item} totalQuestions={10} />}
-    empty={<>No results</>}
     className="w-full"
+    empty={<>No results</>}
     filter={{
       options: mock.create(mock.filterOption, 10),
     }}
+    items={mock.create(mock.tag, 10)}
+    renderItem={(item) => <TagCard tag={item} totalQuestions={10} />}
     search={{
       placeholder: "Search something...",
     }}

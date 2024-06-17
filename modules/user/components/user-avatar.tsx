@@ -17,13 +17,13 @@ export const UserAvatar: React.FC<IUserAvatarProps> = (props) => {
 
   return mp(
     props,
-    <Link href={`/profile/${user.id}`} className="flex items-center gap-1">
+    <Link className="flex items-center gap-1" href={`/profile/${user.id}`}>
       <Image
-        className="invert-colors rounded-full object-contain"
-        src={user.imageUrl}
         alt="Author avatar"
-        width={width}
+        className="invert-colors rounded-full object-contain"
         height={width}
+        src={user.imageUrl}
+        width={width}
       />
       <span className={`${fontSizeClassName} text-dark400_light700`}>
         {user.username || user.fullName}

@@ -29,24 +29,24 @@ export const QuestionCard: React.FC<IQuestionCardProps> = (props) => {
     props,
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <QuestionDate
-        variation="simple"
         className={cn(mediaQuery.isGreaterThanSM && "hidden")}
         question={question}
+        variation="simple"
       />
 
-      <QuestionTitle className="line-clamp-1" question={question} level={3} />
+      <QuestionTitle className="line-clamp-1" level={3} question={question} />
 
       <Tags tags={tags} />
 
       <div className="flex-between mt-6 w-full flex-wrap items-center gap-3 ">
         <UserAvatar
-          user={creator}
           extra={
             <QuestionDate
               className={cn(mediaQuery.isLessThanSM && "hidden")}
               question={question}
             />
           }
+          user={creator}
         />
 
         <QuestionMetrics answers={0} views={question.views} votes={votes} />

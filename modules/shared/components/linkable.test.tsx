@@ -12,7 +12,7 @@ describe("CLinkable", () => {
       const className = "text-red-500";
       const style = { color: "red" };
       render(
-        <Linkable href="/" className={className} style={style}>
+        <Linkable className={className} href="/" style={style}>
           Home
         </Linkable>
       );

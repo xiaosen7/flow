@@ -12,25 +12,25 @@ const CommunityPage: React.FC = async () => {
 
   return (
     <List
-      title={"All Users"}
-      filter={{
-        options: USER_FILTER_OPTIONS,
-      }}
-      search={{
-        placeholder: "Search amazing minds here...",
-      }}
-      items={users}
-      renderItem={(user) => (
-        <UserCard key={user.id} user={user} tags={user.tags} />
-      )}
       empty={
         <NoResults
-          topic="Users"
           description="Be the first to break the silence! 🚀 Sign up to be the first and kickstart the community. Get involved! 💡"
           link="/sign-up"
           linkTitle="Sign Up"
+          topic="Users"
         />
       }
+      filter={{
+        options: USER_FILTER_OPTIONS,
+      }}
+      items={users}
+      renderItem={(user) => (
+        <UserCard key={user.id} tags={user.tags} user={user} />
+      )}
+      search={{
+        placeholder: "Search amazing minds here...",
+      }}
+      title={"All Users"}
     />
   );
 };

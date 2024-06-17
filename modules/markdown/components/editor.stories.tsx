@@ -11,7 +11,7 @@ export default {
 export const Base: StoryFn<typeof MarkdownEditor> = () => (
   <MarkdownEditor
     className="h-[90vh]"
-    onChange={console.log}
     defaultValue={defaultValue}
+    onChange={console.log}
   />
 );

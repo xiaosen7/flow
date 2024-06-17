@@ -17,8 +17,8 @@ export const ProfileTopQuestionCard: React.FC<IProfileTopQuestionCardProps> = (
     props,
     <QuestionCard
       key={question.id}
-      question={question}
       creator={user}
+      question={question}
       tags={tags}
       votes={votes}
     />

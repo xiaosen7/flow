@@ -35,18 +35,18 @@ export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
         <div className="mt-7 flex w-full flex-col gap-[30px]">
           {hotQuestions.map((question) => (
             <Link
-              href={`/question/${question.id}`}
               key={question.id}
               className="flex cursor-pointer items-center justify-between gap-7"
+              href={`/question/${question.id}`}
             >
               <p className="body-medium text-dark500_light700">
                 {question.title}
               </p>
               <ImageChevronRight
                 alt="chevron right"
-                width={20}
-                height={20}
                 className="invert-colors"
+                height={20}
+                width={20}
               />
             </Link>
           ))}
@@ -57,7 +57,7 @@ export const RightSidebar: React.FC<IRightSidebarProps> = (props) => {
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
         <div className="mt-7 flex flex-col gap-4">
           {popularTags.map((tag) => (
-            <Tag key={tag.id} totalQuestions={10} tag={tag} />
+            <Tag key={tag.id} tag={tag} totalQuestions={10} />
           ))}
         </div>
       </div>

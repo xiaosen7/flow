@@ -19,9 +19,9 @@ export interface IListProps<TItem> extends IComponentBaseProps {
   direction?: "row" | "column";
 }
 
-export const List = function List<TItem extends { id: React.Key }>(
+export const List = <TItem extends { id: React.Key }>(
   props: IListProps<TItem>
-) {
+) => {
   const {
     titleExtra,
     search,

@@ -14,15 +14,15 @@ export const SearchInput: React.FC<ISearchInputProps> = (props) => {
       <div className="background-light800_darkgradient relative flex min-h-[56px] grow items-center gap-1 rounded-xl px-4">
         <ImageSearch
           alt="Search"
-          width={24}
-          height={24}
           className="cursor-pointer"
+          height={24}
+          width={24}
         />
 
         <Input
-          type="text"
-          placeholder={placeholder}
           className="paragraph-regular no-focus placeholder border-none bg-inherit shadow-none outline-none"
+          placeholder={placeholder}
+          type="text"
         />
       </div>
     </div>

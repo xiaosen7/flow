@@ -46,8 +46,8 @@ export const Filter: React.FC<IFilterProps> = (props) => {
           <SelectContent className="text-dark500_light700 small-regular border-none bg-light-900 dark:bg-dark-300">
             {props.options.map((option) => (
               <SelectItem
-                className="cursor-pointer focus:bg-light-800 dark:focus:bg-dark-400"
                 key={option.value}
+                className="cursor-pointer focus:bg-light-800 dark:focus:bg-dark-400"
                 value={option.value}
               >
                 {option.label}

@@ -80,8 +80,8 @@ export const FormBuilder = <TValues extends FieldValues>(
       {mp(
         props,
         <form
-          onSubmit={form.handleSubmit(run)}
           className="flex w-full flex-col gap-10"
+          onSubmit={form.handleSubmit(run)}
         >
           {items.map(
             ({
@@ -117,9 +117,9 @@ export const FormBuilder = <TValues extends FieldValues>(
 
           <div className="flex flex-wrap">
             <Button
+              className={cn(submitAlign === "right" && "ml-auto")}
               disabled={loading}
               variant="primary-gradient"
-              className={cn(submitAlign === "right" && "ml-auto")}
             >
               {getSubmitText(loading)}
             </Button>

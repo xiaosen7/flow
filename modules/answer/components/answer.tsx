@@ -27,13 +27,13 @@ export const Answer: React.FC<IAnswerProps> = (props) => {
     <article key={answer.id} className="light-border border-b py-10">
       <div className="mb-8 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
         <UserAvatar
-          user={author}
           extra={
             <p className="small-regular text-light400_light500 ml-0.5 mt-0.5 line-clamp-1">
               <span className="max-sm:hidden">• answered </span>
               {formatDate(answer.createdAt)}
             </p>
           }
+          user={author}
         />
 
         <div className="flex gap-5">

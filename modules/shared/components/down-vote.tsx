@@ -17,11 +17,11 @@ export const DownVote: React.FC<IDownVoteProps> = (props) => {
     props,
     <div className="flex gap-1.5">
       <Image
-        src={voted ? imageDownvotedSrc : imageDownvoteSrc}
-        width={18}
-        height={18}
         alt="down vote"
         className="cursor-pointer"
+        height={18}
+        src={voted ? imageDownvotedSrc : imageDownvoteSrc}
+        width={18}
         onClick={() => onChange?.(!voted)}
       />
 

@@ -20,11 +20,11 @@ export const Metric: React.FC<IMetricProps> = (props) => {
   let content = (
     <>
       <Image
-        src={imgUrl}
         alt={label}
-        width={16}
-        height={16}
         className={cn(`object-contain invert-colors`, href && "rounded-full")}
+        height={16}
+        src={imgUrl}
+        width={16}
       />
       <p className={cn("flex items-center gap-1", classNames?.text)}>
         {isNumber(value) ? formatNumber(value) : value}
@@ -35,7 +35,7 @@ export const Metric: React.FC<IMetricProps> = (props) => {
 
   if (href) {
     content = (
-      <Link href={href} className="flex-center gap-1">
+      <Link className="flex-center gap-1" href={href}>
         {content}
       </Link>
     );

@@ -25,20 +25,20 @@ export const NavLinks: React.FC<INavLinksProps> = (props) => {
           <React.Fragment key={route}>
             {renderItem(
               <Link
-                href={route}
                 className={cn(
                   isActive
                     ? "primary-gradient rounded-lg text-light-900"
                     : "text-dark300_light900",
                   "flex items-center justify-start gap-4 bg-transparent p-4"
                 )}
+                href={route}
               >
                 <Image
-                  src={imgURL}
-                  width={20}
-                  height={20}
                   alt={label}
                   className={cn(!isActive && "invert-colors")}
+                  height={20}
+                  src={imgURL}
+                  width={20}
                 />
                 <p
                   className={cn(

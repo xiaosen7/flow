@@ -6,7 +6,15 @@
     "prettier"
   ],
   "rules": {
-    "import/no-cycle": "error"
+    "import/no-cycle": "error",
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "shorthandFirst": true,
+        "callbacksLast": true,
+        "reservedFirst": true
+      }
+    ]
   },
   "overrides": [
     {

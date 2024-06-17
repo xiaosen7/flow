@@ -31,8 +31,8 @@ export const QuestionList = <TQuestion extends IQuestion>(
       items={questions}
       renderItem={(question) => (
         <QuestionCard
-          question={question}
           creator={getAuthor(question)}
+          question={question}
           tags={getTags(question)}
           votes={getVotes(question).length}
         />

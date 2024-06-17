@@ -61,10 +61,10 @@ export const QuestionForm: React.FC<ICQuestionFormProps> = (props) => {
   return mp(
     props,
     <FormBuilder<IQuestionPostValue>
-      items={items}
       form={form}
-      onSubmit={props.onSubmit}
       getSubmitText={(loading) => (loading ? "Posting..." : "Ask a Question")}
+      items={items}
+      onSubmit={props.onSubmit}
     />
   );
 };

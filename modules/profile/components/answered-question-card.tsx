@@ -43,16 +43,16 @@ export const ProfileAnsweredQuestionCard: React.FC<
             <div className="flex items-center justify-end gap-3 max-sm:w-full">
               <ImageEdit
                 alt="Edit"
-                width={14}
-                height={14}
                 className="cursor-pointer"
+                height={14}
+                width={14}
               />
 
               <ImageTrash
                 alt="Delete"
-                width={14}
-                height={14}
                 className="cursor-pointer"
+                height={14}
+                width={14}
               />
             </div>
           )}
@@ -60,8 +60,8 @@ export const ProfileAnsweredQuestionCard: React.FC<
 
         <div className="flex-between mt-6 w-full flex-wrap gap-3">
           <UserAvatar
-            user={user}
             extra={<QuestionDate question={question} />}
+            user={user}
           />
           <QuestionMetrics votes={upVotes} />
         </div>

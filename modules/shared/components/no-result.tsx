@@ -23,15 +23,15 @@ export const NoResults: React.FC<INoResultsProps> = (props) => {
     <div className="mt-10 flex w-full flex-col items-center justify-center">
       <ImageLightIllustration
         alt="No result illustration"
-        width={270}
-        height={200}
         className="block object-contain dark:hidden"
+        height={200}
+        width={270}
       />
       <ImageDarkIllustration
         alt="No result illustration"
-        width={270}
-        height={200}
         className="hidden object-contain dark:flex"
+        height={200}
+        width={270}
       />
 
       <h2 className="h2-bold text-dark200_light900 mt-8 capitalize">
@@ -42,7 +42,7 @@ export const NoResults: React.FC<INoResultsProps> = (props) => {
       </p>
 
       <Link href={link}>
-        <Button variant={"primary"} className="min-h-[46px]">
+        <Button className="min-h-[46px]" variant={"primary"}>
           {linkTitle}
         </Button>
       </Link>

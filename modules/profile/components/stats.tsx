@@ -45,20 +45,20 @@ export const ProfileStats: React.FC<IProfileStatsProps> = (props) => {
 
         <StatsCard
           imgUrl="/assets/icons/gold-medal.svg"
-          value={gold}
           title="Gold Badges"
+          value={gold}
         />
 
         <StatsCard
           imgUrl="/assets/icons/silver-medal.svg"
-          value={silver}
           title="Silver Badges"
+          value={silver}
         />
 
         <StatsCard
           imgUrl="/assets/icons/bronze-medal.svg"
-          value={bronze}
           title="Bronze Badges"
+          value={bronze}
         />
       </div>
     </div>
@@ -76,7 +76,7 @@ const StatsCard = ({
 }) => {
   return (
     <div className="light-border background-light900_dark300 flex flex-wrap items-center justify-start gap-4 rounded-md border p-6 shadow-light-300 dark:shadow-dark-200">
-      <Image src={imgUrl} alt={title} width={40} height={50} />
+      <Image alt={title} height={50} src={imgUrl} width={40} />
       <div>
         <p className="paragraph-semibold text-dark200_light900">{value}</p>
         <p className="body-medium text-dark400_light700">{title}</p>

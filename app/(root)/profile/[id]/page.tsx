@@ -51,47 +51,44 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
 
   return (
     <div>
-      <ProfileBase user={profileUser} editable={editable} />
+      <ProfileBase editable={editable} user={profileUser} />
       <ProfileStats
-        totalAnswers={profileUser.answers.length}
-        totalQuestions={profileUser.questions.length}
         badges={badges}
         reputation={0}
+        totalAnswers={profileUser.answers.length}
+        totalQuestions={profileUser.questions.length}
       />
 
       <div className="mt-10 flex gap-10">
-        <Tabs defaultValue="top-posts" className="flex-1">
+        <Tabs className="flex-1" defaultValue="top-posts">
           <TabsList className="background-light800_dark400 min-h-[42px] p-1">
-            <TabsTrigger value="top-posts" className="tab">
+            <TabsTrigger className="tab" value="top-posts">
               Top Posts
             </TabsTrigger>
-            <TabsTrigger value="answers" className="tab">
+            <TabsTrigger className="tab" value="answers">
               Answers
             </TabsTrigger>
           </TabsList>
-          <TabsContent
-            value="top-posts"
-            className="mt-5 flex w-full flex-col gap-6"
-          >
+          <TabsContent className="flex w-full flex-col gap-6" value="top-posts">
             {profileUser.questions.map((question) => (
               <ProfileTopQuestionCard
                 key={question.id}
                 question={question}
-                user={profileUser}
                 tags={question.tags}
+                user={profileUser}
                 votes={question.upvotes.length}
               />
             ))}
           </TabsContent>
-          <TabsContent value="answers" className="flex w-full flex-col gap-6">
+          <TabsContent className="flex w-full flex-col gap-6" value="answers">
             {profileUser.answers.map((answer) => (
               <ProfileAnsweredQuestionCard
                 key={answer.id}
+                answer={answer}
+                editable={editable}
                 question={answer.question}
                 upVotes={answer.question.upvotes.length}
-                editable={editable}
                 user={answer.question.author}
-                answer={answer}
               />
             ))}
           </TabsContent>

@@ -51,8 +51,8 @@ export const TagsEditor: React.FC<ITagsEditorProps> = (props) => {
     props,
     <div>
       <Input
-        disabled={disabled}
         className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+        disabled={disabled}
         placeholder="Add tags..."
         {...inputProps}
       />
@@ -67,9 +67,9 @@ export const TagsEditor: React.FC<ITagsEditorProps> = (props) => {
               {text}
               <ImageClose
                 alt="Close icon"
-                width={12}
-                height={12}
                 className="cursor-pointer object-contain invert-0 dark:invert"
+                height={12}
+                width={12}
                 onClick={() => onRemove(text)}
               />
             </Badge>

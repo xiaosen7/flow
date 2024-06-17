@@ -12,10 +12,10 @@ import { z } from "zod";
 import { ISafeAny } from "../types";
 
 export const useForm = <
-  TFieldValues extends FieldValues = FieldValues,
   TContext = ISafeAny,
   TTransformedValues extends FieldValues | undefined = undefined,
   TSchema extends z.ZodType<ISafeAny> = z.ZodType<ISafeAny>,
+  TFieldValues extends FieldValues = z.infer<TSchema>,
 >(
   options: Omit<UseFormProps<TFieldValues, TContext>, "resolver"> & {
     schema: TSchema;

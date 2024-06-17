@@ -21,8 +21,8 @@ export const MarkdownViewer: React.FC<IMarkdownViewerProps> = (props) => {
       <Viewer
         key={mode}
         initialValue={value}
-        theme={mode}
         plugins={MARKDOWN_VIEWER_PLUGINS}
+        theme={mode}
       />
     </div>
   );

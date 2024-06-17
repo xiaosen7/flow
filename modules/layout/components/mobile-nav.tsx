@@ -24,19 +24,19 @@ export const MobileNav: React.FC<IMobileNavProps> = (props) => {
       <Sheet>
         <SheetTrigger asChild>
           <ImageHamburger
-            width={36}
-            height={36}
             alt="Menu"
             className="invert-colors cursor-pointer"
+            height={36}
+            width={36}
           />
         </SheetTrigger>
 
         <SheetContent
-          side={"left"}
           className="background-light900_dark200 flex flex-col justify-between border-none"
+          side={"left"}
         >
-          <Link href="/" className="flex items-center gap-1">
-            <ImageSiteLogo width={23} height={23} alt="DevFlow" />
+          <Link className="flex items-center gap-1" href="/">
+            <ImageSiteLogo alt="DevFlow" height={23} width={23} />
 
             <p className="h2-bold text-dark100_light900 font-spaceGrotesk">
               Dev <span className="text-primary-500">Overflow</span>

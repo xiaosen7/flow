@@ -14,10 +14,10 @@ export const QuestionDate: React.FC<IQuestionDateProps> = (props) => {
     <span className="small-regular text-dark400_light700 flex flex-wrap gap-1">
       {variation === "with-icon" && (
         <ImageClock
-          className="invert-colors object-contain"
-          width={16}
-          height={16}
           alt="clock"
+          className="invert-colors object-contain"
+          height={16}
+          width={16}
         />
       )}
 

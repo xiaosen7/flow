@@ -34,11 +34,11 @@ export function Base() {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             Name
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
+            <Input className="col-span-3" id="name" value="Pedro Duarte" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             Username
-            <Input id="username" value="@peduarte" className="col-span-3" />
+            <Input className="col-span-3" id="username" value="@peduarte" />
           </div>
         </div>
         <SheetFooter>

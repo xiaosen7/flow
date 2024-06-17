@@ -29,16 +29,16 @@ export const MarkdownEditor: React.FC<IMarkdownEditorProps> = (props) => {
         key={theme}
         ref={ref}
         height="100%"
-        minHeight={"100%"}
         initialEditType="markdown"
-        useCommandShortcut={true}
         initialValue={value}
-        previewStyle="vertical"
+        minHeight={"100%"}
         plugins={MARKDOWN_EDITOR_PLUGINS}
+        previewStyle="vertical"
+        theme={theme}
+        useCommandShortcut={true}
         onChange={() => {
           onChange(ref.current?.getInstance().getMarkdown());
         }}
-        theme={theme}
       />
     </div>
   );

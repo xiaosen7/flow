@@ -26,11 +26,11 @@ export const ProfileBase: React.FC<IProfileBaseProps> = (props) => {
     <div>
       <div className="flex flex-col items-start gap-4 lg:flex-row">
         <Image
-          src={user.imageUrl}
           alt="profile picture"
-          width={140}
-          height={140}
           className="rounded-full object-cover"
+          height={140}
+          src={user.imageUrl}
+          width={140}
         />
 
         <div className="mt-3">
@@ -41,7 +41,7 @@ export const ProfileBase: React.FC<IProfileBaseProps> = (props) => {
 
           <div className="mt-5 flex flex-wrap items-center justify-start gap-5">
             {user.portfolioWebsite && (
-              <ProfileLink iconSrc={imageLinkSrc} href={user.portfolioWebsite}>
+              <ProfileLink href={user.portfolioWebsite} iconSrc={imageLinkSrc}>
                 {user.portfolioWebsite}
               </ProfileLink>
             )}
@@ -86,7 +86,7 @@ function ProfileLink(props: {
   const { iconSrc, href, children } = props;
   return (
     <div className="flex-center gap-1">
-      <Image src={iconSrc} alt="icon" width={20} height={20} />
+      <Image alt="icon" height={20} src={iconSrc} width={20} />
 
       <Linkable href={href} target="_blank">
         <span

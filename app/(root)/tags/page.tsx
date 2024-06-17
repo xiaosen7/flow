@@ -10,25 +10,25 @@ const TagsPage: React.FC = async () => {
 
   return (
     <List
-      filter={{
-        options: TAG_FILTERS,
-      }}
-      search={{ placeholder: "Search by tag name..." }}
-      title={"Tags"}
       empty={
         <NoResults
-          topic="Tags"
           description="It appears that there are not tags found at the moment 😔. Ask a Question and kickstart the
           discussion with tags. our query could be the next big thing others learn from. Get
           involved! 💡"
           link="/ask-question"
           linkTitle="Ask a Question"
+          topic="Tags"
         />
       }
+      filter={{
+        options: TAG_FILTERS,
+      }}
       items={tags}
       renderItem={(tag) => (
         <TagCard tag={tag} totalQuestions={tag.questions.length} />
       )}
+      search={{ placeholder: "Search by tag name..." }}
+      title={"Tags"}
     />
   );
 };
