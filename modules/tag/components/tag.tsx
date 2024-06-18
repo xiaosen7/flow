@@ -9,7 +9,7 @@ export const Tag = (props: ITagProps) => {
   const { tag, totalQuestions } = props;
   return mp(
     props,
-    <Link href={`/tag/${tag.id}`}>
+    <Link href={`/tags/${tag.id}`}>
       <div className="flex justify-between gap-2">
         <Badge>{tag.name}</Badge>
 

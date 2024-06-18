@@ -17,6 +17,7 @@
 
 # production
 /build
+/.build/postgresql-data
 
 # misc
 .DS_Store
