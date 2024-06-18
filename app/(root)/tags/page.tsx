@@ -1,11 +1,21 @@
 import { prisma } from "@/prisma";
-import { List, NoResults } from "@/shared";
+import { IPageProps, List, NoResults } from "@/shared";
 import { TAG_FILTERS, TagCard } from "@/tag";
 import React from "react";
 
-const TagsPage: React.FC = async () => {
+const TagsPage: React.FC<IPageProps<{}, { q: string }>> = async (props) => {
+  const {
+    searchParams: { q },
+  } = props;
   const tags = await prisma.tag.findMany({
     include: { questions: true },
+    where: q
+      ? {
+          name: {
+            contains: q,
+          },
+        }
+      : undefined,
   });
 
   return (

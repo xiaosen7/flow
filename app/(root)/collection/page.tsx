@@ -3,10 +3,15 @@ import {
   QuestionList,
   questionActions,
 } from "@/question";
-import { NoResults } from "@/shared";
+import { IPageProps, NoResults } from "@/shared";
 
-export default async function Home() {
-  const questions = await questionActions.getCollected();
+export default async function CollectionPage(
+  props: IPageProps<{}, { q: string }>
+) {
+  const {
+    searchParams: { q },
+  } = props;
+  const questions = await questionActions.getCollected(q);
 
   return (
     <QuestionList

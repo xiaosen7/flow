@@ -1,13 +1,34 @@
 import { prisma } from "@/prisma";
-import { List, NoResults } from "@/shared";
+import { IPageProps, List, NoResults } from "@/shared";
 import { USER_FILTER_OPTIONS, UserCard } from "@/user";
 import React from "react";
 
-const CommunityPage: React.FC = async () => {
+const CommunityPage: React.FC<IPageProps<{}, { q: string }>> = async (
+  props
+) => {
+  const {
+    searchParams: { q },
+  } = props;
   const users = await prisma.user.findMany({
     include: {
       tags: true,
     },
+    where: q
+      ? {
+          OR: [
+            {
+              fullName: {
+                contains: q,
+              },
+            },
+            {
+              username: {
+                contains: q,
+              },
+            },
+          ],
+        }
+      : undefined,
   });
 
   return (

@@ -11,6 +11,7 @@ export interface IControllableComponentProps<TValue> {
   onChange?: (value: TValue) => void;
 }
 
-export interface IPageProps<TParams = {}> {
+export interface IPageProps<TParams = {}, TSearchParams = {}> {
   params: TParams;
+  searchParams: TSearchParams;
 }

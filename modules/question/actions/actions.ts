@@ -107,7 +107,7 @@ export async function collect(question: IQuestion, collect: boolean) {
   });
 }
 
-export async function getCollected() {
+export async function getCollected(q = "") {
   const user = await userActions.getCurrentOrRedirectSignIn();
   return (
     await prisma.user.findUniqueOrThrow({
@@ -121,6 +121,22 @@ export async function getCollected() {
             tags: true,
             upvotes: true,
           },
+          where: q
+            ? {
+                OR: [
+                  {
+                    title: {
+                      contains: q,
+                    },
+                  },
+                  {
+                    content: {
+                      contains: q,
+                    },
+                  },
+                ],
+              }
+            : undefined,
         },
       },
     })

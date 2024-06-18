@@ -2,15 +2,41 @@ import Link from "next/link";
 
 import { prisma } from "@/prisma";
 import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
-import { Button, NoResults } from "@/shared";
+import { Button, IPageProps, NoResults } from "@/shared";
 
-export default async function Home() {
+export default async function Home(
+  props: IPageProps<
+    {},
+    {
+      q: string;
+    }
+  >
+) {
+  const {
+    searchParams: { q },
+  } = props;
   const questions = await prisma.question.findMany({
     include: {
       author: true,
       tags: true,
       upvotes: true,
     },
+    where: q
+      ? {
+          OR: [
+            {
+              title: {
+                contains: q,
+              },
+            },
+            {
+              content: {
+                contains: q,
+              },
+            },
+          ],
+        }
+      : undefined,
   });
   return (
     <QuestionList

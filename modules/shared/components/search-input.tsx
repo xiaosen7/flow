@@ -1,6 +1,9 @@
+"use client";
 import { ImageSearch } from "@/shared/assets/icons/search";
-import React from "react";
-import { IComponentBaseProps, Input, mp } from "..";
+import { useDebounceEffect, useMemoizedFn } from "ahooks";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
+import { IComponentBaseProps, Input, InputProps, mp, patchQuery } from "..";
 
 export interface ISearchInputProps extends IComponentBaseProps {
   placeholder?: string;
@@ -8,6 +11,19 @@ export interface ISearchInputProps extends IComponentBaseProps {
 
 export const SearchInput: React.FC<ISearchInputProps> = (props) => {
   const { placeholder } = props;
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const queryString = searchParams.toString();
+  const [value, setValue] = useState(searchParams?.get("q") ?? "");
+
+  const onChange = useMemoizedFn(((e) => {
+    setValue(e.target.value);
+  }) satisfies InputProps["onChange"]);
+
+  useDebounceEffect(() => {
+    router.replace(pathname + "?" + patchQuery(queryString, "q", value));
+  }, [queryString, pathname, router, value]);
   return mp(
     props,
     <div className="relative">
@@ -23,6 +39,8 @@ export const SearchInput: React.FC<ISearchInputProps> = (props) => {
           className="paragraph-regular no-focus placeholder border-none bg-inherit shadow-none outline-none"
           placeholder={placeholder}
           type="text"
+          value={value}
+          onChange={onChange}
         />
       </div>
     </div>
