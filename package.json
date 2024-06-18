@@ -15,7 +15,8 @@
     "prisma:generate": "pnpm prisma generate",
     "prisma:push": "dotenv -e .env.local -- pnpm prisma db push",
     "gen:git-log-file": "mkdir -p modules/shared/assets && git log -1 --pretty=format:\"%cd %h %s\" > modules/shared/assets/git.log",
-    "prepare": "husky & tsx _scripts/prepare & pnpm gen:git-log-file"
+    "prepare": "husky & tsx _scripts/prepare & pnpm gen:git-log-file",
+    "typecheck": "pnpm tsc --noemit"
   },
   "prisma": {
     "schema": "modules/prisma/schema.prisma",

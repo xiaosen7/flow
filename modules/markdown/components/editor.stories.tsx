@@ -11,7 +11,14 @@ export default {
 export const Base: StoryFn<typeof MarkdownEditor> = () => (
   <MarkdownEditor
     className="h-[90vh]"
-    defaultValue={defaultValue}
+    value={defaultValue}
     onChange={console.log}
   />
+);
+
+export const TestScroll: StoryFn<typeof MarkdownEditor> = () => (
+  <div>
+    <div className="h-screen bg-red-300"></div>
+    <MarkdownEditor className="h-[90vh]" onChange={console.log} />
+  </div>
 );

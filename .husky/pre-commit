@@ -1,1 +1,1 @@
-pnpm tsc --noemit && pnpm lint
+pnpm typecheck && pnpm lint
