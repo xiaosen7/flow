@@ -20,6 +20,7 @@ import {
   IActionFn,
   IAnswer,
   IPageProps,
+  ScrollIntoHashElement,
   UpVote,
 } from "@/shared";
 import { ac } from "@/shared/utils/action";
@@ -163,7 +164,6 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
               onChange: bindAnswerAction(answerActions.downVote, answer),
             }}
             editable={editable}
-            id={`answer_${answer.id}`}
             upVote={{
               count: answer.upvotes.length,
               voted: user
@@ -178,6 +178,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
       })}
 
       <AnswerForm onSubmit={bindQuestionAction(answerActions.create)} />
+      <ScrollIntoHashElement />
     </div>
   );
 };

@@ -7,5 +7,6 @@ export * from "./linkable";
 export * from "./list";
 export * from "./metric";
 export * from "./no-result";
+export * from "./scroll-into-element";
 export * from "./search-input";
 export * from "./up-vote";

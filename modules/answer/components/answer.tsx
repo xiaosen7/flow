@@ -27,12 +27,10 @@ export interface IAnswerProps extends IComponentBaseProps {
   isEditState?: boolean;
   onAnswerSave?: IAnswerFormProps["onSubmit"];
   onDelete?: () => void | Promise<void>;
-  id?: string;
 }
 
 export const Answer: React.FC<IAnswerProps> = (props) => {
-  const { author, upVote, downVote, editable, onAnswerSave, answer, id } =
-    props;
+  const { author, upVote, downVote, editable, onAnswerSave, answer } = props;
   const [isEditState, setIsEditState] = useState(editable && props.isEditState);
 
   const { runAsync: onSubmitSave, loading } = useRequest(
@@ -46,7 +44,7 @@ export const Answer: React.FC<IAnswerProps> = (props) => {
 
   return mp(
     props,
-    <article className="light-border border-b py-10" id={id}>
+    <article className="light-border border-b py-10" id={answer.id}>
       <div className="mb-8 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
         <UserAvatar
           extra={
