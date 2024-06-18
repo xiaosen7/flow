@@ -11,7 +11,7 @@ export async function create(
   values: z.infer<typeof ANSWER_SCHEMA>
 ) {
   const { content } = values;
-  const user = await userActions.getCurrentOrThrow();
+  const user = await userActions.getCurrentOrRedirectSignIn();
   await prisma.answer.create({
     data: {
       content,
@@ -44,7 +44,7 @@ export async function remove(answer: IAnswer) {
 }
 
 export async function upVote(answer: IAnswer, vote: boolean) {
-  const user = await userActions.getCurrentOrThrow();
+  const user = await userActions.getCurrentOrRedirectSignIn();
 
   vote && (await downVote(answer, false));
   await prisma.answer.update({
@@ -62,7 +62,7 @@ export async function upVote(answer: IAnswer, vote: boolean) {
 }
 
 export async function downVote(answer: IAnswer, vote: boolean) {
-  const user = await userActions.getCurrentOrThrow();
+  const user = await userActions.getCurrentOrRedirectSignIn();
 
   vote && (await upVote(answer, false));
   await prisma.answer.update({

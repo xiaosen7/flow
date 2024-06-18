@@ -11,7 +11,7 @@ const QuestionEditPage: React.FC<IPageProps<{ id: string }>> = async (
   const {
     params: { id },
   } = props;
-  const user = await userActions.getCurrentOrThrow();
+  const user = await userActions.getCurrentOrRedirectSignIn();
   const question = await prisma.question.findUniqueOrThrow({
     where: {
       id,

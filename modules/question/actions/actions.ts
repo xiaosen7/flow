@@ -8,7 +8,7 @@ import { z } from "zod";
 import { QUESTION_SCHEMA } from "../constants";
 
 export async function create(values: z.infer<typeof QUESTION_SCHEMA>) {
-  const user = await userActions.getCurrentOrThrow();
+  const user = await userActions.getCurrentOrRedirectSignIn();
 
   const { tags: tagNames } = values;
 
@@ -53,7 +53,7 @@ export async function update(
 }
 
 export async function upVote(question: IQuestion, vote: boolean) {
-  const user = await userActions.getCurrentOrThrow();
+  const user = await userActions.getCurrentOrRedirectSignIn();
 
   vote && (await downVote(question, false));
 
@@ -72,7 +72,7 @@ export async function upVote(question: IQuestion, vote: boolean) {
 }
 
 export async function downVote(question: IQuestion, vote: boolean) {
-  const user = await userActions.getCurrentOrThrow();
+  const user = await userActions.getCurrentOrRedirectSignIn();
 
   vote && (await upVote(question, false));
 
@@ -91,7 +91,7 @@ export async function downVote(question: IQuestion, vote: boolean) {
 }
 
 export async function collect(question: IQuestion, collect: boolean) {
-  const user = await userActions.getCurrentOrThrow();
+  const user = await userActions.getCurrentOrRedirectSignIn();
 
   await prisma.question.update({
     where: {
@@ -108,7 +108,7 @@ export async function collect(question: IQuestion, collect: boolean) {
 }
 
 export async function getCollected() {
-  const user = await userActions.getCurrentOrThrow();
+  const user = await userActions.getCurrentOrRedirectSignIn();
   return (
     await prisma.user.findUniqueOrThrow({
       where: {

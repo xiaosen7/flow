@@ -4,7 +4,7 @@ import { prisma } from "@/prisma";
 import { auth, currentUser } from "@clerk/nextjs/server";
 
 export async function getCurrent() {
-  const { userId } = await auth();
+  const { userId } = auth();
   if (!userId) {
     return null;
   }
@@ -17,14 +17,14 @@ export async function getCurrent() {
   return user;
 }
 
-export const getCurrentOrThrow = async () => {
+export const getCurrentOrRedirectSignIn = async () => {
   const user = await getCurrent();
 
   if (!user) {
-    throw new Error("User not found");
+    auth().redirectToSignIn();
   }
 
-  return user;
+  return user!;
 };
 
 export async function createIfNeeded() {
