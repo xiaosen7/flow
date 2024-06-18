@@ -163,6 +163,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
               onChange: bindAnswerAction(answerActions.downVote, answer),
             }}
             editable={editable}
+            id={`answer_${answer.id}`}
             upVote={{
               count: answer.upvotes.length,
               voted: user

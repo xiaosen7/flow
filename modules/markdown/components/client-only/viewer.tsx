@@ -18,8 +18,6 @@ export const MarkdownViewer: React.FC<IMarkdownViewerProps> = (props) => {
     ref.current?.getInstance().setMarkdown(value);
   }, [value]);
 
-  console.log("client-side-only viewer");
-
   const { mode } = useTheme();
   return mp(
     props,
