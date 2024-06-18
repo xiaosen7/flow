@@ -8,7 +8,7 @@ export default {
 } as Meta<typeof DefaultLayout>;
 
 export const Base: StoryFn<typeof DefaultLayout> = (args) => (
-  <DefaultLayout className="h-[90vh]" {...args}>
+  <DefaultLayout style={{ height: `calc(100vh - 32px)` }} {...args}>
     {"content".repeat(1000)}
   </DefaultLayout>
 );
