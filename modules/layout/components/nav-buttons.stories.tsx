@@ -10,7 +10,3 @@ export default {
 export const Base: StoryFn<typeof NavButtons> = (args) => (
   <NavButtons {...args} />
 );
-
-export const Simple: StoryFn<typeof NavButtons> = (args) => (
-  <NavButtons simple {...args} />
-);

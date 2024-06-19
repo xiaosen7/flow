@@ -7,6 +7,3 @@ export default {
 } as Meta<typeof NavLinks>;
 
 export const Base: StoryFn<typeof NavLinks> = (args) => <NavLinks {...args} />;
-export const Simple: StoryFn<typeof NavLinks> = (args) => (
-  <NavLinks simple {...args} />
-);

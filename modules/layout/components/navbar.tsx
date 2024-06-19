@@ -39,9 +39,7 @@ export const Navbar: React.FC<INavbarProps> = (props) => {
           />
         </SignedIn>
 
-        <MobileNav
-          className="sm:hidden" // 大于640时隐藏
-        />
+        <MobileNav />
       </div>
     </nav>
   );

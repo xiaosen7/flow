@@ -20,7 +20,7 @@ export interface IMobileNavProps extends IComponentBaseProps {}
 export const MobileNav: React.FC<IMobileNavProps> = (props) => {
   return mp(
     props,
-    <div>
+    <div className="sm:hidden">
       <Sheet>
         <SheetTrigger asChild>
           <ImageHamburger
@@ -32,7 +32,7 @@ export const MobileNav: React.FC<IMobileNavProps> = (props) => {
         </SheetTrigger>
 
         <SheetContent
-          className="background-light900_dark200 flex flex-col justify-between border-none"
+          className="background-light900_dark200 flex flex-col justify-between border-none sm:hidden"
           side={"left"}
         >
           <Link className="flex items-center gap-1" href="/">

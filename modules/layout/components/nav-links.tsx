@@ -8,11 +8,10 @@ import { NAV_LINKS } from "../constants";
 
 export interface INavLinksProps extends IComponentBaseProps {
   renderItem?: (originalNode: React.ReactNode) => React.ReactNode;
-  simple?: boolean;
 }
 
 export const NavLinks: React.FC<INavLinksProps> = (props) => {
-  const { renderItem = IDENTITY_FN, simple } = props;
+  const { renderItem = IDENTITY_FN } = props;
 
   const pathname = usePathname() ?? "/";
   return mp(
@@ -43,7 +42,8 @@ export const NavLinks: React.FC<INavLinksProps> = (props) => {
                 <p
                   className={cn(
                     isActive ? "base-bold" : "base-medium",
-                    simple && "hidden"
+                    "max-lg:hidden",
+                    "max-sm:block"
                   )}
                 >
                   {label}

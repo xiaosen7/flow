@@ -1,5 +1,4 @@
 import React from "react";
-import { useMediaQuery } from "../hooks";
 import { IComponentBaseProps } from "../types";
 import { cn, mp } from "../utils";
 import { Filter, IFilterProps } from "./filter";
@@ -36,7 +35,6 @@ export const List = <TItem extends { id: React.Key }>(
     total,
   } = props;
 
-  const media = useMediaQuery();
   return mp(
     props,
     <div>
@@ -55,8 +53,18 @@ export const List = <TItem extends { id: React.Key }>(
             filter,
             <Filter
               {...filter}
-              className="md:w-full"
-              variation={media.isGreaterThanMD ? "tags" : "default"}
+              className="hidden w-full md:block"
+              variation={"tags"}
+            />
+          )}
+
+        {filter &&
+          mp(
+            filter,
+            <Filter
+              {...filter}
+              className="hidden max-md:block"
+              variation={"default"}
             />
           )}
 
