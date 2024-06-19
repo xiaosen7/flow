@@ -1,43 +1,26 @@
 import Link from "next/link";
 
-import { prisma } from "@/prisma";
+import { SearchUtil, prisma } from "@/prisma";
 import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
 import { Button, IPageProps, NoResults } from "@/shared";
+import { Prisma } from "@prisma/client";
 
-export default async function Home(
-  props: IPageProps<
-    {},
-    {
-      q: string;
-    }
-  >
-) {
-  const {
-    searchParams: { q },
-  } = props;
-  const questions = await prisma.question.findMany({
-    include: {
-      author: true,
-      tags: true,
-      upvotes: true,
-    },
-    where: q
-      ? {
-          OR: [
-            {
-              title: {
-                contains: q,
-              },
-            },
-            {
-              content: {
-                contains: q,
-              },
-            },
-          ],
-        }
-      : undefined,
-  });
+export default async function Home(props: IPageProps) {
+  const { searchParams } = props;
+
+  const searchUtil = new SearchUtil(Prisma.ModelName.Question, searchParams);
+  const [questions, total] = await Promise.all([
+    prisma.question.findMany({
+      include: {
+        author: true,
+        tags: true,
+        upvotes: true,
+      },
+      ...searchUtil.args,
+    }),
+    searchUtil.count(),
+  ]);
+
   return (
     <QuestionList
       empty={
@@ -68,6 +51,7 @@ export default async function Home(
           </Button>
         </Link>
       }
+      total={total}
     />
   );
 }

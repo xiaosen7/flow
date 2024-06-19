@@ -4,11 +4,12 @@ import { random } from "lodash-es";
 import { createLogUpdate } from "log-update";
 import os from "node:os";
 
-const internalTagNames = ["react", "vue", "next.js", "javascript"];
-const ANSWER_COUNT = 10000;
+const INTERNAL_TAG_NAMES = ["react", "vue", "next.js", "javascript"];
+const ANSWER_COUNT = 1000000;
 const USER_COUNT = 100;
-const QUESTION_COUNT = 100;
-const TAG_COUNT = 100 + internalTagNames.length;
+const QUESTION_COUNT = 10000;
+const TAG_COUNT = 100 + INTERNAL_TAG_NAMES.length;
+const TAG_COUNT_EACH_USER = 5;
 
 const prisma = new PrismaClient({
   transactionOptions: {
@@ -29,9 +30,10 @@ async function main() {
 
   console.log("Creating tags...");
   const tags = await prisma.tag.createManyAndReturn({
-    data: internalTagNames
-      .map((name) => ({ name, description: `${name} tag` }))
-      .concat(mock.tag.createMany(TAG_COUNT - internalTagNames.length)),
+    data: INTERNAL_TAG_NAMES.map((name) => ({
+      name,
+      description: `${name} tag`,
+    })).concat(mock.tag.createMany(TAG_COUNT - INTERNAL_TAG_NAMES.length)),
   });
 
   console.log("Creating questions...");
@@ -47,7 +49,7 @@ async function main() {
     data: mock.answer.createMany(ANSWER_COUNT).map((a) => ({
       ...a,
       authorId: users[random(0, USER_COUNT - 1)].id,
-      questionId: questions[random(0, 99)].id,
+      questionId: questions[random(0, QUESTION_COUNT - 1)].id,
     })),
   });
 
@@ -75,7 +77,7 @@ async function main() {
       downVoteAnswerStart,
       downVoteAnswerEnd,
     ] = randomRange(ANSWER_COUNT);
-    const tagStart = random(0, 96);
+    const tagStart = random(0, TAG_COUNT - TAG_COUNT_EACH_USER);
 
     await prisma.user.update({
       where: {
@@ -83,7 +85,9 @@ async function main() {
       },
       data: {
         tags: {
-          connect: tags.slice(tagStart, tagStart + 3).map(({ id }) => ({ id })),
+          connect: tags
+            .slice(tagStart, tagStart + TAG_COUNT_EACH_USER)
+            .map(({ id }) => ({ id })),
         },
         collections: {
           connect: questions
@@ -130,7 +134,7 @@ async function main() {
     updateQuestionLog(
       `Updating question ${index + 1} of ${questions.length}...`
     );
-    const tagStart = random(0, 96);
+    const tagStart = random(0, TAG_COUNT - TAG_COUNT_EACH_USER);
     await prisma.question.update({
       where: {
         id: question.id,
@@ -138,7 +142,7 @@ async function main() {
       data: {
         tags: {
           connect: tags
-            .slice(tagStart, tagStart + 3)
+            .slice(tagStart, tagStart + TAG_COUNT_EACH_USER)
             .map((tag) => ({ id: tag.id })),
         },
       },

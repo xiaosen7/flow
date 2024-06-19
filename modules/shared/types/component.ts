@@ -1,3 +1,4 @@
+import { ISearchParams } from "@/search-params";
 import React from "react";
 
 export interface IComponentBaseProps {
@@ -13,5 +14,5 @@ export interface IControllableComponentProps<TValue> {
 
 export interface IPageProps<TParams = {}, TSearchParams = {}> {
   params: TParams;
-  searchParams: TSearchParams;
+  searchParams: ISearchParams & TSearchParams;
 }

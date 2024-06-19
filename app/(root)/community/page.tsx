@@ -1,35 +1,22 @@
-import { prisma } from "@/prisma";
+import { SearchUtil, prisma } from "@/prisma";
 import { IPageProps, List, NoResults } from "@/shared";
 import { USER_FILTER_OPTIONS, UserCard } from "@/user";
+import { Prisma } from "@prisma/client";
 import React from "react";
 
-const CommunityPage: React.FC<IPageProps<{}, { q: string }>> = async (
-  props
-) => {
-  const {
-    searchParams: { q },
-  } = props;
-  const users = await prisma.user.findMany({
-    include: {
-      tags: true,
-    },
-    where: q
-      ? {
-          OR: [
-            {
-              fullName: {
-                contains: q,
-              },
-            },
-            {
-              username: {
-                contains: q,
-              },
-            },
-          ],
-        }
-      : undefined,
-  });
+const CommunityPage: React.FC<IPageProps<{}>> = async (props) => {
+  const { searchParams } = props;
+
+  const searchUtil = new SearchUtil(Prisma.ModelName.User, searchParams);
+  const [users, total] = await Promise.all([
+    prisma.user.findMany({
+      include: {
+        tags: true,
+      },
+      ...searchUtil.args,
+    }),
+    searchUtil.count(),
+  ]);
 
   return (
     <List
@@ -52,6 +39,7 @@ const CommunityPage: React.FC<IPageProps<{}, { q: string }>> = async (
         placeholder: "Search amazing minds here...",
       }}
       title={"All Users"}
+      total={total}
     />
   );
 };

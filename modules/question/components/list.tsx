@@ -16,6 +16,7 @@ export interface IQuestionListProps<TQuestion extends IQuestion>
   getAuthor: (question: TQuestion) => IUser;
   getTags: (question: TQuestion) => ITag[];
   getVotes: (question: TQuestion) => IUser[];
+  total: number;
 }
 
 export const QuestionList = <TQuestion extends IQuestion>(

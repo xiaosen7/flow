@@ -53,7 +53,7 @@ export const ProfileBase: React.FC<IProfileBaseProps> = (props) => {
             )}
 
             <ProfileLink iconSrc={imageCalendarSrc}>
-              {formatJoinedAt(user.joinedAt)}
+              {formatJoinedAt(user.createdAt)}
             </ProfileLink>
           </div>
 

@@ -9,7 +9,7 @@ describe("mock", () => {
       clerkId: expect.any(String),
       imageUrl: expect.any(String),
       fullName: expect.any(String),
-      joinedAt: expect.any(Date),
+      createdAt: expect.any(Date),
       username: expect.any(String),
     });
   });
@@ -18,7 +18,7 @@ describe("mock", () => {
     const tag = mock.tag();
     expect(tag).toEqual({
       id: expect.any(String),
-      createdOn: expect.any(Date),
+      createdAt: expect.any(Date),
       name: expect.any(String),
       description: expect.any(String),
     });
@@ -55,7 +55,7 @@ describe("mock", () => {
     tags.forEach((tag) => {
       expect(tag).toEqual({
         id: expect.any(String),
-        createdOn: expect.any(Date),
+        createdAt: expect.any(Date),
         name: expect.any(String),
         description: expect.any(String),
       });

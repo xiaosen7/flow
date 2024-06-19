@@ -10,7 +10,7 @@ export namespace mock {
     const id = uniqueId("mocked-tag");
     return {
       id,
-      createdOn: date(),
+      createdAt: date(),
       name: `tag${id}`,
       description: `tag${id} description`,
     };
@@ -26,7 +26,7 @@ export namespace mock {
       clerkId: "user" + id,
       imageUrl: imageUrl(),
       fullName: `fullName of ${id}`,
-      joinedAt: date(),
+      createdAt: date(),
       username: `username of ${id}`,
       bio: `bio of ${id}`,
       location: `location of ${id}`,

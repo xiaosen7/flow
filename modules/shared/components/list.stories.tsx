@@ -23,5 +23,6 @@ export const Base: StoryFn<typeof List> = () => (
     }}
     title={"Title"}
     titleExtra={"Title Extra"}
+    total={100}
   />
 );

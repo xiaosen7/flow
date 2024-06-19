@@ -1,17 +1,43 @@
-import {
-  QUESTION_FILTER_OPTIONS,
-  QuestionList,
-  questionActions,
-} from "@/question";
+import { SearchUtil, prisma } from "@/prisma";
+import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
 import { IPageProps, NoResults } from "@/shared";
+import { userActions } from "@/user";
+import { Prisma } from "@prisma/client";
 
 export default async function CollectionPage(
   props: IPageProps<{}, { q: string }>
 ) {
-  const {
-    searchParams: { q },
-  } = props;
-  const questions = await questionActions.getCollected(q);
+  const { searchParams } = props;
+  const user = await userActions.getCurrentOrRedirectSignIn();
+  const searchUtil = new SearchUtil(Prisma.ModelName.Question, searchParams);
+  const [questions, total] = await Promise.all([
+    prisma.question.findMany({
+      ...searchUtil.args,
+      where: {
+        ...searchUtil.args.where,
+        collectors: {
+          some: {
+            id: user.id,
+          },
+        },
+      },
+      include: {
+        author: true,
+        tags: true,
+        upvotes: true,
+      },
+    }),
+    prisma.question.count({
+      where: {
+        ...searchUtil.args.where,
+        collectors: {
+          some: {
+            id: user.id,
+          },
+        },
+      },
+    }),
+  ]);
 
   return (
     <QuestionList
@@ -36,6 +62,7 @@ export default async function CollectionPage(
         placeholder: "Search for amazing minds",
       }}
       title={"Saved Questions"}
+      total={total}
     />
   );
 }

@@ -5,7 +5,7 @@ import {
   answerActions,
 } from "@/answer";
 import { MarkdownViewer } from "@/markdown";
-import { prisma } from "@/prisma";
+import { SearchUtil, prisma } from "@/prisma";
 import {
   Collect,
   QuestionDate,
@@ -20,6 +20,7 @@ import {
   IActionFn,
   IAnswer,
   IPageProps,
+  PagePagination,
   ScrollIntoHashElement,
   UpVote,
 } from "@/shared";
@@ -27,6 +28,7 @@ import { ac } from "@/shared/utils/action";
 import { Tags } from "@/tag";
 import { UserAvatar } from "@/user";
 import { userActions } from "@/user/actions";
+import { Prisma } from "@prisma/client";
 import { NextPage } from "next";
 import { redirect } from "next/navigation";
 
@@ -35,37 +37,57 @@ export interface IQuestionDetailPageProps extends IPageProps<{ id: string }> {}
 const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   props
 ) => {
-  const { params } = props;
+  const { params, searchParams } = props;
   const { id } = params;
 
   const user = await userActions.getCurrent();
-  const question = await prisma.question.update({
-    where: {
-      id,
-    },
-    data: {
-      views: {
-        increment: 1,
+  const answerSearchUtil = new SearchUtil(
+    Prisma.ModelName.Answer,
+    searchParams
+  );
+  const [question, answers, answerCount] = await Promise.all([
+    prisma.question.update({
+      where: {
+        id,
       },
-    },
-    include: {
-      author: true,
-      tags: true,
-      upvotes: true,
-      downvotes: true,
-      collectors: true,
-      answers: {
-        include: {
-          author: true,
-          downvotes: true,
-          upvotes: true,
+      data: {
+        views: {
+          increment: 1,
         },
       },
-    },
-  });
+      include: {
+        author: true,
+        tags: true,
+        upvotes: true,
+        downvotes: true,
+        collectors: true,
+      },
+    }),
+    prisma.answer.findMany({
+      include: {
+        author: true,
+        downvotes: true,
+        upvotes: true,
+      },
+      ...answerSearchUtil.args,
+      where: {
+        ...answerSearchUtil.args.where,
+        question: {
+          id,
+        },
+      },
+    }),
+    prisma.answer.count({
+      where: {
+        ...answerSearchUtil.args.where,
+        question: {
+          id,
+        },
+      },
+    }),
+  ]);
 
-  const { author, tags, answers, upvotes, downvotes, collectors, views } =
-    question;
+  const { author, tags, upvotes, downvotes, collectors, views } = question;
 
   const upVoted = !!(user && upvotes.find((x) => x.id === user.id));
   const downVoted = !!(user && downvotes.find((x) => x.id === user.id));
@@ -144,8 +166,11 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
         )}
       </div>
 
-      <div className="mt-8 flex flex-wrap items-center justify-between">
-        <h3 className="primary-text-gradient">{answers.length} Answers</h3>
+      <div
+        className="mt-8 flex flex-wrap items-center justify-between"
+        id="answer-filter"
+      >
+        <h3 className="primary-text-gradient">{answerCount} Answers</h3>
         <Filter options={ANSWER_FILTER_OPTIONS} />
       </div>
 
@@ -176,6 +201,12 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
           />
         );
       })}
+
+      <PagePagination
+        className="mt-10"
+        hrefHash="answer-filter"
+        total={answerCount}
+      />
 
       <AnswerForm onSubmit={bindQuestionAction(answerActions.create)} />
       <ScrollIntoHashElement />

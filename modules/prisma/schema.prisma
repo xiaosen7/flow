@@ -28,7 +28,7 @@ model User {
   location         String?
   bio              String?
 
-  joinedAt DateTime @default(now())
+  createdAt DateTime @default(now())
 
   tags Tag[]
 
@@ -46,7 +46,7 @@ model Tag {
   id          String     @id @default(cuid()) // Primary key
   name        String     @unique
   description String
-  createdOn   DateTime   @default(now())
+  createdAt   DateTime   @default(now())
   questions   Question[]
   users       User[]
 }
@@ -81,12 +81,3 @@ model Answer {
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
 }
-
-// model TagsOnQuestions {
-//   question   Question @relation(fields: [questionId], references: [id])
-//   questionId String
-//   tag        Tag      @relation(fields: [tagId], references: [id])
-//   tagId      String
-
-//   @@id([questionId, tagId])
-// }

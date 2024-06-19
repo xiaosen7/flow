@@ -1,29 +1,39 @@
 "use client";
+import { ESearchParamKey, patchSearchParams } from "@/search-params";
 import { ImageSearch } from "@/shared/assets/icons/search";
 import { useDebounceEffect, useMemoizedFn } from "ahooks";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
-import { IComponentBaseProps, Input, InputProps, mp, patchQuery } from "..";
+import { IComponentBaseProps, Input, InputProps, mp, useNextRouter } from "..";
 
 export interface ISearchInputProps extends IComponentBaseProps {
   placeholder?: string;
+  /**
+   * @default ESearchParamKey.Q
+   */
+  searchParamKey?: ESearchParamKey;
 }
 
 export const SearchInput: React.FC<ISearchInputProps> = (props) => {
-  const { placeholder } = props;
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const queryString = searchParams.toString();
-  const [value, setValue] = useState(searchParams?.get("q") ?? "");
+  const { placeholder, searchParamKey = ESearchParamKey.Q } = props;
+  const { router, pathname, searchParams } = useNextRouter();
+  const [value, setValue] = useState(searchParams?.get(searchParamKey) ?? "");
 
   const onChange = useMemoizedFn(((e) => {
     setValue(e.target.value);
   }) satisfies InputProps["onChange"]);
 
   useDebounceEffect(() => {
-    router.replace(pathname + "?" + patchQuery(queryString, "q", value));
-  }, [queryString, pathname, router, value]);
+    const newSearchParams = patchSearchParams(searchParams, {
+      [searchParamKey]: value,
+    });
+    if (newSearchParams.toString() !== searchParams.toString()) {
+      newSearchParams.delete(ESearchParamKey.Page); // means value changed, reset page
+      router?.replace(`?${newSearchParams.toString()}`, {
+        scroll: false,
+      });
+    }
+  }, [searchParams, pathname, router, value]);
+
   return mp(
     props,
     <div className="relative">

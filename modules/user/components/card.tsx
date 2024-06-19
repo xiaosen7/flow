@@ -12,11 +12,12 @@ export const UserCard = (props: IUserCardProps) => {
   const { user, tags } = props;
   return mp(
     props,
-    <Link
-      className="shadow-light100_darknone  max-xs:min-w-full xs:w-[260px]"
-      href={`/profile/${user.id}`}
-    >
-      <article className="background-light900_dark200 light-border flex flex-col items-center justify-center rounded-2xl border p-8">
+
+    <article className="shadow-light100_darknone  background-light900_dark200 light-border flex flex-col items-center justify-center rounded-2xl border p-8 max-xs:min-w-full xs:w-[260px]">
+      <Link
+        className="flex flex-col items-center justify-center"
+        href={`/profile/${user.id}`}
+      >
         <Image
           alt="User profile picture"
           className="rounded-full"
@@ -32,19 +33,19 @@ export const UserCard = (props: IUserCardProps) => {
             @{user.username}
           </p>
         </div>
+      </Link>
 
-        <div className="mt-5">
-          {tags.length > 0 ? (
-            <div className="flex items-center gap-2">
-              {tags.map((tag) => (
-                <Tag key={tag.id} tag={tag} />
-              ))}
-            </div>
-          ) : (
-            <Badge>No tags yet</Badge>
-          )}
-        </div>
-      </article>
-    </Link>
+      <div className="mt-5">
+        {tags.length > 0 ? (
+          <div className="flex flex-wrap items-center gap-2">
+            {tags.map((tag) => (
+              <Tag key={tag.id} tag={tag} />
+            ))}
+          </div>
+        ) : (
+          <Badge>No tags yet</Badge>
+        )}
+      </div>
+    </article>
   );
 };

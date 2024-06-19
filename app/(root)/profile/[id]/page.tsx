@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma";
+import { SearchUtil, prisma } from "@/prisma";
 import {
   ProfileAnsweredQuestionCard,
   ProfileBase,
@@ -6,49 +6,82 @@ import {
   ProfileTopQuestionCard,
   profileActions,
 } from "@/profile";
-import { IPageProps, Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared";
+import { ESearchParamKey } from "@/search-params";
+import {
+  IPageProps,
+  PagePagination,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared";
 import { userActions } from "@/user";
+import { Prisma } from "@prisma/client";
 import React from "react";
 
 const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
   params: { id },
+  searchParams,
 }) => {
-  const profileUser = await prisma.user.findUniqueOrThrow({
-    where: {
-      id,
-    },
-    include: {
-      questions: {
-        orderBy: {
-          upvotes: {
-            _count: "desc",
-          },
-        },
-        include: {
-          tags: true,
-          answers: true,
-          upvotes: true,
-        },
-      },
-      answers: {
-        include: {
-          question: {
-            include: {
-              tags: true,
-              upvotes: true,
-              author: true,
-              answers: true,
-            },
-          },
-          upvotes: true,
-        },
-      },
-    },
+  const questionSearchUtil = new SearchUtil(Prisma.ModelName.Question, {
+    page: searchParams[ESearchParamKey.questionPage],
   });
+  const answerSearchUtil = new SearchUtil(Prisma.ModelName.Answer, {
+    page: searchParams[ESearchParamKey.AnsweredQuestionPage],
+  });
+  const [
+    profileUser,
+    questions,
+    questionCount,
+    answers,
+    answerCount,
+    badges,
+    loggedUser,
+  ] = await Promise.all([
+    prisma.user.findUniqueOrThrow({
+      where: {
+        id,
+      },
+    }),
+    prisma.question.findMany({
+      ...questionSearchUtil.args,
+      where: {
+        authorId: id,
+      },
+      include: {
+        tags: true,
+        upvotes: true,
+      },
+    }),
+    prisma.question.count({
+      where: {
+        authorId: id,
+      },
+    }),
+    prisma.answer.findMany({
+      ...answerSearchUtil.args,
+      where: {
+        authorId: id,
+      },
+      include: {
+        question: {
+          include: {
+            author: true,
+          },
+        },
+        upvotes: true,
+      },
+    }),
+    prisma.answer.count({
+      where: {
+        authorId: id,
+      },
+    }),
+    profileActions.getBadges(id),
+    userActions.getCurrent(),
+  ]);
 
-  const loggedUser = await userActions.getCurrent();
   const editable = loggedUser?.id === profileUser.id;
-  const badges = await profileActions.getBadges(profileUser.id);
 
   return (
     <div>
@@ -56,8 +89,8 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
       <ProfileStats
         badges={badges}
         reputation={0}
-        totalAnswers={profileUser.answers.length}
-        totalQuestions={profileUser.questions.length}
+        totalAnswers={answerCount}
+        totalQuestions={questionCount}
       />
 
       <div className="mt-10 flex gap-10">
@@ -71,7 +104,7 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
             </TabsTrigger>
           </TabsList>
           <TabsContent className="flex w-full flex-col gap-6" value="top-posts">
-            {profileUser.questions.map((question) => (
+            {questions.map((question) => (
               <ProfileTopQuestionCard
                 key={question.id}
                 question={question}
@@ -80,9 +113,13 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
                 votes={question.upvotes.length}
               />
             ))}
+            <PagePagination
+              searchParamKey={ESearchParamKey.questionPage}
+              total={questionCount}
+            />
           </TabsContent>
           <TabsContent className="flex w-full flex-col gap-6" value="answers">
-            {profileUser.answers.map((answer) => (
+            {answers.map((answer) => (
               <ProfileAnsweredQuestionCard
                 key={answer.id}
                 answer={answer}
@@ -92,6 +129,10 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
                 user={answer.question.author}
               />
             ))}
+            <PagePagination
+              searchParamKey={ESearchParamKey.AnsweredQuestionPage}
+              total={answerCount}
+            />
           </TabsContent>
         </Tabs>
       </div>

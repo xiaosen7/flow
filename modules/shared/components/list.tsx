@@ -3,6 +3,7 @@ import { useMediaQuery } from "../hooks";
 import { IComponentBaseProps } from "../types";
 import { cn, mp } from "../utils";
 import { Filter, IFilterProps } from "./filter";
+import { PagePagination } from "./page-pagination";
 import { ISearchInputProps, SearchInput } from "./search-input";
 
 export interface IListProps<TItem> extends IComponentBaseProps {
@@ -17,6 +18,7 @@ export interface IListProps<TItem> extends IComponentBaseProps {
    * @default "row"
    */
   direction?: "row" | "column";
+  total: number;
 }
 
 export const List = <TItem extends { id: React.Key }>(
@@ -31,6 +33,7 @@ export const List = <TItem extends { id: React.Key }>(
     renderItem,
     empty,
     direction = "row",
+    total,
   } = props;
 
   const media = useMediaQuery();
@@ -74,6 +77,8 @@ export const List = <TItem extends { id: React.Key }>(
           </div>
         </div>
       </div>
+
+      <PagePagination className="mt-10" total={total} />
     </div>
   );
 };
