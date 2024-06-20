@@ -1,7 +1,7 @@
 import { answerActions, questionActions, userActions } from "@/actions";
 import { ANSWER_FILTER_OPTIONS, Answer, AnswerForm } from "@/answer";
 import { MarkdownViewer } from "@/markdown";
-import { SearchUtil, prisma } from "@/prisma";
+import { prisma } from "@/prisma";
 import {
   Collect,
   QuestionDate,
@@ -34,11 +34,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   const { id } = params;
 
   const user = await userActions.getCurrent();
-  const answerSearchUtil = SearchUtil.create(
-    SearchUtil.kind.Answer,
-    searchParams
-  );
-  const [question, answers, answerCount] = await prisma.$transaction([
+  const [question, { items: answers, total: answerTotal }] = await Promise.all([
     prisma.question.update({
       where: {
         id,
@@ -56,27 +52,18 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
         collectors: true,
       },
     }),
-    prisma.answer.findMany({
+    prisma.answer.search({
       include: {
         author: true,
         downvotes: true,
         upvotes: true,
       },
-      ...answerSearchUtil.args,
       where: {
-        ...answerSearchUtil.args.where,
         question: {
           id,
         },
       },
-    }),
-    prisma.answer.count({
-      where: {
-        ...answerSearchUtil.args.where,
-        question: {
-          id,
-        },
-      },
+      searchParams,
     }),
   ]);
 
@@ -200,7 +187,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
         className="mt-8 flex flex-wrap items-center justify-between"
         id="answer-filter"
       >
-        <h3 className="primary-text-gradient">{answerCount} Answers</h3>
+        <h3 className="primary-text-gradient">{answerTotal} Answers</h3>
         <Filter options={ANSWER_FILTER_OPTIONS} />
       </div>
 
@@ -235,7 +222,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
       <PagePagination
         className="mt-10"
         hrefHash="answer-filter"
-        total={answerCount}
+        total={answerTotal}
       />
 
       <AnswerForm onSubmit={bindQuestionAction(answerActions.create)} />

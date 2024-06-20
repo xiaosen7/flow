@@ -1,5 +1,5 @@
 import { profileActions, userActions } from "@/actions";
-import { SearchUtil, prisma } from "@/prisma";
+import { prisma } from "@/prisma";
 import {
   ProfileAnsweredQuestionCard,
   ProfileBase,
@@ -21,16 +21,10 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
   params: { id },
   searchParams,
 }) => {
-  const questionSearchUtil = SearchUtil.create(SearchUtil.kind.Question, {
-    page: searchParams[ESearchParamKey.QuestionPage],
-  });
-  const answerSearchUtil = SearchUtil.create(SearchUtil.kind.Answer, {
-    page: searchParams[ESearchParamKey.AnsweredQuestionPage],
-  });
   const [
     [profileUser, badges],
-    [questions, questionCount],
-    [answers, answerCount],
+    { items: questions, total: questionTotal },
+    { items: answers, total: answerTotal },
     loggedUser,
   ] = await Promise.all([
     prisma.$transaction(async () =>
@@ -43,44 +37,35 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
         profileActions.getBadges(id),
       ])
     ),
-    prisma.$transaction([
-      prisma.question.findMany({
-        ...questionSearchUtil.args,
-        where: {
-          authorId: id,
-        },
-        include: {
-          tags: true,
-          upvotes: true,
-        },
-      }),
-      prisma.question.count({
-        where: {
-          authorId: id,
-        },
-      }),
-    ]),
-    prisma.$transaction([
-      prisma.answer.findMany({
-        ...answerSearchUtil.args,
-        where: {
-          authorId: id,
-        },
-        include: {
-          question: {
-            include: {
-              author: true,
-            },
+    prisma.question.search({
+      where: {
+        authorId: id,
+      },
+      include: {
+        tags: true,
+        upvotes: true,
+      },
+      searchParams: {
+        [ESearchParamKey.Page]: searchParams[ESearchParamKey.QuestionPage],
+      },
+    }),
+    prisma.answer.search({
+      where: {
+        authorId: id,
+      },
+      include: {
+        question: {
+          include: {
+            author: true,
           },
-          upvotes: true,
         },
-      }),
-      prisma.answer.count({
-        where: {
-          authorId: id,
-        },
-      }),
-    ]),
+        upvotes: true,
+      },
+      searchParams: {
+        [ESearchParamKey.Page]:
+          searchParams[ESearchParamKey.AnsweredQuestionPage],
+      },
+    }),
     userActions.getCurrent(),
   ]);
 
@@ -92,8 +77,8 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
       <ProfileStats
         badges={badges}
         reputation={0}
-        totalAnswers={answerCount}
-        totalQuestions={questionCount}
+        totalAnswers={answerTotal}
+        totalQuestions={questionTotal}
       />
 
       <div className="mt-10 flex gap-10">
@@ -118,7 +103,7 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
             ))}
             <PagePagination
               searchParamKey={ESearchParamKey.QuestionPage}
-              total={questionCount}
+              total={questionTotal}
             />
           </TabsContent>
           <TabsContent className="flex w-full flex-col gap-6" value="answers">
@@ -134,7 +119,7 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
             ))}
             <PagePagination
               searchParamKey={ESearchParamKey.AnsweredQuestionPage}
-              total={answerCount}
+              total={answerTotal}
             />
           </TabsContent>
         </Tabs>

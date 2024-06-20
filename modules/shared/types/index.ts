@@ -4,3 +4,4 @@ export * from "./component";
 export * from "./question";
 export * from "./tag";
 export * from "./user";
+export * from "./utils";

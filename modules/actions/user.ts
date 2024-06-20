@@ -28,28 +28,30 @@ export const getCurrentOrRedirectSignIn = async () => {
 };
 
 export async function createIfNeeded() {
-  const clerkUser = await currentUser();
+  try {
+    const clerkUser = await currentUser();
 
-  if (!clerkUser) {
-    return;
-  }
+    if (!clerkUser) {
+      return;
+    }
 
-  const existingUser = await prisma.user.findUnique({
-    where: {
-      clerkId: clerkUser.id,
-    },
-  });
-  if (existingUser) {
-    return;
-  }
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        clerkId: clerkUser.id,
+      },
+    });
+    if (existingUser) {
+      return;
+    }
 
-  await prisma.user.create({
-    data: {
-      email: clerkUser.emailAddresses[0].emailAddress ?? "",
-      fullName: clerkUser.fullName ?? "",
-      clerkId: clerkUser.id,
-      imageUrl: clerkUser.imageUrl,
-      username: clerkUser.username ?? "",
-    },
-  });
+    await prisma.user.create({
+      data: {
+        email: clerkUser.emailAddresses[0].emailAddress ?? "",
+        fullName: clerkUser.fullName ?? "",
+        clerkId: clerkUser.id,
+        imageUrl: clerkUser.imageUrl,
+        username: clerkUser.username ?? "",
+      },
+    });
+  } catch {}
 }

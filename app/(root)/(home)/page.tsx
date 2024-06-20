@@ -1,24 +1,20 @@
 import Link from "next/link";
 
-import { SearchUtil, prisma } from "@/prisma";
+import { prisma } from "@/prisma";
 import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
 import { Button, IPageProps, NoResults } from "@/shared";
 
 export default async function Home(props: IPageProps) {
   const { searchParams } = props;
 
-  const searchUtil = SearchUtil.create(SearchUtil.kind.Question, searchParams);
-  const [questions, total] = await prisma.$transaction([
-    prisma.question.findMany({
-      include: {
-        author: true,
-        tags: true,
-        upvotes: true,
-      },
-      ...searchUtil.args,
-    }),
-    searchUtil.count(),
-  ]);
+  const { items: questions, total } = await prisma.question.search({
+    searchParams,
+    include: {
+      author: true,
+      tags: true,
+      upvotes: true,
+    },
+  });
 
   return (
     <QuestionList

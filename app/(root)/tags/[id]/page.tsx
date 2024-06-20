@@ -1,49 +1,35 @@
-import { SearchUtil, prisma } from "@/prisma";
+import { prisma } from "@/prisma";
 import { QuestionList } from "@/question";
 import { IPageProps, NoResults } from "@/shared";
+import Link from "next/link";
 import React from "react";
 
 const TagsDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
   params: { id },
   searchParams,
 }) => {
-  const searchUtil = SearchUtil.create(SearchUtil.kind.Question, searchParams);
-  const [tag, questions, total] = await prisma.$transaction(
-    [
-      prisma.tag.findUniqueOrThrow({
-        where: {
-          id,
-        },
-      }),
-      prisma.question.findMany({
-        ...searchUtil.args,
-        where: {
-          ...searchUtil.args.where,
-          tags: {
-            some: {
-              id,
-            },
+  const [tag, { items: questions, total }] = await Promise.all([
+    prisma.tag.findUniqueOrThrow({
+      where: {
+        id,
+      },
+    }),
+    prisma.question.search({
+      where: {
+        tags: {
+          some: {
+            id,
           },
         },
-        include: {
-          author: true,
-          tags: true,
-          upvotes: true,
-        },
-      }),
-      prisma.question.count({
-        where: {
-          ...searchUtil.args.where,
-          tags: {
-            some: {
-              id,
-            },
-          },
-        },
-      }),
-    ],
-    {}
-  );
+      },
+      include: {
+        author: true,
+        tags: true,
+        upvotes: true,
+      },
+      searchParams,
+    }),
+  ]);
   return (
     <QuestionList
       empty={
@@ -61,7 +47,7 @@ const TagsDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
       search={{
         placeholder: "Search tag questions...",
       }}
-      title={tag.name}
+      title={<Link href={`/tags/${tag.id}`}>{tag.name}</Link>}
       total={total}
     />
   );

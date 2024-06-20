@@ -1,6 +1,7 @@
 "use client";
 
-import { IComponentBaseProps, SearchInput, mp } from "@/shared";
+import { ESearchParamKey, formatHref } from "@/search-params";
+import { IComponentBaseProps, ISafeAny, SearchInput, mp } from "@/shared";
 import { ImageTag } from "@/shared/assets/icons/tag";
 import { Prisma } from "@prisma/client";
 import {
@@ -21,12 +22,43 @@ const globalTypes: IGlobalSearchType[] = [
   Prisma.ModelName.User,
 ];
 
-export type IGlobalSearchResult = Array<{
-  type: IGlobalSearchType;
-  title: string;
-  link: string;
-  key: string;
-}>;
+type IModelNameToType = {
+  [K in Prisma.ModelName]: Prisma.TypeMap["model"][K]["payload"]["scalars"];
+};
+
+export type IGlobalSearchResult<T = Prisma.ModelName> = Array<
+  T extends Prisma.ModelName ? IModelNameToType[T] & { type: T } : never
+>;
+
+const modelMap: {
+  [K in Prisma.ModelName]: {
+    getTitle: (model: IModelNameToType[K]) => React.ReactNode;
+    getLink: (model: IModelNameToType[K]) => string;
+  };
+} = {
+  [Prisma.ModelName.Question]: {
+    getTitle: (question) => question.title,
+    getLink: (question) => `/question/${question.id}`,
+  },
+  [Prisma.ModelName.Answer]: {
+    getTitle: (answer) => answer.content,
+    getLink: (answer) =>
+      formatHref({
+        url: `/question/${answer.questionId}`,
+        searchParams: {
+          [ESearchParamKey.AnswerId]: answer.id,
+        },
+      }),
+  },
+  [Prisma.ModelName.Tag]: {
+    getTitle: (tag) => tag.name,
+    getLink: (tag) => `/tags/${tag.id}`,
+  },
+  [Prisma.ModelName.User]: {
+    getTitle: (user) => user.username,
+    getLink: (user) => `/profile/${user.id}`,
+  },
+};
 
 export interface IGlobalSearchProps extends IComponentBaseProps {
   api: (
@@ -125,9 +157,9 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
               {data.length > 0 ? (
                 data.map((item) => (
                   <Link
-                    key={item.key}
+                    key={item.id}
                     className="flex w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-light-700/50 hover:dark:bg-dark-500/50"
-                    href={item.link}
+                    href={modelMap[item.type].getLink(item as ISafeAny)}
                   >
                     <ImageTag
                       alt="tag"
@@ -138,7 +170,7 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
 
                     <div className="flex flex-col">
                       <p className="body-medium text-dark200_light800 line-clamp-1">
-                        {item.title}
+                        {modelMap[item.type].getTitle(item as ISafeAny)}
                       </p>
                       <p className="text-light400_light500 small-medium mt-1 font-bold capitalize">
                         {item.type}

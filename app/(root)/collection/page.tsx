@@ -1,5 +1,5 @@
 import { userActions } from "@/actions";
-import { SearchUtil, prisma } from "@/prisma";
+import { prisma } from "@/prisma";
 import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
 import { IPageProps, NoResults } from "@/shared";
 
@@ -8,36 +8,21 @@ export default async function CollectionPage(
 ) {
   const { searchParams } = props;
   const user = await userActions.getCurrentOrRedirectSignIn();
-  const searchUtil = SearchUtil.create(SearchUtil.kind.Question, searchParams);
-  const [questions, total] = await prisma.$transaction([
-    prisma.question.findMany({
-      ...searchUtil.args,
-      where: {
-        ...searchUtil.args.where,
-        collectors: {
-          some: {
-            id: user.id,
-          },
+  const { items: questions, total } = await prisma.question.search({
+    searchParams,
+    where: {
+      collectors: {
+        some: {
+          id: user.id,
         },
       },
-      include: {
-        author: true,
-        tags: true,
-        upvotes: true,
-      },
-    }),
-    prisma.question.count({
-      where: {
-        ...searchUtil.args.where,
-        collectors: {
-          some: {
-            id: user.id,
-          },
-        },
-      },
-    }),
-  ]);
-
+    },
+    include: {
+      author: true,
+      tags: true,
+      upvotes: true,
+    },
+  });
   return (
     <QuestionList
       empty={

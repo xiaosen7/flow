@@ -1,5 +1,9 @@
 import { DefaultLayout, IGlobalSearchProps } from "@/layout";
-import { SearchUtil, prisma } from "@/prisma";
+import { prisma } from "@/prisma";
+import { ESearchParamKey } from "@/search-params";
+import { ISafeAny } from "@/shared";
+import { Prisma } from "@prisma/client";
+import { toLower } from "lodash-es";
 import React from "react";
 
 interface ILayoutProps extends React.PropsWithChildren {}
@@ -32,23 +36,19 @@ const Layout: React.FC<ILayoutProps> = async ({ children }) => {
 
   const globalSearchApi: IGlobalSearchProps["api"] = async (types, value) => {
     "use server";
-    types =
-      types.length === 0
-        ? [
-            SearchUtil.kind.Question,
-            SearchUtil.kind.Answer,
-            SearchUtil.kind.Tag,
-            SearchUtil.kind.User,
-          ]
-        : types;
     return (
       await Promise.all(
         types.map(async (type) => {
-          const searchUtil = SearchUtil.create(type, {
-            q: value,
-            pageSize: "8",
+          const { items } = await prisma[
+            toLower(type) as Prisma.TypeMap["meta"]["modelProps"]
+          ].search({
+            searchParams: {
+              [ESearchParamKey.Q]: value,
+              [ESearchParamKey.PageSize]: "8",
+            },
           });
-          return await searchUtil.globalSearch();
+
+          return items.map((x) => ({ ...x, type: type as ISafeAny }));
         })
       )
     ).flat();
