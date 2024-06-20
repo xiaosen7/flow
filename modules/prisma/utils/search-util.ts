@@ -1,5 +1,5 @@
 import { IGlobalSearchResult } from "@/layout";
-import { ESearchParamKey, ISearchParams } from "@/search-params";
+import { ESearchParamKey, ISearchParams, formatHref } from "@/search-params";
 import { IAnswer, IQuestion, ITag, IUser } from "@/shared";
 import { Prisma } from "@prisma/client";
 import { camelCase } from "change-case";
@@ -103,8 +103,13 @@ class AnswerSearchUtil extends SearchUtil<typeof Prisma.ModelName.Answer> {
 
     return answers.map((answer) => ({
       key: answer.id,
-      link: `/question/${answer.questionId}`,
-      title: "Answers containing text",
+      link: formatHref({
+        url: `/question/${answer.questionId}`,
+        searchParams: {
+          [ESearchParamKey.AnswerId]: answer.id,
+        },
+      }),
+      title: answer.content,
       type: Prisma.ModelName.Answer,
     }));
   }

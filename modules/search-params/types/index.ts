@@ -1,9 +1,3 @@
 import { ESearchParamKey } from "../constants";
 
-export interface ISearchParams {
-  [ESearchParamKey.Q]?: string;
-  [ESearchParamKey.Page]?: string;
-  [ESearchParamKey.AnsweredQuestionPage]?: string;
-  [ESearchParamKey.QuestionPage]?: string;
-  [ESearchParamKey.PageSize]?: string;
-}
+export type ISearchParams = Partial<Record<ESearchParamKey, string>>;

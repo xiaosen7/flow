@@ -2,6 +2,7 @@ export {};
 
 import { isString } from "lodash-es";
 import { ESearchParamKey } from "../constants";
+import { ISearchParams } from "../types";
 
 function patchSearchParams(
   searchParams: URLSearchParams,
@@ -46,17 +47,10 @@ export { patchSearchParams };
 
 export function formatHref(options: {
   url: string;
-  searchParams: URLSearchParams;
-  keepSearchParamKeys: ESearchParamKey[];
+  searchParams: ISearchParams;
 }) {
-  const { url, searchParams, keepSearchParamKeys } = options;
-  const newSearchParams = new URLSearchParams();
-
-  keepSearchParamKeys.forEach((key) => {
-    if (searchParams.has(key)) {
-      newSearchParams.set(key, searchParams.get(key)!);
-    }
-  });
+  const { url, searchParams } = options;
+  const newSearchParams = new URLSearchParams(searchParams);
 
   const search = newSearchParams.toString();
   if (search) {

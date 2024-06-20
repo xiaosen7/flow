@@ -1,4 +1,5 @@
 import { QuestionDate, QuestionMetrics } from "@/question";
+import { ESearchParamKey, formatHref } from "@/search-params";
 import {
   IAnswer,
   IComponentBaseProps,
@@ -28,7 +29,14 @@ export const ProfileAnsweredQuestionCard: React.FC<
   return mp(
     props,
     <div className="card-wrapper rounded-[10px] px-11 py-9">
-      <Link href={`/question/${question.id}/#${answer.id}`}>
+      <Link
+        href={formatHref({
+          url: `/question/${question.id}`,
+          searchParams: {
+            [ESearchParamKey.AnswerId]: answer.id,
+          },
+        })}
+      >
         <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
           <div>
             <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">

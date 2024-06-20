@@ -30,7 +30,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log("render global layout");
+  // console.log("render global layout");
   // await userActions.createIfNeeded();
   return (
     <html lang="en">

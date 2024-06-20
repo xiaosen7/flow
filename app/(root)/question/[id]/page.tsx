@@ -80,6 +80,19 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
     }),
   ]);
 
+  const answer = searchParams.answerId
+    ? await prisma.answer.findUnique({
+        where: {
+          id: searchParams.answerId,
+        },
+        include: {
+          author: true,
+          downvotes: true,
+          upvotes: true,
+        },
+      })
+    : null;
+
   const { author, tags, upvotes, downvotes, collectors, views } = question;
 
   const upVoted = !!(user && upvotes.find((x) => x.id === user.id));
@@ -158,6 +171,30 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
           />
         )}
       </div>
+
+      {answer && (
+        <Answer
+          answer={answer}
+          author={answer.author}
+          downVote={{
+            count: answer.downvotes.length,
+            voted: user
+              ? !!answer.downvotes.find((x) => x.id === user.id)
+              : false,
+            onChange: bindAnswerAction(answerActions.downVote, answer),
+          }}
+          editable={editable}
+          upVote={{
+            count: answer.upvotes.length,
+            voted: user
+              ? !!answer.upvotes.find((x) => x.id === user.id)
+              : false,
+            onChange: bindAnswerAction(answerActions.upVote, answer),
+          }}
+          onAnswerSave={bindAnswerAction(answerActions.update, answer)}
+          onDelete={bindAnswerAction(answerActions.remove, answer)}
+        />
+      )}
 
       <div
         className="mt-8 flex flex-wrap items-center justify-between"
