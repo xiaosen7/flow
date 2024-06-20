@@ -3,12 +3,15 @@ import { IComponentBaseProps } from "../types";
 import { cn, mp } from "../utils";
 import { Filter, IFilterProps } from "./filter";
 import { PagePagination } from "./page-pagination";
-import { ISearchInputProps, SearchInput } from "./search-input";
+import {
+  ISearchInputSyncQueryProps,
+  SearchInputSyncQuery,
+} from "./search-input";
 
 export interface IListProps<TItem> extends IComponentBaseProps {
   title: React.ReactNode;
   titleExtra?: React.ReactNode;
-  search?: ISearchInputProps;
+  search?: ISearchInputSyncQueryProps;
   filter?: IFilterProps;
   items: TItem[];
   renderItem: (item: TItem, index: number) => React.ReactNode;
@@ -46,7 +49,10 @@ export const List = <TItem extends { id: React.Key }>(
 
       <div className="mt-11 flex flex-wrap justify-between gap-5 max-sm:flex-col sm:items-center md:flex-col">
         {search &&
-          mp(search, <SearchInput {...search} className="flex-1 md:w-full" />)}
+          mp(
+            search,
+            <SearchInputSyncQuery {...search} className="flex-1 md:w-full" />
+          )}
 
         {filter &&
           mp(

@@ -5,7 +5,7 @@ import { useDebounceEffect, useMemoizedFn } from "ahooks";
 import React, { useState } from "react";
 import { IComponentBaseProps, Input, InputProps, mp, useNextRouter } from "..";
 
-export interface ISearchInputProps
+export interface ISearchInputSyncQueryProps
   extends IComponentBaseProps,
     Pick<InputProps, "onFocus"> {
   placeholder?: string;
@@ -15,10 +15,14 @@ export interface ISearchInputProps
   searchParamKey?: ESearchParamKey;
 }
 
-export const SearchInput: React.FC<ISearchInputProps> = (props) => {
-  const { placeholder, searchParamKey = ESearchParamKey.Q, onFocus } = props;
+export const SearchInputSyncQuery: React.FC<ISearchInputSyncQueryProps> = (
+  props
+) => {
+  const { placeholder, searchParamKey = ESearchParamKey.Q } = props;
   const { router, pathname, searchParams } = useNextRouter();
-  const [value, setValue] = useState(searchParams?.get(searchParamKey) ?? "");
+
+  const searchParamValue = searchParams?.get(searchParamKey) ?? "";
+  const [value, setValue] = useState(searchParamValue);
 
   const onChange = useMemoizedFn(((e) => {
     setValue(e.target.value);
@@ -34,8 +38,15 @@ export const SearchInput: React.FC<ISearchInputProps> = (props) => {
         scroll: false,
       });
     }
-  }, [searchParams, pathname, router, value]);
+  }, [searchParamValue, pathname, router, value]);
 
+  return mp(
+    props,
+    <SearchInput placeholder={placeholder} value={value} onChange={onChange} />
+  );
+};
+
+export const SearchInput: React.FC<InputProps> = (props) => {
   return mp(
     props,
     <div className="relative">
@@ -49,11 +60,8 @@ export const SearchInput: React.FC<ISearchInputProps> = (props) => {
 
         <Input
           className="paragraph-regular no-focus placeholder border-none bg-inherit shadow-none outline-none"
-          placeholder={placeholder}
           type="text"
-          value={value}
-          onChange={onChange}
-          onFocus={onFocus}
+          {...props}
         />
       </div>
     </div>

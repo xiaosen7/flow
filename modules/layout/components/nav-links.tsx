@@ -1,5 +1,4 @@
 "use client";
-import { ESearchParamKey, formatHref } from "@/search-params";
 import { IComponentBaseProps, IDENTITY_FN, cn, mp } from "@/shared";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,11 +31,7 @@ export const NavLinks: React.FC<INavLinksProps> = (props) => {
                     : "text-dark300_light900",
                   "flex items-center justify-start gap-4 bg-transparent p-4"
                 )}
-                href={formatHref({
-                  url: route,
-                  keepSearchParamKeys: [ESearchParamKey.GT, ESearchParamKey.GQ],
-                  searchParams,
-                })}
+                href={route}
               >
                 <Image
                   alt={label}

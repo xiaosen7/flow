@@ -36,6 +36,7 @@ export class SearchUtil<TModelName extends Prisma.ModelName> {
           OR: modelMap[this.modelName].searchableFields.map((key) => ({
             [key]: {
               contains: search,
+              mode: "insensitive",
             },
           })),
         }

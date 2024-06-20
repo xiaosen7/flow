@@ -1,16 +1,15 @@
 "use client";
 
-import { ESearchParamKey, patchSearchParams } from "@/search-params";
-import {
-  IComponentBaseProps,
-  ISafeAny,
-  SearchInput,
-  mp,
-  useNextRouter,
-} from "@/shared";
+import { IComponentBaseProps, SearchInput, mp } from "@/shared";
 import { ImageTag } from "@/shared/assets/icons/tag";
 import { Prisma } from "@prisma/client";
-import { useClickAway, useMemoizedFn, useRequest } from "ahooks";
+import {
+  useClickAway,
+  useEventTarget,
+  useMemoizedFn,
+  useRequest,
+  useSet,
+} from "ahooks";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -38,42 +37,30 @@ export interface IGlobalSearchProps extends IComponentBaseProps {
 
 export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
   const { api } = props;
-  const { loading, data = [], run } = useRequest(api, { manual: true });
-  const { searchParams, router } = useNextRouter();
-  const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
   useClickAway(() => setOpen(false), containerRef);
-
-  const types = new Set<IGlobalSearchType>(
-    (searchParams.get(ESearchParamKey.GT)?.split(",") ?? []).filter(
-      (x: ISafeAny) => globalTypes.includes(x)
-    ) as unknown as IGlobalSearchType[]
-  );
-  const q = searchParams.get(ESearchParamKey.GQ);
+  const {
+    loading,
+    data = [],
+    run,
+  } = useRequest(api, { manual: true, ready: open });
+  const [value, { onChange }] = useEventTarget<string>();
+  const [types, typesActions] = useSet<Prisma.ModelName>();
 
   useEffect(() => {
-    if (open && q) {
-      run(Array.from(types), q);
+    // run when types or value change
+    if (value) {
+      run(types.size === 0 ? globalTypes : Array.from(types), value);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, Array.from(types).join(","), open]);
+  }, [value, types, run]);
 
   const onTypeClick = useMemoizedFn((type: IGlobalSearchType) => {
     if (types.has(type)) {
-      types.delete(type);
+      typesActions.remove(type);
     } else {
-      types.add(type);
+      typesActions.add(type);
     }
-
-    router?.replace(
-      "?" +
-        patchSearchParams(searchParams, {
-          [ESearchParamKey.GT]: Array.from(types).join(","),
-        }).toString(),
-      {
-        scroll: false,
-      }
-    );
   });
 
   return mp(
@@ -81,7 +68,8 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
     <div ref={containerRef} className="relative">
       <SearchInput
         placeholder="Search globally"
-        searchParamKey={ESearchParamKey.GQ}
+        value={value}
+        onChange={onChange}
         onFocus={() => setOpen(true)}
       />
 
@@ -95,7 +83,7 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
                   key={type}
                   className={`light-border-2 small-medium rounded-3xl px-5 py-2 capitalize dark:text-light-800 dark:hover:text-primary-500 ${
                     types.has(type)
-                      ? "bg-primary-500 text-light-900"
+                      ? "bg-primary-500 text-light-900 dark:hover:text-light-800"
                       : "bg-light-700 text-dark-400 hover:text-primary-500 dark:bg-dark-500"
                   }`}
                   type="button"
@@ -107,11 +95,9 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
             </div>
           </div>
           <div className="my-5 h-px bg-light-700/50 dark:bg-dark-500/50" />
-          <div className="space-y-5">
-            <p className="text-dark400_light900 paragraph-semibold px-5">
-              Top Match
-            </p>
-          </div>
+          <p className="text-dark400_light900 paragraph-semibold space-y-5 px-5">
+            Top Match
+          </p>
 
           {loading ? (
             <div className="flex-center flex-col px-5">
@@ -141,7 +127,7 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
                   <Link
                     key={item.key}
                     className="flex w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-light-700/50 hover:dark:bg-dark-500/50"
-                    href={item.link + "?" + searchParams.toString()}
+                    href={item.link}
                   >
                     <ImageTag
                       alt="tag"
@@ -161,13 +147,9 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
                   </Link>
                 ))
               ) : (
-                <div>
-                  <div className="flex-center flex-col px-5">
-                    <p className="text-dark200_light800 body-regular px-5 py-2.5">
-                      No results found.
-                    </p>
-                  </div>
-                </div>
+                <p className="text-dark200_light800 body-regular flex-center flex-col px-5 py-2.5">
+                  No results found.
+                </p>
               )}
             </div>
           )}

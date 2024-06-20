@@ -5,14 +5,6 @@ export const enum ESearchParamKey {
    * search keywords
    */
   Q = "q",
-  /**
-   * global search keywords
-   */
-  GQ = "gq",
-  /**
-   * global search types
-   */
-  GT = "gt",
 
   AnsweredQuestionPage = "answeredQuestionPage",
   QuestionPage = "questionPage",
