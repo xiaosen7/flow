@@ -7,7 +7,7 @@ const CommunityPage: React.FC<IPageProps<{}>> = async (props) => {
   const { searchParams } = props;
 
   const searchUtil = SearchUtil.create(SearchUtil.kind.User, searchParams);
-  const [users, total] = await Promise.all([
+  const [users, total] = await prisma.$transaction([
     prisma.user.findMany({
       include: {
         tags: true,

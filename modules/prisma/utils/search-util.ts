@@ -53,13 +53,13 @@ export class SearchUtil<TModelName extends Prisma.ModelName> {
     };
   }
 
-  async count() {
+  count(): Prisma.PrismaPromise<number> {
     return prisma[
       camelCase(this.modelName) as CamelCase<Prisma.ModelName>
       // @ts-ignore
     ].count({
       where: this.where,
-    }) as Promise<number>;
+    });
   }
 
   async findMany(): Promise<IModelTypeMap[TModelName]["type"][]> {

@@ -8,39 +8,42 @@ const TagsDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
   searchParams,
 }) => {
   const searchUtil = SearchUtil.create(SearchUtil.kind.Question, searchParams);
-  const [tag, questions, total] = await Promise.all([
-    prisma.tag.findUniqueOrThrow({
-      where: {
-        id,
-      },
-    }),
-    prisma.question.findMany({
-      ...searchUtil.args,
-      where: {
-        ...searchUtil.args.where,
-        tags: {
-          some: {
-            id,
+  const [tag, questions, total] = await prisma.$transaction(
+    [
+      prisma.tag.findUniqueOrThrow({
+        where: {
+          id,
+        },
+      }),
+      prisma.question.findMany({
+        ...searchUtil.args,
+        where: {
+          ...searchUtil.args.where,
+          tags: {
+            some: {
+              id,
+            },
           },
         },
-      },
-      include: {
-        author: true,
-        tags: true,
-        upvotes: true,
-      },
-    }),
-    prisma.question.count({
-      where: {
-        ...searchUtil.args.where,
-        tags: {
-          some: {
-            id,
+        include: {
+          author: true,
+          tags: true,
+          upvotes: true,
+        },
+      }),
+      prisma.question.count({
+        where: {
+          ...searchUtil.args.where,
+          tags: {
+            some: {
+              id,
+            },
           },
         },
-      },
-    }),
-  ]);
+      }),
+    ],
+    {}
+  );
   return (
     <QuestionList
       empty={

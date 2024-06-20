@@ -8,7 +8,7 @@ export default async function Home(props: IPageProps) {
   const { searchParams } = props;
 
   const searchUtil = SearchUtil.create(SearchUtil.kind.Question, searchParams);
-  const [questions, total] = await Promise.all([
+  const [questions, total] = await prisma.$transaction([
     prisma.question.findMany({
       include: {
         author: true,

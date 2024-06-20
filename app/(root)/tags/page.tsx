@@ -9,7 +9,7 @@ const TagsPage: React.FC<IPageProps<{}, { q: string }>> = async (props) => {
   } = props;
 
   const searchUtil = SearchUtil.create(SearchUtil.kind.Tag, props.searchParams);
-  const [tags, total] = await Promise.all([
+  const [tags, total] = await prisma.$transaction([
     prisma.tag.findMany({
       include: { questions: true },
       ...searchUtil.args,

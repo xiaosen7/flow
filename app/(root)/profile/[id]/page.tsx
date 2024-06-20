@@ -28,54 +28,59 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
     page: searchParams[ESearchParamKey.AnsweredQuestionPage],
   });
   const [
-    profileUser,
-    questions,
-    questionCount,
-    answers,
-    answerCount,
-    badges,
+    [profileUser, badges],
+    [questions, questionCount],
+    [answers, answerCount],
     loggedUser,
   ] = await Promise.all([
-    prisma.user.findUniqueOrThrow({
-      where: {
-        id,
-      },
-    }),
-    prisma.question.findMany({
-      ...questionSearchUtil.args,
-      where: {
-        authorId: id,
-      },
-      include: {
-        tags: true,
-        upvotes: true,
-      },
-    }),
-    prisma.question.count({
-      where: {
-        authorId: id,
-      },
-    }),
-    prisma.answer.findMany({
-      ...answerSearchUtil.args,
-      where: {
-        authorId: id,
-      },
-      include: {
-        question: {
-          include: {
-            author: true,
+    prisma.$transaction(async () =>
+      Promise.all([
+        prisma.user.findUniqueOrThrow({
+          where: {
+            id,
           },
+        }),
+        profileActions.getBadges(id),
+      ])
+    ),
+    prisma.$transaction([
+      prisma.question.findMany({
+        ...questionSearchUtil.args,
+        where: {
+          authorId: id,
         },
-        upvotes: true,
-      },
-    }),
-    prisma.answer.count({
-      where: {
-        authorId: id,
-      },
-    }),
-    profileActions.getBadges(id),
+        include: {
+          tags: true,
+          upvotes: true,
+        },
+      }),
+      prisma.question.count({
+        where: {
+          authorId: id,
+        },
+      }),
+    ]),
+    prisma.$transaction([
+      prisma.answer.findMany({
+        ...answerSearchUtil.args,
+        where: {
+          authorId: id,
+        },
+        include: {
+          question: {
+            include: {
+              author: true,
+            },
+          },
+          upvotes: true,
+        },
+      }),
+      prisma.answer.count({
+        where: {
+          authorId: id,
+        },
+      }),
+    ]),
     userActions.getCurrent(),
   ]);
 

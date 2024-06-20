@@ -9,7 +9,7 @@ export default async function CollectionPage(
   const { searchParams } = props;
   const user = await userActions.getCurrentOrRedirectSignIn();
   const searchUtil = SearchUtil.create(SearchUtil.kind.Question, searchParams);
-  const [questions, total] = await Promise.all([
+  const [questions, total] = await prisma.$transaction([
     prisma.question.findMany({
       ...searchUtil.args,
       where: {

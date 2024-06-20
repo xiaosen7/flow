@@ -38,7 +38,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
     SearchUtil.kind.Answer,
     searchParams
   );
-  const [question, answers, answerCount] = await Promise.all([
+  const [question, answers, answerCount] = await prisma.$transaction([
     prisma.question.update({
       where: {
         id,
