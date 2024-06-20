@@ -5,5 +5,6 @@ export interface ISearchParams {
   [ESearchParamKey.GQ]?: string;
   [ESearchParamKey.Page]?: string;
   [ESearchParamKey.AnsweredQuestionPage]?: string;
-  [ESearchParamKey.questionPage]?: string;
+  [ESearchParamKey.QuestionPage]?: string;
+  [ESearchParamKey.PageSize]?: string;
 }

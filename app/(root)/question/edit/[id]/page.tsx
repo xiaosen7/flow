@@ -1,7 +1,7 @@
+import { questionActions, userActions } from "@/actions";
 import { prisma } from "@/prisma";
-import { QuestionForm, questionActions } from "@/question";
+import { QuestionForm } from "@/question";
 import { IPageProps } from "@/shared";
-import { userActions } from "@/user";
 import { redirect } from "next/navigation";
 import React from "react";
 

@@ -1,13 +1,12 @@
 import { SearchUtil, prisma } from "@/prisma";
 import { IPageProps, List, NoResults } from "@/shared";
 import { USER_FILTER_OPTIONS, UserCard } from "@/user";
-import { Prisma } from "@prisma/client";
 import React from "react";
 
 const CommunityPage: React.FC<IPageProps<{}>> = async (props) => {
   const { searchParams } = props;
 
-  const searchUtil = new SearchUtil(Prisma.ModelName.User, searchParams);
+  const searchUtil = SearchUtil.create(SearchUtil.kind.User, searchParams);
   const [users, total] = await Promise.all([
     prisma.user.findMany({
       include: {

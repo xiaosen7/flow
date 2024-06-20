@@ -1,11 +1,11 @@
 "use server";
 
 import { prisma } from "@/prisma";
+import { QUESTION_SCHEMA } from "@/question";
 import { IQuestion } from "@/shared";
-import { userActions } from "@/user";
 import { RedirectType, redirect } from "next/navigation";
 import { z } from "zod";
-import { QUESTION_SCHEMA } from "../constants";
+import * as userActions from "./user";
 
 export async function create(values: z.infer<typeof QUESTION_SCHEMA>) {
   const user = await userActions.getCurrentOrRedirectSignIn();

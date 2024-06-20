@@ -1,6 +1,7 @@
 import { GitLog, IComponentBaseProps, mp } from "@/shared";
 import React from "react";
 
+import { IGlobalSearchProps } from "./global-search";
 import { LeftSidebar } from "./left-sidebar";
 import { Navbar } from "./navbar";
 import { IRightSidebarProps, RightSidebar } from "./right-sidebar";
@@ -9,14 +10,16 @@ export interface IDefaultLayoutProps
   extends IComponentBaseProps,
     IRightSidebarProps {
   children?: React.ReactNode;
+  globalSearch: IGlobalSearchProps;
 }
 
 export const DefaultLayout: React.FC<IDefaultLayoutProps> = (props) => {
-  const { getTagQuestionCount, hotQuestions, popularTags } = props;
+  const { getTagQuestionCount, hotQuestions, popularTags, globalSearch } =
+    props;
   return mp(
     props,
     <div className="background-light850_dark100 flex flex-col">
-      <Navbar />
+      <Navbar globalSearch={globalSearch} />
       <div className="flex flex-1 overflow-hidden">
         <LeftSidebar className="h-full overflow-auto max-sm:hidden" />
 

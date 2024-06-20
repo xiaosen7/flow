@@ -1,7 +1,6 @@
 import { SearchUtil, prisma } from "@/prisma";
 import { IPageProps, List, NoResults } from "@/shared";
 import { TAG_FILTERS, TagCard } from "@/tag";
-import { Prisma } from "@prisma/client";
 import React from "react";
 
 const TagsPage: React.FC<IPageProps<{}, { q: string }>> = async (props) => {
@@ -9,7 +8,7 @@ const TagsPage: React.FC<IPageProps<{}, { q: string }>> = async (props) => {
     searchParams: { q },
   } = props;
 
-  const searchUtil = new SearchUtil(Prisma.ModelName.Tag, props.searchParams);
+  const searchUtil = SearchUtil.create(SearchUtil.kind.Tag, props.searchParams);
   const [tags, total] = await Promise.all([
     prisma.tag.findMany({
       include: { questions: true },

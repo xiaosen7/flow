@@ -1,4 +1,5 @@
-import { QuestionForm, questionActions } from "@/question";
+import { questionActions } from "@/actions";
+import { QuestionForm } from "@/question";
 import React from "react";
 
 const AskQuestionPage: React.FC = () => {

@@ -1,15 +1,14 @@
+import { userActions } from "@/actions";
 import { SearchUtil, prisma } from "@/prisma";
 import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
 import { IPageProps, NoResults } from "@/shared";
-import { userActions } from "@/user";
-import { Prisma } from "@prisma/client";
 
 export default async function CollectionPage(
   props: IPageProps<{}, { q: string }>
 ) {
   const { searchParams } = props;
   const user = await userActions.getCurrentOrRedirectSignIn();
-  const searchUtil = new SearchUtil(Prisma.ModelName.Question, searchParams);
+  const searchUtil = SearchUtil.create(SearchUtil.kind.Question, searchParams);
   const [questions, total] = await Promise.all([
     prisma.question.findMany({
       ...searchUtil.args,

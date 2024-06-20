@@ -1,10 +1,10 @@
 "use server";
 
+import { ANSWER_SCHEMA } from "@/answer";
 import { prisma } from "@/prisma";
 import { IAnswer, IQuestion } from "@/shared";
-import { userActions } from "@/user";
 import { z } from "zod";
-import { ANSWER_SCHEMA } from "../constants";
+import * as userActions from "./user";
 
 export async function create(
   question: IQuestion,

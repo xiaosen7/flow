@@ -5,7 +5,9 @@ import { useDebounceEffect, useMemoizedFn } from "ahooks";
 import React, { useState } from "react";
 import { IComponentBaseProps, Input, InputProps, mp, useNextRouter } from "..";
 
-export interface ISearchInputProps extends IComponentBaseProps {
+export interface ISearchInputProps
+  extends IComponentBaseProps,
+    Pick<InputProps, "onFocus"> {
   placeholder?: string;
   /**
    * @default ESearchParamKey.Q
@@ -14,7 +16,7 @@ export interface ISearchInputProps extends IComponentBaseProps {
 }
 
 export const SearchInput: React.FC<ISearchInputProps> = (props) => {
-  const { placeholder, searchParamKey = ESearchParamKey.Q } = props;
+  const { placeholder, searchParamKey = ESearchParamKey.Q, onFocus } = props;
   const { router, pathname, searchParams } = useNextRouter();
   const [value, setValue] = useState(searchParams?.get(searchParamKey) ?? "");
 
@@ -51,6 +53,7 @@ export const SearchInput: React.FC<ISearchInputProps> = (props) => {
           type="text"
           value={value}
           onChange={onChange}
+          onFocus={onFocus}
         />
       </div>
     </div>

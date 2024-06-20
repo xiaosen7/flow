@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma";
-import { calcBadges } from "../utils";
+import { calcBadges } from "@/profile";
 
 export {};
 

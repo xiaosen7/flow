@@ -1,14 +1,19 @@
 export const enum ESearchParamKey {
   Page = "page",
+  PageSize = "pageSize",
   /**
-   * search query
+   * search keywords
    */
   Q = "q",
   /**
-   * global search query
+   * global search keywords
    */
   GQ = "gq",
+  /**
+   * global search types
+   */
+  GT = "gt",
 
   AnsweredQuestionPage = "answeredQuestionPage",
-  questionPage = "questionPage",
+  QuestionPage = "questionPage",
 }

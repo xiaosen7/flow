@@ -1,10 +1,10 @@
+import { profileActions, userActions } from "@/actions";
 import { SearchUtil, prisma } from "@/prisma";
 import {
   ProfileAnsweredQuestionCard,
   ProfileBase,
   ProfileStats,
   ProfileTopQuestionCard,
-  profileActions,
 } from "@/profile";
 import { ESearchParamKey } from "@/search-params";
 import {
@@ -15,18 +15,16 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/shared";
-import { userActions } from "@/user";
-import { Prisma } from "@prisma/client";
 import React from "react";
 
 const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
   params: { id },
   searchParams,
 }) => {
-  const questionSearchUtil = new SearchUtil(Prisma.ModelName.Question, {
-    page: searchParams[ESearchParamKey.questionPage],
+  const questionSearchUtil = SearchUtil.create(SearchUtil.kind.Question, {
+    page: searchParams[ESearchParamKey.QuestionPage],
   });
-  const answerSearchUtil = new SearchUtil(Prisma.ModelName.Answer, {
+  const answerSearchUtil = SearchUtil.create(SearchUtil.kind.Answer, {
     page: searchParams[ESearchParamKey.AnsweredQuestionPage],
   });
   const [
@@ -114,7 +112,7 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
               />
             ))}
             <PagePagination
-              searchParamKey={ESearchParamKey.questionPage}
+              searchParamKey={ESearchParamKey.QuestionPage}
               total={questionCount}
             />
           </TabsContent>

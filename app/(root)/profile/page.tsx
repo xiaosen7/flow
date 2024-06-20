@@ -1,5 +1,5 @@
+import { userActions } from "@/actions";
 import { IPageProps } from "@/shared";
-import { userActions } from "@/user";
 import { RedirectType, redirect } from "next/navigation";
 import React from "react";
 

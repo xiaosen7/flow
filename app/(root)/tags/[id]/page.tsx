@@ -1,14 +1,13 @@
 import { SearchUtil, prisma } from "@/prisma";
 import { QuestionList } from "@/question";
 import { IPageProps, NoResults } from "@/shared";
-import { Prisma } from "@prisma/client";
 import React from "react";
 
 const TagsDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
   params: { id },
   searchParams,
 }) => {
-  const searchUtil = new SearchUtil(Prisma.ModelName.Question, searchParams);
+  const searchUtil = SearchUtil.create(SearchUtil.kind.Question, searchParams);
   const [tag, questions, total] = await Promise.all([
     prisma.tag.findUniqueOrThrow({
       where: {

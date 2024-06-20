@@ -1,9 +1,5 @@
-import {
-  ANSWER_FILTER_OPTIONS,
-  Answer,
-  AnswerForm,
-  answerActions,
-} from "@/answer";
+import { answerActions, questionActions, userActions } from "@/actions";
+import { ANSWER_FILTER_OPTIONS, Answer, AnswerForm } from "@/answer";
 import { MarkdownViewer } from "@/markdown";
 import { SearchUtil, prisma } from "@/prisma";
 import {
@@ -11,7 +7,6 @@ import {
   QuestionDate,
   QuestionMetrics,
   QuestionTitle,
-  questionActions,
 } from "@/question";
 import {
   DownVote,
@@ -27,8 +22,6 @@ import {
 import { ac } from "@/shared/utils/action";
 import { Tags } from "@/tag";
 import { UserAvatar } from "@/user";
-import { userActions } from "@/user/actions";
-import { Prisma } from "@prisma/client";
 import { NextPage } from "next";
 import { redirect } from "next/navigation";
 
@@ -41,8 +34,8 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   const { id } = params;
 
   const user = await userActions.getCurrent();
-  const answerSearchUtil = new SearchUtil(
-    Prisma.ModelName.Answer,
+  const answerSearchUtil = SearchUtil.create(
+    SearchUtil.kind.Answer,
     searchParams
   );
   const [question, answers, answerCount] = await Promise.all([

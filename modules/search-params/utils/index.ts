@@ -43,3 +43,25 @@ function patchSearchParams(
 }
 
 export { patchSearchParams };
+
+export function formatHref(options: {
+  url: string;
+  searchParams: URLSearchParams;
+  keepSearchParamKeys: ESearchParamKey[];
+}) {
+  const { url, searchParams, keepSearchParamKeys } = options;
+  const newSearchParams = new URLSearchParams();
+
+  keepSearchParamKeys.forEach((key) => {
+    if (searchParams.has(key)) {
+      newSearchParams.set(key, searchParams.get(key)!);
+    }
+  });
+
+  const search = newSearchParams.toString();
+  if (search) {
+    return url + "?" + search;
+  } else {
+    return url;
+  }
+}

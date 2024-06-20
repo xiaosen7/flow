@@ -3,12 +3,11 @@ import Link from "next/link";
 import { SearchUtil, prisma } from "@/prisma";
 import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
 import { Button, IPageProps, NoResults } from "@/shared";
-import { Prisma } from "@prisma/client";
 
 export default async function Home(props: IPageProps) {
   const { searchParams } = props;
 
-  const searchUtil = new SearchUtil(Prisma.ModelName.Question, searchParams);
+  const searchUtil = SearchUtil.create(SearchUtil.kind.Question, searchParams);
   const [questions, total] = await Promise.all([
     prisma.question.findMany({
       include: {

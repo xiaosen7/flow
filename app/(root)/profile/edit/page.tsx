@@ -1,9 +1,9 @@
+import { userActions } from "@/actions";
 import { prisma } from "@/prisma";
 import { ProfileForm } from "@/profile";
 import { PROFILE_SCHEMA } from "@/profile/constants";
 import { IPageProps, IUser } from "@/shared";
 import { ac } from "@/shared/utils/action";
-import { userActions } from "@/user";
 import { redirect } from "next/navigation";
 import React from "react";
 import { z } from "zod";
