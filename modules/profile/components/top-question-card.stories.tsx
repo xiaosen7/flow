@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 
-import { mock } from "@/shared";
+import { mock } from "@/mock";
 import { random } from "lodash-es";
 import { ProfileTopQuestionCard } from "./top-question-card";
 

@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 
-import { mock } from "@/shared";
+import { mock } from "@/mock";
 import { TagCard } from "@/tag";
 import { List } from "./list";
 

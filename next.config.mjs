@@ -16,6 +16,12 @@ const nextConfig = {
       {
         hostname: "picsum.photos",
       },
+      {
+        hostname: "cloudflare-ipfs.com",
+      },
+      {
+        hostname: "avatars.githubusercontent.com",
+      },
     ],
   },
   eslint: {

@@ -1,50 +1,49 @@
-import { EXAMPLE_MARKDOWN } from "@/markdown/constants/example-markdown";
-import { isArray, random, range, uniqueId } from "lodash-es";
-import type { IFilterOption } from "../components";
-import type { IAnswer, IQuestion, ITag, IUser } from "../types";
+import type { IAnswer, IFilterOption, IQuestion, ITag, IUser } from "@/shared";
+import { fakerEN as faker } from "@faker-js/faker";
+import { isArray, random, range } from "lodash-es";
 
 type ICreateMany<T> = (count: number | [number, number]) => T[];
 
 export namespace mock {
   export function tag(): ITag {
-    const id = uniqueId("mocked-tag");
+    const id = faker.string.uuid();
     return {
       id,
       createdAt: date(),
-      name: `tag${id}`,
-      description: `tag${id} description`,
+      name: faker.lorem.word(),
+      description: faker.lorem.paragraph(),
     };
   }
 
   tag.createMany = createMany.bind(null, tag) as ICreateMany<ITag>;
 
   export function user(): IUser {
-    const id = uniqueId("mocked-user");
+    const id = faker.string.uuid();
     return {
       id,
-      email: `user${id}@email.com`,
-      clerkId: "user" + id,
-      imageUrl: imageUrl(),
-      fullName: `fullName of ${id}`,
+      email: faker.internet.email(),
+      clerkId: faker.string.uuid(),
+      imageUrl: faker.image.avatar(),
+      fullName: faker.person.fullName(),
       createdAt: date(),
-      username: `username of ${id}`,
-      bio: `bio of ${id}`,
-      location: `location of ${id}`,
-      portfolioWebsite: `http://www.${id}.com`,
+      username: faker.internet.userName(),
+      bio: faker.person.bio(),
+      location: faker.location.city(),
+      portfolioWebsite: faker.internet.url(),
     };
   }
 
   user.createMany = createMany.bind(null, user) as ICreateMany<IUser>;
 
   export function question(): IQuestion {
-    const id = uniqueId("mocked-question");
+    const id = faker.string.uuid();
 
     return {
       id,
-      title: `This is question title of ${id}`,
-      content: EXAMPLE_MARKDOWN,
+      title: faker.lorem.paragraph(1),
+      content: faker.lorem.paragraphs({ max: 10, min: 1 }),
       createdAt: date(),
-      authorId: uniqueId("mocked-user"),
+      authorId: faker.string.uuid(),
       views: random(0, 99999999),
     };
   }
@@ -55,13 +54,13 @@ export namespace mock {
   ) as ICreateMany<IQuestion>;
 
   export function answer(): IAnswer {
-    const id = uniqueId("mocked-answer");
+    const id = faker.string.uuid();
     return {
       id,
-      content: `answer${id}`,
+      content: faker.lorem.paragraph({ min: 1, max: 3 }),
       createdAt: date(),
-      authorId: uniqueId("mocked-user"),
-      questionId: uniqueId("mocked-question"),
+      authorId: faker.string.uuid(),
+      questionId: faker.string.uuid(),
     };
   }
 
@@ -82,8 +81,8 @@ export namespace mock {
   imageUrl.createMany = createMany.bind(null, imageUrl) as ICreateMany<string>;
 
   export function filterOption(): IFilterOption {
-    const value = uniqueId("mocked-filter-option-value");
-    const label = uniqueId("mocked-filter-option-label");
+    const value = faker.lorem.word();
+    const label = value;
 
     return { value, label };
   }

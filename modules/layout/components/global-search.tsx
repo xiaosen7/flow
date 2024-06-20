@@ -86,7 +86,7 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
       />
 
       {open && (
-        <div className="absolute top-full z-10 mt-3 w-full bg-light-800 py-5 shadow-sm dark:bg-dark-400 rounded-lg">
+        <div className="absolute top-full z-10 mt-3 w-full rounded-lg bg-light-800 py-5 shadow-sm dark:bg-dark-400">
           <div className="flex items-baseline gap-5 px-5">
             <p className="text-dark400_light900 body-medium">Type:</p>
             <div className="flex flex-wrap gap-3">

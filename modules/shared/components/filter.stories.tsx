@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 
-import { mock } from "../mock";
+import { mock } from "@/mock";
 import { Filter } from "./filter";
 
 export default {

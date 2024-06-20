@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 
-import { mock } from "@/shared";
+import { mock } from "@/mock";
 import { UserAvatar } from "./user-avatar";
 
 export default {
