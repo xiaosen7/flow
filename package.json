@@ -11,12 +11,12 @@
     "build:storybook": "storybook build -o ./public/storybook-static",
     "test": "vitest",
     "sync:prisma:dev": "dotenv -e .env.development -- tsx .scripts/sync-prisma.ts",
-    "gen:git-log-file": "mkdir -p modules/shared/assets && git log -1 --pretty=format:\"%cd %h %s\" > modules/shared/assets/git.log",
+    "gen:git-log-file": "mkdir -p libs/shared/assets && git log -1 --pretty=format:\"%cd %h %s\" > libs/shared/assets/git.log",
     "prepare": "husky & tsx .scripts/prepare & pnpm gen:git-log-file",
     "typecheck": "pnpm tsc --noemit"
   },
   "prisma": {
-    "schema": "modules/prisma/schema.prisma",
+    "schema": "libs/prisma/schema.prisma",
     "seed": "tsx .scripts/seed.ts"
   },
   "dependencies": {

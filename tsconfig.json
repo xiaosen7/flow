@@ -18,7 +18,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./modules/*"]
+      "@/*": ["./libs/*"]
     },
     "types": ["vitest/globals"]
   },

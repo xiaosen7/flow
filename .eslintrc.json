@@ -18,7 +18,7 @@
   },
   "overrides": [
     {
-      "files": ["modules/shared/**"],
+      "files": ["libs/shared/**"],
       "rules": {
         "import/no-cycle": "off"
       }

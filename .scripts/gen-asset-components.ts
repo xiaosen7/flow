@@ -10,7 +10,7 @@ import { dedent } from "ts-dedent";
   const projectRoot = join(__dirname, "..");
   const publicDir = join(projectRoot, "public");
   const publicAssetsDir = join(publicDir, "assets");
-  const outDir = join(projectRoot, "modules", "shared", "assets");
+  const outDir = join(projectRoot, "libs", "shared", "assets");
 
   const assetPaths = await fg([join("**/*.{svg,png,jpg}")], {
     cwd: publicAssetsDir,

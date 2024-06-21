@@ -2,13 +2,13 @@ import { PrismaClient } from "@prisma/client";
 import { random } from "lodash-es";
 import { createLogUpdate } from "log-update";
 import os from "node:os";
-import { mock } from "../modules/mock";
+import { mock } from "../libs/mock";
 
 const BUILTIN_TAG_NAMES = ["react", "vue", "next.js", "javascript"];
-const ANSWER_COUNT = 1000000;
-const USER_COUNT = 100;
-const QUESTION_COUNT = 10000;
-const TAG_COUNT = 100 + BUILTIN_TAG_NAMES.length;
+const ANSWER_COUNT = 125000;
+const USER_COUNT = 50;
+const QUESTION_COUNT = 2500;
+const TAG_COUNT = 50 + BUILTIN_TAG_NAMES.length;
 const TAG_COUNT_EACH_USER = 5;
 
 const prisma = new PrismaClient({
