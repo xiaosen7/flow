@@ -5,7 +5,9 @@ import { IComponentBaseProps, ISafeAny, SearchInput, mp } from "@/shared";
 import { ImageTag } from "@/shared/assets/icons/tag";
 import { Prisma } from "@prisma/client";
 import {
+  useBoolean,
   useClickAway,
+  useDebounceEffect,
   useEventTarget,
   useMemoizedFn,
   useRequest,
@@ -70,22 +72,31 @@ export interface IGlobalSearchProps extends IComponentBaseProps {
 export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
   const { api } = props;
   const containerRef = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState(false);
-  useClickAway(() => setOpen(false), containerRef);
-  const {
-    loading,
-    data = [],
-    run,
-  } = useRequest(api, { manual: true, ready: open });
+  const [open, openActions] = useBoolean(false);
+  useClickAway(openActions.setFalse, containerRef);
+  const [data, setData] = useState<IGlobalSearchResult>([]);
+  const { loading, run } = useRequest(api, {
+    manual: true,
+    onBefore: openActions.setTrue,
+    onSuccess(data) {
+      setData(data);
+    },
+  });
   const [value, { onChange }] = useEventTarget<string>();
   const [types, typesActions] = useSet<Prisma.ModelName>();
 
-  useEffect(() => {
-    // run when types or value change
+  useDebounceEffect(() => {
+    // run when types or input value change
     if (value) {
       run(types.size === 0 ? globalTypes : Array.from(types), value);
     }
   }, [value, types, run]);
+
+  useEffect(() => {
+    if (!value) {
+      setData([]);
+    }
+  }, [value]);
 
   const onTypeClick = useMemoizedFn((type: IGlobalSearchType) => {
     if (types.has(type)) {
@@ -102,7 +113,7 @@ export const GlobalSearch: React.FC<IGlobalSearchProps> = (props) => {
         placeholder="Search globally"
         value={value}
         onChange={onChange}
-        onFocus={() => setOpen(true)}
+        onFocus={openActions.setTrue}
       />
 
       {open && (
