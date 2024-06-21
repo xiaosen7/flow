@@ -1,5 +1,6 @@
 import { mp } from "@/shared";
 import { useTheme } from "@/theme";
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import { useControllableValue } from "ahooks";

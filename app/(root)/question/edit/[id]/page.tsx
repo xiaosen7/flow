@@ -30,7 +30,7 @@ const QuestionEditPage: React.FC<IPageProps<{ id: string }>> = async (
         className="mt-9"
         defaultValues={{
           explanation: question.content,
-          tags: question.tags.map((x) => x.name),
+          tags: question.tags,
           title: question.title,
         }}
         onSubmit={async (values) => {

@@ -6,13 +6,14 @@ import { mp } from "../utils";
 export interface ILinkableProps extends IComponentBaseProps {
   href?: string;
   children?: React.ReactNode;
+  linkable?: boolean;
   target?: React.HTMLAttributeAnchorTarget;
 }
 
 export const Linkable: React.FC<ILinkableProps> = (props) => {
-  const { href, children } = props;
+  const { href, children, linkable = !!href } = props;
 
-  if (href) {
+  if (linkable && href) {
     return mp(
       props,
       <Link href={href} {...props}>

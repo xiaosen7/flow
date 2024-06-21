@@ -2,7 +2,7 @@
 
 import { prisma } from "@/prisma";
 import { QUESTION_SCHEMA } from "@/question";
-import { IQuestion, REPUTATION_COUNTS } from "@/shared";
+import { IQuestion, ITag, REPUTATION_COUNTS } from "@/shared";
 import { RedirectType, redirect } from "next/navigation";
 import { z } from "zod";
 import * as userActions from "./user";
@@ -11,7 +11,7 @@ export async function create(values: z.infer<typeof QUESTION_SCHEMA>) {
   await prisma.$transaction(async () => {
     const user = await userActions.getCurrentOrRedirectSignIn();
 
-    const { tags: tagNames } = values;
+    const { tags } = values;
 
     await prisma.question.create({
       data: {
@@ -20,20 +20,10 @@ export async function create(values: z.infer<typeof QUESTION_SCHEMA>) {
         views: 0,
         authorId: user.id,
         tags: {
-          connectOrCreate: tagNames.map((name) => ({
-            where: {
-              name,
-            },
-            create: {
-              name,
-              description: "",
-            },
-          })),
+          connect: (tags as ITag[]).map(({ id }) => ({ id })),
         },
       },
     });
-
-    // TODO add tag reputation
 
     await userActions.updateReputation(user, REPUTATION_COUNTS.Question.create);
   });
