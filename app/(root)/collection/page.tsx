@@ -1,13 +1,13 @@
-import { userActions } from "@/actions";
+import { actions } from "@/actions";
 import { prisma } from "@/prisma";
-import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
-import { IPageProps, NoResults } from "@/shared";
+import { QuestionList } from "@/question";
+import { IPageProps, MODEL_NAME, NoResults } from "@/shared";
 
 export default async function CollectionPage(
   props: IPageProps<{}, { q: string }>
 ) {
   const { searchParams } = props;
-  const user = await userActions.getCurrentOrRedirectSignIn();
+  const user = await actions.user.getCurrentOrRedirectSignIn();
   const { items: questions, total } = await prisma.question.search({
     searchParams,
     where: {
@@ -35,12 +35,12 @@ export default async function CollectionPage(
           topic="questions"
         />
       }
-      filter={{
-        options: QUESTION_FILTER_OPTIONS,
-      }}
       getAuthor={(question) => question.author}
       getTags={(question) => question.tags}
       getVotes={(question) => question.upvotes}
+      modelFilter={{
+        name: MODEL_NAME.Question,
+      }}
       questions={questions}
       search={{
         placeholder: "Search for amazing minds",

@@ -1,11 +1,12 @@
 import { QuestionDate, QuestionMetrics } from "@/question";
-import { ESearchParamKey, formatHref } from "@/search-params";
+import { ESearchParamKey } from "@/search-params";
 import {
   IAnswer,
   IComponentBaseProps,
   IQuestion,
   IUser,
   formatDate,
+  getUrl,
   mp,
 } from "@/shared";
 import { ImageEdit } from "@/shared/assets/icons/edit";
@@ -30,7 +31,7 @@ export const ProfileAnsweredQuestionCard: React.FC<
     props,
     <div className="card-wrapper rounded-[10px] px-11 py-9">
       <Link
-        href={formatHref({
+        href={getUrl({
           url: `/question/${question.id}`,
           searchParams: {
             [ESearchParamKey.AnswerId]: answer.id,

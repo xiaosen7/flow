@@ -1,9 +1,8 @@
-import { userActions } from "@/actions";
+import { ac, actions } from "@/actions";
 import { prisma } from "@/prisma";
 import { ProfileForm } from "@/profile";
 import { PROFILE_SCHEMA } from "@/profile/constants";
 import { IPageProps, IUser } from "@/shared";
-import { ac } from "@/shared/utils/action";
 import { redirect } from "next/navigation";
 import React from "react";
 import { z } from "zod";
@@ -21,7 +20,7 @@ const onSubmit = async (user: IUser, data: z.infer<typeof PROFILE_SCHEMA>) => {
 };
 
 const ProfileEditPage: React.FC<IPageProps> = async () => {
-  const user = await userActions.getCurrentOrRedirectSignIn();
+  const user = await actions.user.getCurrentOrRedirectSignIn();
 
   return <ProfileForm user={user} onSubmit={ac(onSubmit).bindArgs(user)} />;
 };

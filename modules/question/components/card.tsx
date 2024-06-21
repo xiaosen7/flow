@@ -22,7 +22,7 @@ export const QuestionCard: React.FC<IQuestionCardProps> = (props) => {
       <QuestionDate
         className={"sm:hidden"}
         question={question}
-        variation="simple"
+        variant="simple"
       />
 
       <QuestionTitle className="line-clamp-1" level={3} question={question} />

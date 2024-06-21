@@ -1,17 +1,6 @@
 import { IActionFn, ISafeAny } from "@/shared";
 import { revalidatePath } from "next/cache";
 
-export function bindAction<
-  TArg1,
-  TArg2,
-  T extends (arg1: TArg1, arg2: TArg2) => ISafeAny,
->(actionFn: T, arg1: TArg1) {
-  return async (arg2: TArg2) => {
-    "use server";
-    return actionFn(arg1, arg2);
-  };
-}
-
 export const ac = (actionFn: IActionFn) => {
   const fn = Object.assign(actionFn, {
     bindArgs(...boundArgs: ISafeAny[]) {

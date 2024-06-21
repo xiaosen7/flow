@@ -1,5 +1,5 @@
-import { answerActions, questionActions, userActions } from "@/actions";
-import { ANSWER_FILTER_OPTIONS, Answer, AnswerForm } from "@/answer";
+import { ac, actions } from "@/actions";
+import { Answer, AnswerForm } from "@/answer";
 import { MarkdownViewer } from "@/markdown";
 import { prisma } from "@/prisma";
 import {
@@ -11,17 +11,17 @@ import {
 import {
   DownVote,
   EditAndDelete,
-  Filter,
   IActionFn,
   IAnswer,
   IPageProps,
+  ModelFilter,
   PagePagination,
   ScrollIntoHashElement,
   UpVote,
 } from "@/shared";
-import { ac } from "@/shared/utils/action";
 import { Tags } from "@/tag";
 import { UserAvatar } from "@/user";
+import { Prisma } from "@prisma/client";
 import { NextPage } from "next";
 import { redirect } from "next/navigation";
 
@@ -33,7 +33,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   const { params, searchParams } = props;
   const { id } = params;
 
-  const user = await userActions.getCurrent();
+  const user = await actions.user.getCurrent();
   const [question, { items: answers, total: answerTotal }] = await Promise.all([
     prisma.question.update({
       where: {
@@ -123,18 +123,18 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
           <UpVote
             count={question.upvotes.length}
             voted={upVoted}
-            onChange={bindQuestionAction(questionActions.upVote)}
+            onChange={bindQuestionAction(actions.question.upVote)}
           />
 
           <DownVote
             count={question.downvotes.length}
             voted={downVoted}
-            onChange={bindQuestionAction(questionActions.downVote)}
+            onChange={bindQuestionAction(actions.question.downVote)}
           />
 
           <Collect
             collected={collected}
-            onChange={bindQuestionAction(questionActions.collect)}
+            onChange={bindQuestionAction(actions.question.collect)}
           />
         </div>
       </div>
@@ -142,7 +142,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
       <QuestionTitle className="mt-3.5" level={2} question={question} />
 
       <div className="mb-8 mt-5 flex flex-wrap gap-4">
-        <QuestionDate question={question} variation="with-icon" />
+        <QuestionDate question={question} variant="with-icon" />
         <QuestionMetrics answers={answers.length} views={views} />
       </div>
 
@@ -168,7 +168,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
             voted: user
               ? !!answer.downvotes.find((x) => x.id === user.id)
               : false,
-            onChange: bindAnswerAction(answerActions.downVote, answer),
+            onChange: bindAnswerAction(actions.answer.downVote, answer),
           }}
           editable={editable}
           upVote={{
@@ -176,10 +176,10 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
             voted: user
               ? !!answer.upvotes.find((x) => x.id === user.id)
               : false,
-            onChange: bindAnswerAction(answerActions.upVote, answer),
+            onChange: bindAnswerAction(actions.answer.upVote, answer),
           }}
-          onAnswerSave={bindAnswerAction(answerActions.update, answer)}
-          onDelete={bindAnswerAction(answerActions.remove, answer)}
+          onAnswerSave={bindAnswerAction(actions.answer.update, answer)}
+          onDelete={bindAnswerAction(actions.answer.remove, answer)}
         />
       )}
 
@@ -188,7 +188,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
         id="answer-filter"
       >
         <h3 className="primary-text-gradient">{answerTotal} Answers</h3>
-        <Filter options={ANSWER_FILTER_OPTIONS} />
+        <ModelFilter name={Prisma.ModelName.Answer} />
       </div>
 
       {answers.map((answer) => {
@@ -203,7 +203,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
               voted: user
                 ? !!answer.downvotes.find((x) => x.id === user.id)
                 : false,
-              onChange: bindAnswerAction(answerActions.downVote, answer),
+              onChange: bindAnswerAction(actions.answer.downVote, answer),
             }}
             editable={editable}
             upVote={{
@@ -211,10 +211,10 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
               voted: user
                 ? !!answer.upvotes.find((x) => x.id === user.id)
                 : false,
-              onChange: bindAnswerAction(answerActions.upVote, answer),
+              onChange: bindAnswerAction(actions.answer.upVote, answer),
             }}
-            onAnswerSave={bindAnswerAction(answerActions.update, answer)}
-            onDelete={bindAnswerAction(answerActions.remove, answer)}
+            onAnswerSave={bindAnswerAction(actions.answer.update, answer)}
+            onDelete={bindAnswerAction(actions.answer.remove, answer)}
           />
         );
       })}
@@ -225,7 +225,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
         total={answerTotal}
       />
 
-      <AnswerForm onSubmit={bindQuestionAction(answerActions.create)} />
+      <AnswerForm onSubmit={bindQuestionAction(actions.answer.create)} />
       <ScrollIntoHashElement />
     </div>
   );

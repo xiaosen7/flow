@@ -32,8 +32,6 @@ export async function create(values: z.infer<typeof QUESTION_SCHEMA>) {
     },
   });
 
-  console.log(`create question: ${question.title}`);
-
   redirect("/", RedirectType.push);
 }
 

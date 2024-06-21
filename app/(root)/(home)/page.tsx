@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import { prisma } from "@/prisma";
-import { QUESTION_FILTER_OPTIONS, QuestionList } from "@/question";
-import { Button, IPageProps, NoResults } from "@/shared";
+import { QuestionList } from "@/question";
+import { Button, IPageProps, MODEL_NAME, NoResults } from "@/shared";
 
 export default async function Home(props: IPageProps) {
   const { searchParams } = props;
@@ -28,12 +28,12 @@ export default async function Home(props: IPageProps) {
           topic="questions"
         />
       }
-      filter={{
-        options: QUESTION_FILTER_OPTIONS,
-      }}
       getAuthor={(question) => question.author}
       getTags={(question) => question.tags}
       getVotes={(question) => question.upvotes}
+      modelFilter={{
+        name: MODEL_NAME.Question,
+      }}
       questions={questions}
       search={{
         placeholder: "Search for amazing minds",

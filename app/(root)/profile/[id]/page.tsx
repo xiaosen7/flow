@@ -1,4 +1,4 @@
-import { profileActions, userActions } from "@/actions";
+import { actions } from "@/actions";
 import { prisma } from "@/prisma";
 import {
   ProfileAnsweredQuestionCard,
@@ -34,7 +34,7 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
             id,
           },
         }),
-        profileActions.getBadges(id),
+        actions.profile.getBadges(id),
       ])
     ),
     prisma.question.search({
@@ -66,7 +66,7 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
           searchParams[ESearchParamKey.AnsweredQuestionPage],
       },
     }),
-    userActions.getCurrent(),
+    actions.user.getCurrent(),
   ]);
 
   const editable = loggedUser?.id === profileUser.id;

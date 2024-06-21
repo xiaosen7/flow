@@ -3,16 +3,16 @@ import { ImageClock } from "@/shared/assets/icons/clock";
 import React from "react";
 
 export interface IQuestionDateProps extends IComponentBaseProps {
-  variation?: "default" | "simple" | "with-icon";
+  variant?: "default" | "simple" | "with-icon";
   question: IQuestion;
 }
 
 export const QuestionDate: React.FC<IQuestionDateProps> = (props) => {
-  const { question, variation = "default" } = props;
+  const { question, variant = "default" } = props;
   return mp(
     props,
     <span className="small-regular text-dark400_light700 flex flex-wrap gap-1">
-      {variation === "with-icon" && (
+      {variant === "with-icon" && (
         <ImageClock
           alt="clock"
           className="invert-colors object-contain"
@@ -22,7 +22,7 @@ export const QuestionDate: React.FC<IQuestionDateProps> = (props) => {
       )}
 
       <span>
-        {variation !== "simple" && "• asked"} {formatDate(question.createdAt)}
+        {variant !== "simple" && "• asked"} {formatDate(question.createdAt)}
       </span>
     </span>
   );

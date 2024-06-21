@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma";
-import { IPageProps, List, NoResults } from "@/shared";
-import { TAG_FILTERS, TagCard } from "@/tag";
+import { IPageProps, List, MODEL_NAME, NoResults } from "@/shared";
+import { TagCard } from "@/tag";
 import React from "react";
 
 const TagsPage: React.FC<IPageProps<{}, { q: string }>> = async (props) => {
@@ -23,10 +23,10 @@ const TagsPage: React.FC<IPageProps<{}, { q: string }>> = async (props) => {
           topic="Tags"
         />
       }
-      filter={{
-        options: TAG_FILTERS,
-      }}
       items={tags}
+      modelFilter={{
+        name: MODEL_NAME.Tag,
+      }}
       renderItem={(tag) => (
         <TagCard tag={tag} totalQuestions={tag.questions.length} />
       )}

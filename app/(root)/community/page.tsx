@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma";
-import { IPageProps, List, NoResults } from "@/shared";
-import { USER_FILTER_OPTIONS, UserCard } from "@/user";
+import { IPageProps, List, MODEL_NAME, NoResults } from "@/shared";
+import { UserCard } from "@/user";
 import React from "react";
 
 const CommunityPage: React.FC<IPageProps<{}>> = async (props) => {
@@ -23,10 +23,10 @@ const CommunityPage: React.FC<IPageProps<{}>> = async (props) => {
           topic="Users"
         />
       }
-      filter={{
-        options: USER_FILTER_OPTIONS,
-      }}
       items={users}
+      modelFilter={{
+        name: MODEL_NAME.User,
+      }}
       renderItem={(user) => (
         <UserCard key={user.id} tags={user.tags} user={user} />
       )}

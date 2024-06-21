@@ -1,7 +1,7 @@
 import React from "react";
-import { IComponentBaseProps } from "../types";
+import { IComponentBaseProps, ISafeAny } from "../types";
 import { cn, mp } from "../utils";
-import { Filter, IFilterProps } from "./filter";
+import { Filter, IFilterProps, IModelFilterProps, ModelFilter } from "./filter";
 import { PagePagination } from "./page-pagination";
 import {
   ISearchInputSyncQueryProps,
@@ -13,6 +13,7 @@ export interface IListProps<TItem> extends IComponentBaseProps {
   titleExtra?: React.ReactNode;
   search?: ISearchInputSyncQueryProps;
   filter?: IFilterProps;
+  modelFilter?: IModelFilterProps;
   items: TItem[];
   renderItem: (item: TItem, index: number) => React.ReactNode;
   empty: React.ReactNode;
@@ -30,6 +31,7 @@ export const List = <TItem extends { id: React.Key }>(
     titleExtra,
     search,
     filter,
+    modelFilter,
     title,
     items,
     renderItem,
@@ -37,6 +39,9 @@ export const List = <TItem extends { id: React.Key }>(
     direction = "row",
     total,
   } = props;
+
+  const filterProps = filter || modelFilter;
+  const FilterComponent = filter ? Filter : ModelFilter;
 
   return mp(
     props,
@@ -54,23 +59,23 @@ export const List = <TItem extends { id: React.Key }>(
             <SearchInputSyncQuery {...search} className="flex-1 md:w-full" />
           )}
 
-        {filter &&
+        {filterProps &&
           mp(
-            filter,
-            <Filter
-              {...filter}
+            filterProps,
+            <FilterComponent
+              {...(filterProps as ISafeAny)}
               className="hidden w-full md:block"
-              variation={"tags"}
+              variant={"tags"}
             />
           )}
 
-        {filter &&
+        {filterProps &&
           mp(
-            filter,
-            <Filter
-              {...filter}
+            filterProps,
+            <FilterComponent
+              {...(filterProps as ISafeAny)}
               className="hidden max-md:block"
-              variation={"default"}
+              variant={"default"}
             />
           )}
 

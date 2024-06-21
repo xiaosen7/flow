@@ -1,4 +1,4 @@
-import { questionActions, userActions } from "@/actions";
+import { actions } from "@/actions";
 import { prisma } from "@/prisma";
 import { QuestionForm } from "@/question";
 import { IPageProps } from "@/shared";
@@ -11,7 +11,7 @@ const QuestionEditPage: React.FC<IPageProps<{ id: string }>> = async (
   const {
     params: { id },
   } = props;
-  const user = await userActions.getCurrentOrRedirectSignIn();
+  const user = await actions.user.getCurrentOrRedirectSignIn();
   const question = await prisma.question.findUniqueOrThrow({
     where: {
       id,
@@ -35,7 +35,7 @@ const QuestionEditPage: React.FC<IPageProps<{ id: string }>> = async (
         }}
         onSubmit={async (values) => {
           "use server";
-          await questionActions.update(question, values);
+          await actions.question.update(question, values);
           redirect(`/question/${question.id}`);
         }}
       />

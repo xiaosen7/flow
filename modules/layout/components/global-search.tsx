@@ -1,7 +1,13 @@
 "use client";
 
-import { ESearchParamKey, formatHref } from "@/search-params";
-import { IComponentBaseProps, ISafeAny, SearchInput, mp } from "@/shared";
+import { ESearchParamKey } from "@/search-params";
+import {
+  IComponentBaseProps,
+  ISafeAny,
+  SearchInput,
+  getUrl,
+  mp,
+} from "@/shared";
 import { ImageTag } from "@/shared/assets/icons/tag";
 import { Prisma } from "@prisma/client";
 import {
@@ -45,7 +51,7 @@ const modelMap: {
   [Prisma.ModelName.Answer]: {
     getTitle: (answer) => answer.content,
     getLink: (answer) =>
-      formatHref({
+      getUrl({
         url: `/question/${answer.questionId}`,
         searchParams: {
           [ESearchParamKey.AnswerId]: answer.id,

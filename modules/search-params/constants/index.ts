@@ -9,4 +9,5 @@ export const enum ESearchParamKey {
   AnsweredQuestionPage = "answeredQuestionPage",
   AnswerId = "answerId",
   QuestionPage = "questionPage",
+  Filter = "filter",
 }
