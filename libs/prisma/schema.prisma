@@ -27,6 +27,7 @@ model User {
   portfolioWebsite String?
   location         String?
   bio              String?
+  reputation       Int?
 
   createdAt DateTime @default(now())
 

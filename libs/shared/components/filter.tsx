@@ -47,7 +47,10 @@ export const Filter: React.FC<IFilterProps> = (props) => {
         searchParams: {
           [ESearchParamKey.Filter]: newFilter,
         },
-      })
+      }),
+      {
+        scroll: false,
+      }
     );
   });
 

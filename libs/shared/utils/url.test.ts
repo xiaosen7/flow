@@ -5,24 +5,48 @@ describe("url", () => {
     test("base", () => {
       expect(
         getUrl({
-          url: "htttp://example.com",
+          url: "http://example.com",
           searchParams: {
             q: "1",
             a: "",
           },
         })
-      ).toBe("htttp://example.com?q=1&a=");
+      ).toBe("http://example.com/?q=1&a=");
     });
 
     test("preserve existing query", () => {
       expect(
         getUrl({
-          url: "htttp://example.com?c=1",
+          url: "http://example.com?c=1",
           searchParams: {
             q: "1",
           },
         })
-      ).toBe("htttp://example.com?c=1&q=1");
+      ).toBe("http://example.com/?c=1&q=1");
+    });
+  });
+
+  describe("getHref", () => {
+    test("base", () => {
+      expect(
+        getUrl({
+          url: "/question/1",
+          searchParams: {
+            q: "1",
+          },
+        })
+      ).toBe("/question/1?q=1");
+    });
+
+    test("preserve existing query", () => {
+      expect(
+        getUrl({
+          url: "/question/1?c=1",
+          searchParams: {
+            q: "1",
+          },
+        })
+      ).toBe("/question/1?c=1&q=1");
     });
   });
 });

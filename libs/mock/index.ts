@@ -30,6 +30,7 @@ export namespace mock {
       bio: faker.person.bio(),
       location: faker.location.city(),
       portfolioWebsite: faker.internet.url(),
+      reputation: faker.number.int(1000000),
     };
   }
 

@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/prisma";
+import { IUser } from "@/shared";
 import { auth, currentUser } from "@clerk/nextjs/server";
 
 export async function getCurrent() {
@@ -54,4 +55,20 @@ export async function createIfNeeded() {
       },
     });
   } catch {}
+}
+
+export async function changeReputation(
+  user: Pick<IUser, "id">,
+  reputation: number
+) {
+  return prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      reputation: {
+        increment: reputation,
+      },
+    },
+  });
 }

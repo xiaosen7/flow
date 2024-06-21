@@ -11,6 +11,10 @@ describe("mock", () => {
       fullName: expect.any(String),
       createdAt: expect.any(Date),
       username: expect.any(String),
+      bio: expect.any(String),
+      location: expect.any(String),
+      portfolioWebsite: expect.any(String),
+      reputation: expect.any(Number),
     });
   });
 
@@ -32,8 +36,6 @@ describe("mock", () => {
       content: expect.any(String),
       createdAt: expect.any(Date),
       authorId: expect.any(String),
-      downvotes: expect.any(Number),
-      upvotes: expect.any(Number),
       views: expect.any(Number),
     });
   });
