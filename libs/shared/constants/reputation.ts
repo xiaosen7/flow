@@ -15,6 +15,7 @@ export const REPUTATION_COUNTS = {
   },
   [Prisma.ModelName.Answer]: {
     create: 10,
+    remove: 10,
     upvote: {
       user: 2,
       author: 10,
@@ -27,4 +28,4 @@ export const REPUTATION_COUNTS = {
   [Prisma.ModelName.Tag]: {
     create: 3,
   },
-};
+} as const;

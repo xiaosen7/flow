@@ -31,8 +31,6 @@ function createInstance() {
           const modelName = context.name as Prisma.ModelName;
 
           const finalArgs = getArgs(modelName, searchParams, userArgs);
-
-
           return prisma.$transaction(async () => {
             const items = (await context.findMany(finalArgs)) as Prisma.Result<
               T,
@@ -43,6 +41,8 @@ function createInstance() {
             const total = (await context.count({
               where: finalArgs.where,
             })) as number;
+
+            console.log("Search", modelName, finalArgs);
 
             return { items, total };
           });
@@ -80,6 +80,9 @@ function getArgs<T extends Prisma.ModelName>(
   const paginationArgs: IFindManyArgs<T> = {
     skip: (page - 1) * pageSize,
     take: pageSize,
+    orderBy: {
+      createdAt: "desc",
+    },
   };
 
   const where = search
@@ -100,7 +103,7 @@ function getArgs<T extends Prisma.ModelName>(
     args,
     (objValue, srcValue, key) => {
       if (key === "orderBy") {
-        return [...ensureArray(objValue), ...ensureArray(srcValue)].filter(
+        return [...ensureArray(srcValue), ...ensureArray(objValue)].filter(
           Boolean
         );
       }

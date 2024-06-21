@@ -57,7 +57,7 @@ export async function createIfNeeded() {
   } catch {}
 }
 
-export async function changeReputation(
+export async function updateReputation(
   user: Pick<IUser, "id">,
   reputation: number
 ) {
@@ -67,7 +67,7 @@ export async function changeReputation(
     },
     data: {
       reputation: {
-        increment: reputation,
+        [reputation > 0 ? "increment" : "decrement"]: Math.abs(reputation),
       },
     },
   });

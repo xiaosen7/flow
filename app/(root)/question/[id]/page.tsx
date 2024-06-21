@@ -92,17 +92,6 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
       .bindRevalidatePath(`/question/${id}`);
   };
 
-  const onDelete = async () => {
-    "use server";
-    await prisma.question.delete({
-      where: {
-        id: question.id,
-      },
-    });
-
-    redirect("/");
-  };
-
   const onEdit = async () => {
     "use server";
     redirect(`/question/edit/${question.id}`);
@@ -153,7 +142,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
         {editable && (
           <EditAndDelete
             className="h-[30px]"
-            onDelete={onDelete}
+            onDelete={ac(actions.question.remove).bindArgs(question)}
             onEdit={onEdit}
           />
         )}

@@ -1,3 +1,4 @@
+import { actions } from "@/actions";
 import { ThemeProvider } from "@/theme";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
@@ -31,7 +32,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   // console.log("render global layout");
-  // await userActions.createIfNeeded();
+  await actions.user.createIfNeeded();
   return (
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>

@@ -2,37 +2,60 @@
 
 import { prisma } from "@/prisma";
 import { QUESTION_SCHEMA } from "@/question";
-import { IQuestion } from "@/shared";
+import { IQuestion, REPUTATION_COUNTS } from "@/shared";
 import { RedirectType, redirect } from "next/navigation";
 import { z } from "zod";
 import * as userActions from "./user";
 
 export async function create(values: z.infer<typeof QUESTION_SCHEMA>) {
-  const user = await userActions.getCurrentOrRedirectSignIn();
+  await prisma.$transaction(async () => {
+    const user = await userActions.getCurrentOrRedirectSignIn();
 
-  const { tags: tagNames } = values;
+    const { tags: tagNames } = values;
 
-  await prisma.question.create({
-    data: {
-      content: values.explanation,
-      title: values.title,
-      views: 0,
-      authorId: user.id,
-      tags: {
-        connectOrCreate: tagNames.map((name) => ({
-          where: {
-            name,
-          },
-          create: {
-            name,
-            description: "",
-          },
-        })),
+    await prisma.question.create({
+      data: {
+        content: values.explanation,
+        title: values.title,
+        views: 0,
+        authorId: user.id,
+        tags: {
+          connectOrCreate: tagNames.map((name) => ({
+            where: {
+              name,
+            },
+            create: {
+              name,
+              description: "",
+            },
+          })),
+        },
       },
-    },
+    });
+
+    // TODO add tag reputation
+
+    await userActions.updateReputation(user, REPUTATION_COUNTS.Question.create);
   });
 
   redirect("/", RedirectType.push);
+}
+
+export async function remove(question: IQuestion) {
+  await prisma.$transaction(async () => {
+    await prisma.question.delete({
+      where: {
+        id: question.id,
+      },
+    });
+
+    await userActions.updateReputation(
+      await userActions.getCurrentOrRedirectSignIn(),
+      REPUTATION_COUNTS.Question.remove
+    );
+  });
+
+  redirect("/");
 }
 
 export async function update(
@@ -51,40 +74,62 @@ export async function update(
 }
 
 export async function upVote(question: IQuestion, vote: boolean) {
-  const user = await userActions.getCurrentOrRedirectSignIn();
+  await prisma.$transaction(async () => {
+    const user = await userActions.getCurrentOrRedirectSignIn();
 
-  vote && (await downVote(question, false));
+    vote && (await downVote(question, false));
 
-  await prisma.question.update({
-    where: {
-      id: question.id,
-    },
-    data: {
-      upvotes: {
-        [vote ? "connect" : "disconnect"]: {
-          id: user.id,
+    await prisma.question.update({
+      where: {
+        id: question.id,
+      },
+      data: {
+        upvotes: {
+          [vote ? "connect" : "disconnect"]: {
+            id: user.id,
+          },
         },
       },
-    },
+    });
+
+    await userActions.updateReputation(
+      user,
+      REPUTATION_COUNTS.Question.upvote.user
+    );
+    await userActions.updateReputation(
+      { id: question.authorId },
+      REPUTATION_COUNTS.Question.upvote.author
+    );
   });
 }
 
 export async function downVote(question: IQuestion, vote: boolean) {
-  const user = await userActions.getCurrentOrRedirectSignIn();
+  await prisma.$transaction(async () => {
+    const user = await userActions.getCurrentOrRedirectSignIn();
 
-  vote && (await upVote(question, false));
+    vote && (await upVote(question, false));
 
-  await prisma.question.update({
-    where: {
-      id: question.id,
-    },
-    data: {
-      downvotes: {
-        [vote ? "connect" : "disconnect"]: {
-          id: user.id,
+    await prisma.question.update({
+      where: {
+        id: question.id,
+      },
+      data: {
+        downvotes: {
+          [vote ? "connect" : "disconnect"]: {
+            id: user.id,
+          },
         },
       },
-    },
+    });
+
+    await userActions.updateReputation(
+      user,
+      REPUTATION_COUNTS.Question.downvote.user
+    );
+    await userActions.updateReputation(
+      { id: question.authorId },
+      REPUTATION_COUNTS.Question.downvote.author
+    );
   });
 }
 

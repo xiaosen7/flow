@@ -102,7 +102,7 @@ export const MODEL_CONFIG_MAP: IModelConfigMap = {
       "top contributors": {
         args: {
           orderBy: {
-            // todo reputation
+            reputation: "desc",
           },
         },
       },

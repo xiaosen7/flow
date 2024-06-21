@@ -76,7 +76,7 @@ const ProFileDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
       <ProfileBase editable={editable} user={profileUser} />
       <ProfileStats
         badges={badges}
-        reputation={0}
+        reputation={profileUser.reputation}
         totalAnswers={answerTotal}
         totalQuestions={questionTotal}
       />
