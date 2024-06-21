@@ -12,7 +12,7 @@ export async function create(values: z.infer<typeof QUESTION_SCHEMA>) {
 
   const { tags: tagNames } = values;
 
-  const question = await prisma.question.create({
+  await prisma.question.create({
     data: {
       content: values.explanation,
       title: values.title,
