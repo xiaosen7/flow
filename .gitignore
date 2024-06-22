@@ -47,3 +47,6 @@ public/git.log
 
 # scripts
 /libs/shared/assets/
+
+# temp
+/temp/
