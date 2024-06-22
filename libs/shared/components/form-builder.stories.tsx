@@ -1,7 +1,6 @@
 import { Input } from "@/shared";
 import { Meta, StoryFn } from "@storybook/react";
 import { z } from "zod";
-import { useForm } from "../hooks";
 import { FormBuilder, IFormBuilderItem } from "./form-builder";
 
 const schema = z.object({
@@ -26,6 +25,7 @@ const items: IFormBuilderItem<IValues>[] = [
     label: "age",
     renderControl: (field) => <Input placeholder="shadcn" {...field} />,
     description: "This is your public display age.",
+    required: true,
   },
 ];
 
@@ -33,21 +33,18 @@ export default {
   component: FormBuilder,
 } as Meta<typeof FormBuilder>;
 
-export const Base: StoryFn<typeof FormBuilder> = (args) => {
-  const form = useForm({
-    schema,
-    defaultValues: {
-      username: "",
-      age: "",
-    },
-  });
-
+export const Base: StoryFn<typeof FormBuilder> = () => {
   const onSubmit = async (values: IValues) => {
     alert(JSON.stringify(values));
     await new Promise((resolve) => setTimeout(resolve, 1000));
   };
 
   return (
-    <FormBuilder {...args} form={form} items={items} onSubmit={onSubmit} />
+    <FormBuilder
+      items={items}
+      schema={schema}
+      topic="Person"
+      onSubmit={onSubmit}
+    />
   );
 };

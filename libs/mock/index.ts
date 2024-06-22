@@ -24,7 +24,7 @@ export namespace mock {
       id,
       email: faker.internet.email(),
       clerkId: faker.string.uuid(),
-      imageUrl: faker.image.avatar(),
+      imageUrl: faker.image.avatarGitHub(),
       fullName: faker.person.fullName(),
       createdAt: date(),
       username: faker.internet.userName(),
@@ -71,16 +71,6 @@ export namespace mock {
   export function date() {
     return new Date(random(2000, 2020), 1, 1);
   }
-
-  export function imageUrl(
-    width: number = 100,
-    height: number = 100,
-    seed: number = random(0, 10000)
-  ) {
-    return `https://picsum.photos/${width}/${height}?random=${seed}`;
-  }
-
-  imageUrl.createMany = createMany.bind(null, imageUrl) as ICreateMany<string>;
 
   export function filterOption(): IFilterOption {
     const value = faker.lorem.word();

@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/prisma";
-import { IUser } from "@/shared";
+import { IUser, toast } from "@/shared";
 import { auth, currentUser } from "@clerk/nextjs/server";
 
 export async function getCurrent() {
@@ -22,6 +22,10 @@ export const getCurrentOrRedirectSignIn = async () => {
   const user = await getCurrent();
 
   if (!user) {
+    toast({
+      title: "Not signed in",
+      description: "You need to be signed in to vote ⚠️",
+    });
     auth().redirectToSignIn();
   }
 

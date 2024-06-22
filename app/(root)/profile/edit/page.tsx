@@ -22,7 +22,13 @@ const onSubmit = async (user: IUser, data: z.infer<typeof PROFILE_SCHEMA>) => {
 const ProfileEditPage: React.FC<IPageProps> = async () => {
   const user = await actions.user.getCurrentOrRedirectSignIn();
 
-  return <ProfileForm user={user} onSubmit={ac(onSubmit).bindArgs(user)} />;
+  return (
+    <ProfileForm
+      defaultValues={user}
+      type="edit"
+      onSubmit={ac(onSubmit).bindArgs(user)}
+    />
+  );
 };
 
 export default ProfileEditPage;

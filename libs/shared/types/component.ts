@@ -1,6 +1,6 @@
 import { ISearchParams } from "@/search-params";
 import React from "react";
-import { FieldValues } from "react-hook-form";
+import { z } from "zod";
 import { IFormBuilderProps } from "../components";
 
 export interface IComponentBaseProps {
@@ -20,5 +20,5 @@ export interface IPageProps<TParams = {}, TSearchParams = {}> {
   searchParams: ISearchParams & TSearchParams;
 }
 
-export interface IFormComponentProps<TValues extends FieldValues>
-  extends Omit<IFormBuilderProps<TValues>, "items" | "form"> {}
+export interface IFormComponentProps<TValues extends z.ZodType>
+  extends Omit<IFormBuilderProps<TValues>, "items" | "schema"> {}

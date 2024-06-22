@@ -7,7 +7,6 @@ import {
   Input,
   Textarea,
   mp,
-  useForm,
 } from "@/shared";
 import React, { useMemo } from "react";
 import { z } from "zod";
@@ -24,6 +23,8 @@ const getTagSchema = (checkNameUniq: (name: string) => Promise<boolean>) => {
     description: z.string().min(50).max(1000),
   });
 };
+
+type ISchema = ReturnType<typeof getTagSchema>;
 
 type IValues = z.infer<ReturnType<typeof getTagSchema>>;
 
@@ -46,15 +47,16 @@ const items: IFormBuilderItems<IValues> = [
   },
 ];
 
-export interface ITagFormProps extends IFormComponentProps<IValues> {
+export interface ITagFormProps extends IFormComponentProps<ISchema> {
   checkNameUniq: (name: string) => Promise<boolean>;
 }
 
 export const TagForm: React.FC<ITagFormProps> = (props) => {
   const { checkNameUniq, ...formProps } = props;
   const schema = useMemo(() => getTagSchema(checkNameUniq), [checkNameUniq]);
-  const form = useForm({
-    schema,
-  });
-  return mp(props, <FormBuilder form={form} items={items} {...formProps} />);
+
+  return mp(
+    props,
+    <FormBuilder items={items} schema={schema} topic="Tag" {...formProps} />
+  );
 };

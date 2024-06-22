@@ -14,11 +14,11 @@ export const Post: StoryFn<typeof QuestionForm> = (args) => (
 export const Edit: StoryFn<typeof QuestionForm> = (args) => (
   <QuestionForm
     {...args}
-    isEdit
     defaultValues={{
       tags: ["react"],
       explanation: "",
       title: "",
     }}
+    type="edit"
   />
 );

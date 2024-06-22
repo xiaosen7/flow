@@ -1,4 +1,5 @@
 import { actions } from "@/actions";
+import { Toaster } from "@/shared";
 import { ThemeProvider } from "@/theme";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
@@ -44,7 +45,10 @@ export default async function RootLayout({
             },
           }}
         >
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            <Toaster />
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>

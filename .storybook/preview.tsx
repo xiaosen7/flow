@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import "../app/globals.css";
 import "./preview.css";
 
+import { Toaster } from "@/shared";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
@@ -63,6 +64,8 @@ const preview: Preview = {
         >
           <ThemeProvider defaultMode={backgroundMode}>
             <Story />
+
+            <Toaster />
           </ThemeProvider>
         </ClerkProvider>
       );

@@ -26,13 +26,13 @@ const QuestionEditPage: React.FC<IPageProps<{ id: string }>> = async (
     <div>
       <h1 className="h1-bold text-dark100_light900">Edit Question</h1>
       <QuestionForm
-        isEdit
         className="mt-9"
         defaultValues={{
           explanation: question.content,
           tags: question.tags,
           title: question.title,
         }}
+        type="edit"
         onSubmit={async (values) => {
           "use server";
           await actions.question.update(question, values);

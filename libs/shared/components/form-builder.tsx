@@ -2,12 +2,10 @@
 
 import { useRequest } from "ahooks";
 import { capitalCase } from "change-case";
-import {
-  ControllerRenderProps,
-  FieldValues,
-  Path,
-  UseFormReturn,
-} from "react-hook-form";
+import { capitalize } from "lodash-es";
+import { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
+import { z } from "zod";
+import { useForm } from "../hooks";
 import { IComponentBaseProps, ISafeAny } from "../types";
 import {
   Button,
@@ -19,8 +17,9 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  toast,
 } from "../ui";
-import { cn, mp } from "../utils";
+import { cn, mp, removeNilKeys } from "../utils";
 
 type _IFormBuilderItem<
   TValues extends FieldValues,
@@ -49,34 +48,59 @@ export type IFormBuilderPropsOnSubmit<TValues extends FieldValues> = (
   values: TValues
 ) => void | Promise<void>;
 
-export interface IFormBuilderProps<TValues extends FieldValues>
+export interface IFormBuilderProps<TSchema extends z.ZodType>
   extends IComponentBaseProps {
-  items: IFormBuilderItem<TValues>[];
-  form: UseFormReturn<TValues, ISafeAny, ISafeAny>;
-  onSubmit?: IFormBuilderPropsOnSubmit<TValues>;
-  getSubmitText?: (loading: boolean) => React.ReactNode;
+  items: IFormBuilderItem<z.infer<TSchema>>[];
+  onSubmit?: IFormBuilderPropsOnSubmit<z.infer<TSchema>>;
+  getSubmitText?: (loading: boolean, type: "edit" | "post") => React.ReactNode;
   /**
    * @default 'left'
    */
   submitAlign?: "left" | "right";
   extra?: React.ReactNode;
+  defaultValues?: {
+    [K in keyof z.infer<TSchema>]: z.infer<TSchema>[K] | null;
+  };
+  schema: TSchema;
+  type?: "edit" | "post";
+  topic?: string;
 }
 
-export const FormBuilder = <TValues extends FieldValues>(
-  props: IFormBuilderProps<TValues>
+export const FormBuilder = <TSchema extends z.ZodType>(
+  props: IFormBuilderProps<TSchema>
 ) => {
   const {
     items,
-    form,
     onSubmit,
-    getSubmitText = getDefaultSubmitText,
     submitAlign = "left",
     extra,
+    defaultValues,
+    schema,
+    type = "post",
+    getSubmitText = getDefaultSubmitText,
+    topic,
   } = props;
-  const { run, loading } = useRequest(
-    async (values: TValues) => onSubmit?.(values),
-    { manual: true }
-  );
+  const { run, loading } = useRequest(async (values) => onSubmit?.(values), {
+    manual: true,
+    onSuccess() {
+      if (topic) {
+        toast({
+          title: capitalize(`${topic} ${type}ed successfully!`),
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: capitalize(`${type}ed successfully!`),
+          variant: "default",
+        });
+      }
+    },
+  });
+
+  const form = useForm<z.infer<TSchema>>({
+    schema,
+    defaultValues: removeNilKeys(defaultValues ?? {}),
+  });
 
   return (
     <Form {...form}>
@@ -122,11 +146,11 @@ export const FormBuilder = <TValues extends FieldValues>(
 
           <div className="flex flex-wrap gap-4">
             <Button
-              className={cn(submitAlign === "right" && "ml-auto")}
+              className={cn(submitAlign === "right" && "ml-auto", "capitalize")}
               disabled={loading}
               variant="primary-gradient"
             >
-              {getSubmitText(loading)}
+              {getSubmitText(loading, type)}
             </Button>
             {extra}
           </div>
@@ -136,8 +160,8 @@ export const FormBuilder = <TValues extends FieldValues>(
   );
 };
 
-const getDefaultSubmitText = (loading: boolean) => {
-  return loading ? "Submitting..." : "Submit";
+const getDefaultSubmitText = (loading: boolean, type: "edit" | "post") => {
+  return loading ? `${type}...` : type;
 };
 
 const defaultRenderControl = (

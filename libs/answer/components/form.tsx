@@ -3,22 +3,16 @@
 import { MarkdownEditor } from "@/markdown";
 import {
   FormBuilder,
-  IComponentBaseProps,
   IFormBuilderItem,
-  IFormBuilderPropsOnSubmit,
+  IFormComponentProps,
   mp,
-  useForm,
 } from "@/shared";
 import React from "react";
 import { z } from "zod";
 import { ANSWER_SCHEMA } from "../constants";
 
-export interface IAnswerFormProps extends IComponentBaseProps {
-  onSubmit?: IFormBuilderPropsOnSubmit<z.infer<typeof ANSWER_SCHEMA>>;
-  defaultValues?: z.infer<typeof ANSWER_SCHEMA>;
-  getSubmitText?: (loading: boolean) => React.ReactNode;
-  extra?: React.ReactNode;
-}
+export interface IAnswerFormProps
+  extends IFormComponentProps<typeof ANSWER_SCHEMA> {}
 
 const items: IFormBuilderItem<z.infer<typeof ANSWER_SCHEMA>>[] = [
   {
@@ -30,25 +24,14 @@ const items: IFormBuilderItem<z.infer<typeof ANSWER_SCHEMA>>[] = [
 ];
 
 export const AnswerForm: React.FC<IAnswerFormProps> = (props) => {
-  const {
-    defaultValues,
-    onSubmit,
-    getSubmitText = (loading) => (loading ? "Posting..." : "Post Answer"),
-    extra,
-  } = props;
-  const form = useForm({
-    schema: ANSWER_SCHEMA,
-    defaultValues,
-  });
   return mp(
     props,
     <FormBuilder
-      extra={extra}
-      form={form}
-      getSubmitText={getSubmitText}
       items={items}
+      schema={ANSWER_SCHEMA}
       submitAlign="right"
-      onSubmit={onSubmit}
+      topic="Answer"
+      {...props}
     />
   );
 };

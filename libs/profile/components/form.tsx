@@ -2,12 +2,9 @@
 
 import {
   FormBuilder,
-  IComponentBaseProps,
   IFormBuilderItems,
-  IFormBuilderPropsOnSubmit,
-  IUser,
+  IFormComponentProps,
   mp,
-  useForm,
 } from "@/shared";
 import React from "react";
 import { z } from "zod";
@@ -43,31 +40,19 @@ const items: IFormBuilderItems<z.infer<typeof PROFILE_SCHEMA>> = [
   },
 ];
 
-export interface IProfileFormProps extends IComponentBaseProps {
-  onSubmit?: IFormBuilderPropsOnSubmit<z.infer<typeof PROFILE_SCHEMA>>;
-  user?: IUser;
-}
+export interface IProfileFormProps
+  extends IFormComponentProps<typeof PROFILE_SCHEMA> {}
 
 export const ProfileForm: React.FC<IProfileFormProps> = (props) => {
-  const { user, onSubmit } = props;
-  const form = useForm({
-    schema: PROFILE_SCHEMA,
-    defaultValues: {
-      bio: user?.bio ?? "",
-      location: user?.location ?? "",
-      fullName: user?.fullName ?? "",
-      username: user?.username ?? "",
-      portfolioWebsite: user?.portfolioWebsite ?? "",
-    },
-  });
   return mp(
     props,
     <FormBuilder
-      form={form}
-      getSubmitText={(loading) => (loading ? "Saving..." : "Save")}
       items={items}
+      schema={PROFILE_SCHEMA}
       submitAlign="right"
-      onSubmit={onSubmit}
+      topic="Profile"
+      type="edit"
+      {...props}
     />
   );
 };

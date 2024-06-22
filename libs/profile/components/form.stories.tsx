@@ -7,7 +7,7 @@ export default {
   component: ProfileForm,
   args: {
     onSubmit: console.log,
-    user: mock.user(),
+    defaultValues: mock.user(),
   },
 } as Meta<typeof ProfileForm>;
 

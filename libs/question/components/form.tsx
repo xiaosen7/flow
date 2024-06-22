@@ -2,26 +2,19 @@
 import { MarkdownEditor } from "@/markdown";
 import {
   FormBuilder,
-  IComponentBaseProps,
   IFormBuilderItems,
-  IFormBuilderPropsOnSubmit,
+  IFormComponentProps,
   ITag,
   Input,
   cn,
   mp,
-  useForm,
 } from "@/shared";
 import { ITagsEditorProps, TagsEditor } from "@/tag";
-import React from "react";
+import { z } from "zod";
 import { QUESTION_SCHEMA } from "../constants";
-import { IQuestionPostValue } from "../types";
 
-export interface ICQuestionFormProps<TTag extends ITag>
-  extends IComponentBaseProps {
-  onSubmit: IFormBuilderPropsOnSubmit<IQuestionPostValue>;
-  defaultValues?: IQuestionPostValue;
-  isEdit?: boolean;
-  getSubmitText?: (loading: boolean) => React.ReactNode;
+export interface IQuestionFormProps<TTag extends ITag>
+  extends IFormComponentProps<typeof QUESTION_SCHEMA> {
   tagsEditor?: ITagsEditorProps<TTag>;
 }
 
@@ -58,42 +51,20 @@ const getItems = <TTag extends ITag>(
       ),
       required: true,
     },
-  ] satisfies IFormBuilderItems<IQuestionPostValue>;
+  ] satisfies IFormBuilderItems<z.infer<typeof QUESTION_SCHEMA>>;
 
 export const QuestionForm = <TTag extends ITag>(
-  props: ICQuestionFormProps<TTag>
+  props: IQuestionFormProps<TTag>
 ) => {
-  const {
-    isEdit,
-    defaultValues = {
-      explanation: "",
-      tags: [] as string[],
-      title: "",
-    },
-    tagsEditor,
-    onSubmit,
-    getSubmitText = (loading) =>
-      loading
-        ? isEdit
-          ? "Saving..."
-          : "Posting..."
-        : isEdit
-          ? "Save"
-          : "Post",
-  } = props;
-
-  const form = useForm({
-    schema: QUESTION_SCHEMA,
-    defaultValues,
-  });
+  const { tagsEditor } = props;
 
   return mp(
     props,
-    <FormBuilder<IQuestionPostValue>
-      form={form}
-      getSubmitText={getSubmitText}
-      items={getItems(tagsEditor, isEdit)}
-      onSubmit={onSubmit}
+    <FormBuilder
+      items={getItems(tagsEditor, props.type === "edit")}
+      schema={QUESTION_SCHEMA}
+      topic="Question"
+      {...props}
     />
   );
 };

@@ -63,8 +63,4 @@ describe("mock", () => {
       });
     });
   });
-
-  test("imageUrl", () => {
-    expect(mock.imageUrl(100, 100)).toMatch(/^http/);
-  });
 });
