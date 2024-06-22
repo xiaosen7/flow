@@ -1,6 +1,6 @@
 import { actions } from "@/actions";
 import { prisma } from "@/prisma";
-import { IPageProps } from "@/shared";
+import { IPageProps, REPUTATION_COUNTS } from "@/shared";
 import { ITagFormProps, TagForm } from "@/tag";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -12,25 +12,29 @@ const CreateTagPage: React.FC<IPageProps> = async () => {
     "use server";
 
     await prisma.$transaction(async () => {
-      const tag = await prisma.tag.create({
-        data: {
-          ...values,
-          creatorId: user.id,
-        },
-      });
+      await prisma.$transaction(async () => {
+        const tag = await prisma.tag.create({
+          data: {
+            ...values,
+            creatorId: user.id,
+          },
+        });
 
-      await prisma.user.update({
-        data: {
-          followedTags: {
-            connect: {
-              id: tag.id,
+        await prisma.user.update({
+          data: {
+            followedTags: {
+              connect: {
+                id: tag.id,
+              },
             },
           },
-        },
-        where: {
-          id: user.id,
-        },
+          where: {
+            id: user.id,
+          },
+        });
       });
+
+      await actions.user.updateReputation(user, REPUTATION_COUNTS.Tag.create);
     });
 
     redirect("/tags");
