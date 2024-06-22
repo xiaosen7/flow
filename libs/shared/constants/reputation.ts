@@ -29,3 +29,5 @@ export const REPUTATION_COUNTS = {
     create: 3,
   },
 } as const;
+
+export const REPUTATION_CAN_CREATE_TAGS = 10000;

@@ -8,7 +8,7 @@ const CommunityPage: React.FC<IPageProps<{}>> = async (props) => {
 
   const { items: users, total } = await prisma.user.search({
     include: {
-      tags: true,
+      followedTags: true,
     },
     searchParams,
   });
@@ -28,7 +28,7 @@ const CommunityPage: React.FC<IPageProps<{}>> = async (props) => {
         name: MODEL_NAME.User,
       }}
       renderItem={(user) => (
-        <UserCard key={user.id} tags={user.tags} user={user} />
+        <UserCard key={user.id} tags={user.followedTags} user={user} />
       )}
       search={{
         placeholder: "Search amazing minds here...",

@@ -31,7 +31,8 @@ model User {
 
   createdAt DateTime @default(now())
 
-  tags Tag[]
+  followedTags Tag[]
+  createdTags  Tag[] @relation("UserTags")
 
   questions         Question[] @relation("UserQuestions")
   upvoteQuestions   Question[] @relation("UserUpvoteQuestions")
@@ -49,7 +50,9 @@ model Tag {
   description String
   createdAt   DateTime   @default(now())
   questions   Question[]
-  users       User[]
+  followers   User[]
+  creator     User       @relation("UserTags", fields: [creatorId], references: [id])
+  creatorId   String
 }
 
 model Question {

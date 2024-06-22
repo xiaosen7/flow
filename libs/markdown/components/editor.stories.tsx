@@ -17,7 +17,7 @@ export const Base: StoryFn<typeof MarkdownEditor> = () => (
 );
 
 export const TestScroll: StoryFn<typeof MarkdownEditor> = () => (
-  <div>
+  <div className="w-[300px]">
     <div className="h-screen bg-red-300"></div>
     <MarkdownEditor className="h-[90vh]" onChange={console.log} />
   </div>

@@ -18,11 +18,11 @@ export const DefaultLayout: React.FC<IDefaultLayoutProps> = (props) => {
     props;
   return mp(
     props,
-    <div className="background-light850_dark100 relative">
-      <div className="flex">
+    <div className="relative">
+      <div className="background-light850_dark100 flex">
         <LeftSidebar className="sticky left-0 top-0 h-screen overflow-auto pt-36 max-sm:hidden" />
 
-        <section className="mx-auto flex max-w-5xl flex-1 flex-col break-all p-6 pt-36 max-md:pb-14 sm:px-14">
+        <section className="mx-auto flex max-w-5xl flex-1 flex-col overflow-auto break-all p-6 pt-36 max-md:pb-14 sm:px-14">
           {props.children}
           <GitLog className="mt-6" />
         </section>

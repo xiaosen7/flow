@@ -38,7 +38,12 @@ async function main() {
       data: BUILTIN_TAG_NAMES.map((name) => ({
         name,
         description: `${name} tag`,
-      })).concat(mock.tag.createMany(TAG_COUNT - BUILTIN_TAG_NAMES.length)),
+      }))
+        .concat(mock.tag.createMany(TAG_COUNT - BUILTIN_TAG_NAMES.length))
+        .map((x) => ({
+          ...x,
+          creatorId: users[random(0, USER_COUNT - 1)].id,
+        })),
       skipDuplicates: true,
     });
 
@@ -92,7 +97,7 @@ async function main() {
           id: user.id,
         },
         data: {
-          tags: {
+          followedTags: {
             connect: tags
               .slice(tagStart, tagStart + TAG_COUNT_EACH_USER)
               .map(({ id }) => ({ id })),

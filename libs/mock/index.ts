@@ -12,6 +12,7 @@ export namespace mock {
       createdAt: date(),
       name: faker.lorem.word(),
       description: faker.lorem.paragraph(),
+      creatorId: faker.string.uuid(),
     };
   }
 

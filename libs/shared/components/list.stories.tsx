@@ -2,6 +2,7 @@ import { Meta, StoryFn } from "@storybook/react";
 
 import { mock } from "@/mock";
 import { TagCard } from "@/tag";
+import { faker } from "@faker-js/faker";
 import { List } from "./list";
 
 export default {
@@ -12,6 +13,7 @@ export default {
 export const Base: StoryFn<typeof List> = () => (
   <List
     className="w-full"
+    description={<>{faker.lorem.paragraph()}</>}
     empty={<>No results</>}
     filter={{
       options: mock.filterOption.createMany(10),

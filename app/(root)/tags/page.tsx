@@ -1,6 +1,15 @@
+import { actions } from "@/actions";
 import { prisma } from "@/prisma";
-import { IPageProps, List, MODEL_NAME, NoResults } from "@/shared";
+import {
+  Button,
+  IPageProps,
+  List,
+  MODEL_NAME,
+  NoResults,
+  REPUTATION_CAN_CREATE_TAGS,
+} from "@/shared";
 import { TagCard } from "@/tag";
+import Link from "next/link";
 import React from "react";
 
 const TagsPage: React.FC<IPageProps<{}, { q: string }>> = async (props) => {
@@ -10,6 +19,8 @@ const TagsPage: React.FC<IPageProps<{}, { q: string }>> = async (props) => {
     include: { questions: true },
     searchParams,
   });
+
+  const user = await actions.user.getCurrent();
 
   return (
     <List
@@ -32,6 +43,19 @@ const TagsPage: React.FC<IPageProps<{}, { q: string }>> = async (props) => {
       )}
       search={{ placeholder: "Search by tag name..." }}
       title={"Tags"}
+      titleExtra={
+        user &&
+        user.reputation > REPUTATION_CAN_CREATE_TAGS && (
+          <Link className="flex justify-end max-sm:w-full" href="/tags/create">
+            <Button
+              className="min-h-[46px] w-full"
+              variant={"primary-gradient"}
+            >
+              Create New Tag
+            </Button>
+          </Link>
+        )
+      }
       total={total}
     />
   );

@@ -13,6 +13,9 @@ const TagsDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
       where: {
         id,
       },
+      include: {
+        creator: true,
+      },
     }),
     prisma.question.search({
       where: {
@@ -32,11 +35,14 @@ const TagsDetailPage: React.FC<IPageProps<{ id: string }>> = async ({
   ]);
   return (
     <QuestionList
+      description={tag.description}
       empty={
         <NoResults
-          description="It appears that there are no saved questions in your collection at the moment 😔.Start exploring and saving questions that pique your interest 🌟"
-          link="/"
-          linkTitle="Explore Questions"
+          description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
+        discussion. our query could be the next big thing others learn from. Get
+        involved! 💡"
+          link="/ask-question"
+          linkTitle="Ask a question"
           topic="Tag Questions"
         />
       }

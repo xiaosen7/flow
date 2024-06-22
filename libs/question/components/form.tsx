@@ -39,22 +39,22 @@ const getItems = <TTag extends ITag>(
       required: true,
     },
     {
+      label: "Tags",
+      name: "tags",
+      description:
+        "Add up to 3 tags to describe what your question is about. You need to press enter to add a tag.",
+      renderControl: (field) => (
+        <TagsEditor {...field} disabled={isEdit} {...tagsEditor} max={3} />
+      ),
+      required: true,
+    },
+    {
       label: "Explanation",
       name: "explanation",
       description:
         " Introduces the problem and expand on what you put in the title. Minimum 20 characters.",
       renderControl: (field) => (
         <MarkdownEditor {...field} className={cn("h-[300px]")} />
-      ),
-      required: true,
-    },
-    {
-      label: "Tags",
-      name: "tags",
-      description:
-        "Add up to 3 tags to describe what your question is about. You need to press enter to add a tag.",
-      renderControl: (field) => (
-        <TagsEditor {...field} disabled={isEdit} {...tagsEditor} max={3}/>
       ),
       required: true,
     },

@@ -22,6 +22,7 @@ export interface IListProps<TItem> extends IComponentBaseProps {
    */
   direction?: "row" | "column";
   total: number;
+  description?: React.ReactNode;
 }
 
 export const List = <TItem extends { id: React.Key }>(
@@ -38,6 +39,7 @@ export const List = <TItem extends { id: React.Key }>(
     empty,
     direction = "row",
     total,
+    description,
   } = props;
 
   const filterProps = filter || modelFilter;
@@ -51,6 +53,8 @@ export const List = <TItem extends { id: React.Key }>(
 
         {titleExtra}
       </div>
+
+      {description && <div className="my-6">{description}</div>}
 
       <div className="mt-11 flex flex-wrap justify-between gap-5 max-sm:flex-col sm:items-center md:flex-col">
         {search &&
