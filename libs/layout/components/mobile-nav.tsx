@@ -32,7 +32,7 @@ export const MobileNav: React.FC<IMobileNavProps> = (props) => {
         </SheetTrigger>
 
         <SheetContent
-          className="background-light900_dark200 flex flex-col justify-between border-none sm:hidden"
+          className="background-light900_dark200 flex flex-col border-none sm:hidden"
           side={"left"}
         >
           <Link className="flex items-center gap-1" href="/">
@@ -44,11 +44,13 @@ export const MobileNav: React.FC<IMobileNavProps> = (props) => {
           </Link>
 
           <NavLinks
+            className="py-16"
             renderItem={(node) => <SheetClose asChild>{node}</SheetClose>}
           />
 
           <SignedOut>
             <NavButtons
+              className="mt-auto"
               renderItem={(node) => <SheetClose asChild>{node}</SheetClose>}
             />
           </SignedOut>
