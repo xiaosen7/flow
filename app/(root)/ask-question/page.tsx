@@ -32,13 +32,16 @@ const AskQuestionPage: React.FC = () => {
   };
 
   return (
-    <QuestionForm
-      tagsEditor={{
-        searchApi,
-        searchedTagTotalQuestionsPaths: "_count.questions",
-      }}
-      onSubmit={actions.question.create}
-    />
+    <div>
+      <h1 className="h1-bold text-dark100_light900 mb-9">Ask a Question</h1>
+      <QuestionForm
+        tagsEditor={{
+          searchApi,
+          searchedTagTotalQuestionsPaths: "_count.questions",
+        }}
+        onSubmit={actions.question.create}
+      />
+    </div>
   );
 };
 

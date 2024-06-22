@@ -28,7 +28,7 @@ export const Navbar: React.FC<INavbarProps> = (props) => {
         {...globalSearch}
         className={cn(
           "max-w-[600px] flex-1 max-lg:hidden",
-          globalSearch.className
+          globalSearch?.className
         )}
       />
 
