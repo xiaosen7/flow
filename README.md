@@ -6,6 +6,8 @@ This project is developing.
 
 [Storybook](https://stack-overflow-clone-next.vercel.app/storybook-static/index.html)
 
+Technology stack：Next.js、Prisma、Zod、Tailwindcss、Vitest、clsx、ahooks、shadcn/ui、ClerkJS...
+
 ## Getting Started
 
 1. Clone this project and run `pnpm install`
