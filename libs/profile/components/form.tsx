@@ -1,19 +1,21 @@
 "use client";
 
 import {
-  FormBuilder,
-  IFormBuilderItems,
+  EFormTopic,
+  EFormType,
+  Form,
   IFormComponentProps,
+  IFormItems,
   mp,
 } from "@/shared";
+import { merge } from "lodash-es";
 import React from "react";
 import { z } from "zod";
 import { PROFILE_SCHEMA } from "../constants";
 
-const items: IFormBuilderItems<z.infer<typeof PROFILE_SCHEMA>> = [
+const items: IFormItems<z.infer<typeof PROFILE_SCHEMA>> = [
   {
     name: "fullName",
-    required: true,
     label: "Name",
     description: "Your name",
   },
@@ -21,7 +23,6 @@ const items: IFormBuilderItems<z.infer<typeof PROFILE_SCHEMA>> = [
     name: "username",
     label: "Username",
     description: "Your username",
-    required: true,
   },
   {
     name: "portfolioWebsite",
@@ -46,13 +47,23 @@ export interface IProfileFormProps
 export const ProfileForm: React.FC<IProfileFormProps> = (props) => {
   return mp(
     props,
-    <FormBuilder
+    <Form
       items={items}
       schema={PROFILE_SCHEMA}
       submitAlign="right"
-      topic="Profile"
-      type="edit"
+      topic={EFormTopic.Profile}
+      type={EFormType.Edit}
       {...props}
+      defaultValues={merge(
+        {
+          bio: "",
+          fullName: "",
+          location: "",
+          portfolioWebsite: "",
+          username: "",
+        },
+        props.defaultValues
+      )}
     />
   );
 };

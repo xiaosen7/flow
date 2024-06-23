@@ -2,7 +2,7 @@ import { ac, actions } from "@/actions";
 import { prisma } from "@/prisma";
 import { ProfileForm } from "@/profile";
 import { PROFILE_SCHEMA } from "@/profile/constants";
-import { IPageProps, IUser } from "@/shared";
+import { EFormType, IPageProps, IUser } from "@/shared";
 import { redirect } from "next/navigation";
 import React from "react";
 import { z } from "zod";
@@ -25,7 +25,7 @@ const ProfileEditPage: React.FC<IPageProps> = async () => {
   return (
     <ProfileForm
       defaultValues={user}
-      type="edit"
+      type={EFormType.Edit}
       onSubmit={ac(onSubmit).bindArgs(user)}
     />
   );

@@ -1,9 +1,11 @@
 "use client";
 import { MarkdownEditor } from "@/markdown";
 import {
-  FormBuilder,
-  IFormBuilderItems,
+  EFormTopic,
+  EFormType,
+  Form,
   IFormComponentProps,
+  IFormItems,
   ITag,
   Input,
   cn,
@@ -29,7 +31,6 @@ const getItems = <TTag extends ITag>(
       description:
         "Be specific and imagine you're asking a question to another person.",
       renderControl: (field) => <Input {...field} />,
-      required: true,
     },
     {
       label: "Tags",
@@ -39,7 +40,6 @@ const getItems = <TTag extends ITag>(
       renderControl: (field) => (
         <TagsEditor {...field} disabled={isEdit} {...tagsEditor} max={3} />
       ),
-      required: true,
     },
     {
       label: "Explanation",
@@ -49,9 +49,8 @@ const getItems = <TTag extends ITag>(
       renderControl: (field) => (
         <MarkdownEditor {...field} className={cn("h-[300px]")} />
       ),
-      required: true,
     },
-  ] satisfies IFormBuilderItems<z.infer<typeof QUESTION_SCHEMA>>;
+  ] satisfies IFormItems<z.infer<typeof QUESTION_SCHEMA>>;
 
 export const QuestionForm = <TTag extends ITag>(
   props: IQuestionFormProps<TTag>
@@ -60,10 +59,10 @@ export const QuestionForm = <TTag extends ITag>(
 
   return mp(
     props,
-    <FormBuilder
-      items={getItems(tagsEditor, props.type === "edit")}
+    <Form
+      items={getItems(tagsEditor, props.type === EFormType.Edit)}
       schema={QUESTION_SCHEMA}
-      topic="Question"
+      topic={EFormTopic.Question}
       {...props}
     />
   );

@@ -1,7 +1,7 @@
-import { Input } from "@/shared";
+import { EFormTopic, Input } from "@/shared";
 import { Meta, StoryFn } from "@storybook/react";
 import { z } from "zod";
-import { FormBuilder, IFormBuilderItem } from "./form-builder";
+import { Form, IFormItem } from "./form";
 
 const schema = z.object({
   username: z.string().min(2, {
@@ -12,38 +12,36 @@ const schema = z.object({
 
 type IValues = z.infer<typeof schema>;
 
-const items: IFormBuilderItem<IValues>[] = [
+const items: IFormItem<IValues>[] = [
   {
     name: "username",
     label: "username",
     renderControl: (field) => <Input placeholder="shadcn" {...field} />,
     description: "This is your public display name.",
-    required: true,
   },
   {
     name: "age",
     label: "age",
     renderControl: (field) => <Input placeholder="shadcn" {...field} />,
     description: "This is your public display age.",
-    required: true,
   },
 ];
 
 export default {
-  component: FormBuilder,
-} as Meta<typeof FormBuilder>;
+  component: Form,
+} as Meta<typeof Form>;
 
-export const Base: StoryFn<typeof FormBuilder> = () => {
+export const Base: StoryFn<typeof Form> = () => {
   const onSubmit = async (values: IValues) => {
     alert(JSON.stringify(values));
     await new Promise((resolve) => setTimeout(resolve, 1000));
   };
 
   return (
-    <FormBuilder
+    <Form
       items={items}
       schema={schema}
-      topic="Person"
+      topic={EFormTopic.Profile}
       onSubmit={onSubmit}
     />
   );

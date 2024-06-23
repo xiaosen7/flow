@@ -2,26 +2,25 @@
 
 import { useRequest } from "ahooks";
 import { capitalCase } from "change-case";
-import { capitalize } from "lodash-es";
+import { capitalize, lowerCase } from "lodash-es";
 import { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
 import { z } from "zod";
+import { EFormTopic, EFormType } from "../constants";
 import { useForm } from "../hooks";
 import { IComponentBaseProps, ISafeAny } from "../types";
+import { Button, Input, toast } from "../ui";
 import {
-  Button,
-  Form,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  toast,
-} from "../ui";
+  Form as FormUI,
+} from "../ui/form";
 import { cn, mp, removeNilKeys } from "../utils";
 
-type _IFormBuilderItem<
+type _IFormItem<
   TValues extends FieldValues,
   TName extends Path<TValues> = Path<TValues>,
 > =
@@ -33,26 +32,23 @@ type _IFormBuilderItem<
           field: ControllerRenderProps<TValues, TName>
         ) => JSX.Element;
         description?: string;
-        required?: boolean;
         disabled?: boolean;
       }
     : never;
 
-export type IFormBuilderItem<TValues extends FieldValues> =
-  _IFormBuilderItem<TValues>;
+export type IFormItem<TValues extends FieldValues> = _IFormItem<TValues>;
 
-export type IFormBuilderItems<TValues extends FieldValues> =
-  IFormBuilderItem<TValues>[];
+export type IFormItems<TValues extends FieldValues> = IFormItem<TValues>[];
 
-export type IFormBuilderPropsOnSubmit<TValues extends FieldValues> = (
+export type IFormPropsOnSubmit<TValues extends FieldValues> = (
   values: TValues
 ) => void | Promise<void>;
 
-export interface IFormBuilderProps<TSchema extends z.ZodType>
+export interface IFormProps<TSchema extends z.ZodObject<ISafeAny>>
   extends IComponentBaseProps {
-  items: IFormBuilderItem<z.infer<TSchema>>[];
-  onSubmit?: IFormBuilderPropsOnSubmit<z.infer<TSchema>>;
-  getSubmitText?: (loading: boolean, type: "edit" | "post") => React.ReactNode;
+  items: IFormItem<z.infer<TSchema>>[];
+  onSubmit?: IFormPropsOnSubmit<z.infer<TSchema>>;
+  getSubmitText?: (loading: boolean, type: EFormType) => React.ReactNode;
   /**
    * @default 'left'
    */
@@ -62,12 +58,15 @@ export interface IFormBuilderProps<TSchema extends z.ZodType>
     [K in keyof z.infer<TSchema>]: z.infer<TSchema>[K] | null;
   };
   schema: TSchema;
-  type?: "edit" | "post";
-  topic?: string;
+  /**
+   * @default EFormType.Post
+   */
+  type?: EFormType;
+  topic?: EFormTopic;
 }
 
-export const FormBuilder = <TSchema extends z.ZodType>(
-  props: IFormBuilderProps<TSchema>
+export const Form = <TSchema extends z.ZodObject<ISafeAny>>(
+  props: IFormProps<TSchema>
 ) => {
   const {
     items,
@@ -76,7 +75,7 @@ export const FormBuilder = <TSchema extends z.ZodType>(
     extra,
     defaultValues,
     schema,
-    type = "post",
+    type = EFormType.Post,
     getSubmitText = getDefaultSubmitText,
     topic,
   } = props;
@@ -85,12 +84,12 @@ export const FormBuilder = <TSchema extends z.ZodType>(
     onSuccess() {
       if (topic) {
         toast({
-          title: capitalize(`${topic} ${type}ed successfully!`),
+          title: capitalize(`${topic} ${lowerCase(type)}ed successfully!`),
           variant: "default",
         });
       } else {
         toast({
-          title: capitalize(`${type}ed successfully!`),
+          title: capitalize(`${lowerCase(type)}ed successfully!`),
           variant: "default",
         });
       }
@@ -103,7 +102,7 @@ export const FormBuilder = <TSchema extends z.ZodType>(
   });
 
   return (
-    <Form {...form}>
+    <FormUI {...form}>
       {mp(
         props,
         <form
@@ -116,7 +115,6 @@ export const FormBuilder = <TSchema extends z.ZodType>(
               description,
               label,
               renderControl = defaultRenderControl,
-              required,
               disabled,
             }) => (
               <FormField
@@ -128,14 +126,16 @@ export const FormBuilder = <TSchema extends z.ZodType>(
                   <FormItem className="flex w-full flex-col gap-3">
                     <FormLabel className="paragraph-semibold text-dark400_light800">
                       {label && capitalCase(label)}
-                      {required && <span className="text-primary-500">*</span>}
+                      {!schema.shape[name]?.isOptional() && (
+                        <span className="text-primary-500">*</span>
+                      )}
                     </FormLabel>
 
                     <FormControl className="mt-3.5">
                       {renderControl(field as ISafeAny)}
                     </FormControl>
                     <FormDescription className="body-regular mt-2.5 text-light-500">
-                      {description}
+                      {description || schema.shape[name]?.description}
                     </FormDescription>
                     <FormMessage className="text-red-500" />
                   </FormItem>
@@ -156,11 +156,11 @@ export const FormBuilder = <TSchema extends z.ZodType>(
           </div>
         </form>
       )}
-    </Form>
+    </FormUI>
   );
 };
 
-const getDefaultSubmitText = (loading: boolean, type: "edit" | "post") => {
+const getDefaultSubmitText = (loading: boolean, type: EFormType) => {
   return loading ? `${type}...` : type;
 };
 

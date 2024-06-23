@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 
+import { EFormType } from "@/shared";
 import { QuestionForm } from "./form";
 
 export default {
@@ -19,6 +20,6 @@ export const Edit: StoryFn<typeof QuestionForm> = (args) => (
       explanation: "",
       title: "",
     }}
-    type="edit"
+    type={EFormType.Edit}
   />
 );

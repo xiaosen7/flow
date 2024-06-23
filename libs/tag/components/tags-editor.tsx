@@ -36,7 +36,7 @@ export const TagsEditor = <TSearchedTag extends ITag>(
   props: ITagsEditorProps<TSearchedTag>
 ) => {
   const { disabled, searchApi, max, searchedTagTotalQuestionsPaths } = props;
-  const [value, onChange] = useControllableValue<ITag[]>(props);
+  const [value, onChange] = useControllableValue<ITag[] | undefined>(props);
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, openActions] = useBoolean(false);
   const [data, setData] = useState<TSearchedTag[]>([]);
@@ -58,18 +58,18 @@ export const TagsEditor = <TSearchedTag extends ITag>(
   useDebounceEffect(() => {
     // run when types or input value change
     if (inputValue) {
-      search(inputValue, value);
+      search(inputValue, value || []);
     }
   }, [inputValue, search]);
 
   const onClickTagCard = useMemoizedFn((tag: ITag) => {
-    onChange([...value, tag]);
+    onChange([...(value ?? []), tag]);
     onInputChange({ target: { value: "" } });
     openActions.setFalse();
   });
 
   const onRemove = useMemoizedFn((tag: ITag) => {
-    onChange(value.filter((x) => x.id !== tag.id));
+    onChange(value?.filter((x) => x.id !== tag.id));
   });
 
   return mp(
@@ -80,7 +80,7 @@ export const TagsEditor = <TSearchedTag extends ITag>(
         className="light-border-2 text-dark300_light700 background-light900_dark300 paragraph-regular flex border dark:bg-background"
       >
         <div className="flex items-center justify-center gap-2">
-          {value.map((tag, index) => (
+          {value?.map((tag, index) => (
             <Tag
               key={tag.id}
               className={cn(index === 0 && "ml-3")}
@@ -109,8 +109,10 @@ export const TagsEditor = <TSearchedTag extends ITag>(
         </div>
         <Input
           className="no-focus min-h-[56px] rounded-l-none border-none"
-          disabled={disabled || !searchApi || value.length === max}
-          placeholder={value.length === max ? "Maximum reached" : "Add tags..."}
+          disabled={disabled || !searchApi || value?.length === max}
+          placeholder={
+            value?.length === max ? "Maximum reached" : "Add tags..."
+          }
           value={inputValue}
           onChange={onInputChange}
         />

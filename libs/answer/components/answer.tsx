@@ -3,6 +3,7 @@ import { MarkdownViewer } from "@/markdown";
 import {
   Button,
   DownVote,
+  EFormType,
   EditAndDelete,
   IAnswer,
   IComponentBaseProps,
@@ -76,6 +77,7 @@ export const Answer: React.FC<IAnswerProps> = (props) => {
             </Button>
           }
           getSubmitText={(loading) => (loading ? "Saving..." : "Save")}
+          type={EFormType.Edit}
           onSubmit={onSubmitSave}
         />
       )}

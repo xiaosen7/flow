@@ -1,7 +1,8 @@
 import { ISearchParams } from "@/search-params";
 import React from "react";
 import { z } from "zod";
-import { IFormBuilderProps } from "../components";
+import { IFormProps } from "../components";
+import { ISafeAny } from "./base";
 
 export interface IComponentBaseProps {
   className?: string;
@@ -20,5 +21,5 @@ export interface IPageProps<TParams = {}, TSearchParams = {}> {
   searchParams: ISearchParams & TSearchParams;
 }
 
-export interface IFormComponentProps<TValues extends z.ZodType>
-  extends Omit<IFormBuilderProps<TValues>, "items" | "schema"> {}
+export interface IFormComponentProps<TSchema extends z.ZodObject<ISafeAny>>
+  extends Omit<IFormProps<TSchema>, "items" | "schema"> {}

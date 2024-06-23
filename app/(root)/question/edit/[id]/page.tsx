@@ -1,7 +1,7 @@
 import { actions } from "@/actions";
 import { prisma } from "@/prisma";
 import { QuestionForm } from "@/question";
-import { IPageProps } from "@/shared";
+import { EFormType, IPageProps } from "@/shared";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -32,7 +32,7 @@ const QuestionEditPage: React.FC<IPageProps<{ id: string }>> = async (
           tags: question.tags,
           title: question.title,
         }}
-        type="edit"
+        type={EFormType.Edit}
         onSubmit={async (values) => {
           "use server";
           await actions.question.update(question, values);

@@ -1,9 +1,10 @@
 "use client";
 
 import {
-  FormBuilder,
-  IFormBuilderItems,
+  EFormTopic,
+  Form,
   IFormComponentProps,
+  IFormItems,
   Input,
   Textarea,
   mp,
@@ -20,7 +21,7 @@ const getTagSchema = (checkNameUniq: (name: string) => Promise<boolean>) => {
       .refine(checkNameUniq, (name) => ({
         message: `Duplicate tag ${name}.`,
       })),
-    description: z.string().min(50).max(1000),
+    description: z.string().min(50).max(100000),
   });
 };
 
@@ -28,14 +29,13 @@ type ISchema = ReturnType<typeof getTagSchema>;
 
 type IValues = z.infer<ReturnType<typeof getTagSchema>>;
 
-const items: IFormBuilderItems<IValues> = [
+const items: IFormItems<IValues> = [
   {
     name: "name",
     renderControl(field) {
       return <Input {...field} />;
     },
     label: "Tag Name",
-    required: true,
   },
   {
     name: "description",
@@ -43,7 +43,6 @@ const items: IFormBuilderItems<IValues> = [
       return <Textarea {...field} />;
     },
     label: "Tag Description",
-    required: true,
   },
 ];
 
@@ -57,6 +56,6 @@ export const TagForm: React.FC<ITagFormProps> = (props) => {
 
   return mp(
     props,
-    <FormBuilder items={items} schema={schema} topic="Tag" {...formProps} />
+    <Form items={items} schema={schema} topic={EFormTopic.Tag} {...formProps} />
   );
 };
