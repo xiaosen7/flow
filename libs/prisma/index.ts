@@ -42,8 +42,6 @@ function createInstance() {
               where: finalArgs.where,
             })) as number;
 
-            console.log("Search", modelName, finalArgs);
-
             return { items, total };
           });
         },

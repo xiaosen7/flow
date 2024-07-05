@@ -89,7 +89,7 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   const bindQuestionAction = (actionFn: IActionFn) => {
     return ac(actionFn)
       .bindArgs(question)
-      .bindRevalidatePath(`/question/${id}`);
+      .bindRevalidateStackOverflowClonePath(`/question/${id}`);
   };
 
   const onEdit = async () => {
@@ -98,7 +98,9 @@ const QuestionDetailPage: NextPage<IQuestionDetailPageProps> = async (
   };
 
   const bindAnswerAction = (actionFn: IActionFn, answer: IAnswer) => {
-    return ac(actionFn).bindArgs(answer).bindRevalidatePath(`/question/${id}`);
+    return ac(actionFn)
+      .bindArgs(answer)
+      .bindRevalidateStackOverflowClonePath(`/question/${id}`);
   };
 
   const editable = user?.id === author.id;

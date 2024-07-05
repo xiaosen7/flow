@@ -2,6 +2,7 @@ import { camelCase, pascalCase } from "change-case";
 import fg from "fast-glob";
 import fsx from "fs-extra";
 import { writeFile } from "fs/promises";
+import slash from "slash";
 
 import { basename, dirname, extname, join, relative } from "path";
 import { dedent } from "ts-dedent";
@@ -12,7 +13,7 @@ import { dedent } from "ts-dedent";
   const publicAssetsDir = join(publicDir, "assets");
   const outDir = join(projectRoot, "libs", "shared", "assets");
 
-  const assetPaths = await fg([join("**/*.{svg,png,jpg}")], {
+  const assetPaths = await fg(["**/*.{svg,png,jpg}"], {
     cwd: publicAssetsDir,
     absolute: true,
   });
@@ -37,7 +38,7 @@ import { dedent } from "ts-dedent";
     }
 
     async function toImage() {
-      const url = relative(publicDir, fsPath);
+      const url = slash(relative(publicDir, fsPath));
       if (url.startsWith(".")) {
         throw new Error(`Invalid path: ${url}`);
       }
@@ -70,7 +71,7 @@ import { dedent } from "ts-dedent";
 
       await fsx.ensureFile(outputPath);
       await writeFile(outputPath, content);
-      console.log("Generated:", relative(projectRoot, outputPath));
+      console.log("Generated:", outputPath);
     }
   }
 })();
